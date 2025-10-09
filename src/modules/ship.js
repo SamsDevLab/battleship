@@ -16,17 +16,17 @@ No.	Class of ship	Size
 5	Destroyer	     2
 */
 
-export const Ship = (length, hitCount, sinkStatus) => {
+export const Ship = (length) => {
   return {
     length: length,
-    hitCount: hitCount,
-    sinkStatus: sinkStatus,
-    hit: () => {
-      hitCount += 1;
-      return hitCount;
+    hitCount: 0,
+    sinkStatus: false,
+    hit: function () {
+      this.hitCount += 1;
+      return this.hitCount;
     },
-    isSunk: () => {
-      if (length === hitCount) {
+    isSunk: function () {
+      if (this.length === this.hitCount) {
         return "The vessel has been sunk!";
       } else return "The vessel is still afloat!";
     },
