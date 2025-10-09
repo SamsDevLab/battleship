@@ -16,7 +16,7 @@ No.	Class of ship	Size
 5	Destroyer	     2
 */
 
-export const ship = (length, hitCount, sinkStatus) => {
+export const Ship = (length, hitCount, sinkStatus) => {
   return {
     length: length,
     hitCount: hitCount,

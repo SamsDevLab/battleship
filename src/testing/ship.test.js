@@ -1,6 +1,6 @@
-import { ship } from "../modules/ship.js";
+import { Ship } from "../modules/ship.js";
 
-const newShip = ship(2, 0, false);
+const newShip = Ship(2, 0, false);
 
 // test("this should increase the numOfHits by 1", () => {
 //   expect(newShip.hit()).toBe(0);
