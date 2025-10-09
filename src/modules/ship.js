@@ -25,5 +25,10 @@ export const ship = (length, hitCount, sinkStatus) => {
       hitCount += 1;
       return hitCount;
     },
+    isSunk: () => {
+      if (length === hitCount) {
+        return "The vessel has been sunk!";
+      } else return "The vessel is still afloat!";
+    },
   };
 };
