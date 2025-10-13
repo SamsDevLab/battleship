@@ -35,11 +35,13 @@ export const Gameboard = () => {
   • If 'direction' is horizontal, boat's length spreads across row
   • If 'direction' is vertical, boat's length spreads across column
 
-  Additional Tests:
-  • Has to add the next cell before determining if it's placed outside the gameboard
-  • If a boat is already placed on the board, a second boat can't overwite it
-
   */
+
+  const checkForOverFlow = (boat, startRow, startCol) => {
+    if (startRow + boat.length > rows || startCol + boat.length > columns) {
+      return true;
+    } else return false;
+  };
 
   return {
     placeShip: function (boat, startRow, startCol, direction) {
@@ -47,15 +49,20 @@ export const Gameboard = () => {
 
       if (startRow < 0 || startCol < 0) {
         return "Starting number cannot be negative";
-      } else if (direction === "horizontal") {
-        for (let i = 0; i < boat.length; i++) {
-          board[startRow][startCol + i] = boat;
-          finalCoords.push([startRow, startCol + i]);
-        }
-      } else if (direction === "vertical") {
-        for (let i = 0; i < boat.length; i++) {
-          board[startRow + i][startCol] = boat;
-          finalCoords.push([startRow + i, startCol]);
+      } else {
+        const overflowResult = checkForOverFlow(boat, startRow, startCol);
+        if (overflowResult === true) {
+          return "Boat cannot be placed outside of gameboard";
+        } else {
+          for (let i = 0; i < boat.length; i++) {
+            if (direction === "horizontal") {
+              board[startRow][startCol + i] = boat;
+              finalCoords.push([startRow, startCol + i]);
+            } else if (direction === "vertical") {
+              board[startRow + i][startCol] = boat;
+              finalCoords.push([startRow + i, startCol]);
+            }
+          }
         }
       }
 
