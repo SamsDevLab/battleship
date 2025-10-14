@@ -31,18 +31,6 @@ export const Gameboard = () => {
   9: [sBoat, nulll, nulll, nulll, bBoat, nulll, nulll, nulll, nulll, cBoat,]
   ]
 
-  Pseudo:
-  • If 'direction' is horizontal, boat's length spreads across row
-  • If 'direction' is vertical, boat's length spreads across column
-
-  Three Checks:
-  • Check for overflow
-  • Check for negative value
-  • Check to ensure board is clear
-  
-  Need to address:
-  • New ships can overlay on top of ships that have already been placed.
-    • Need to fix!
   */
 
   const checkForNegativeValue = (startRow, startCol) => {
@@ -115,8 +103,6 @@ export const Gameboard = () => {
         direction,
       );
 
-      // console.log(allValuesNull);
-
       if (allValuesNull === false) {
         return "These coordinates are occupied by another vessel";
       } else {
@@ -134,29 +120,3 @@ export const Gameboard = () => {
     },
   };
 };
-
-// Second draft
-// placeShip: function (boat, startRow, startCol, direction) {
-//       const finalCoords = [];
-
-//       if (startRow < 0 || startCol < 0) {
-//         return "Starting number cannot be negative";
-//       } else {
-//         const overflowResult = checkForOverFlow(boat, startRow, startCol);
-//         if (overflowResult === true) {
-//           return "Boat cannot be placed outside of gameboard";
-//         } else {
-//           for (let i = 0; i < boat.length; i++) {
-//             if (direction === "horizontal") {
-//               board[startRow][startCol + i] = boat;
-//               finalCoords.push([startRow, startCol + i]);
-//             } else if (direction === "vertical") {
-//               board[startRow + i][startCol] = boat;
-//               finalCoords.push([startRow + i, startCol]);
-//             }
-//           }
-//         }
-//       }
-
-//       return finalCoords;
-//     },
