@@ -221,11 +221,11 @@ test("this should return the battleshipBoat's coordinates", () => {
 });
 
 test("this should return the battleshipBoat's coordinates", () => {
-  expect(board.placeShip(battleshipBoat, 6, 9, "vertical")).toEqual([
-    [6, 9],
-    [7, 9],
-    [8, 9],
-    [9, 9],
+  expect(board.placeShip(battleshipBoat, 6, 4, "vertical")).toEqual([
+    [6, 4],
+    [7, 4],
+    [8, 4],
+    [9, 4],
   ]);
 });
 
@@ -240,12 +240,12 @@ test("this should return the carrierBoat's coordinates", () => {
   ]);
 });
 
-// test("this should return the carrierBoat's coordinates", () => {
-//   expect(board.placeShip(carrierBoat, 5, 9, "vertical")).toEqual([
-//     [5, 9],
-//     [6, 9],
-//     [7, 9],
-//     [8, 9],
-//     [9, 9],
-//   ]);
-// });
+test("this should return the carrierBoat's coordinates", () => {
+  expect(board.placeShip(carrierBoat, 5, 9, "vertical")).toEqual([
+    [5, 9],
+    [6, 9],
+    [7, 9],
+    [8, 9],
+    [9, 9],
+  ]);
+});
