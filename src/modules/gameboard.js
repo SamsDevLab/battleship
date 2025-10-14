@@ -24,11 +24,11 @@ export const Gameboard = () => {
   2: [pBoat, nulll, nulll, nulll, dBoat, nulll, nulll, nulll, nulll, nulll,]
   3: [nulll, nulll, nulll, nulll, dBoat, cBoat, cBoat, cBoat, cBoat, cBoat,]
   4: [nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
-  5: [nulll, nulll, nulll, nulll, bBoat, bBoat, bBoat, bBoat, nulll, nulll,]
-  6: [sBoat, sBoat, sBoat, nulll, nulll, nulll, nulll, nulll, nulll, bBoat,]
-  7: [sBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, bBoat,]
-  8: [sBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, bBoat,]
-  9: [sBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, bBoat,]
+  5: [nulll, nulll, nulll, nulll, bBoat, bBoat, bBoat, bBoat, nulll, cBoat,]
+  6: [sBoat, sBoat, sBoat, nulll, bBoat, nulll, nulll, nulll, nulll, cBoat,]
+  7: [sBoat, nulll, nulll, nulll, bBoat, nulll, nulll, nulll, nulll, cBoat,]
+  8: [sBoat, nulll, nulll, nulll, bBoat, nulll, nulll, nulll, nulll, cBoat,]
+  9: [sBoat, nulll, nulll, nulll, bBoat, nulll, nulll, nulll, nulll, cBoat,]
   ]
 
   Pseudo:
@@ -51,10 +51,22 @@ export const Gameboard = () => {
     } else return false;
   };
 
-  const checkForOverFlow = (boat, startRow, startCol) => {
-    if (startRow + boat.length > rows || startCol + boat.length > columns) {
-      return true;
-    } else return false;
+  const checkForOverflow = (boat, startRow, startCol, direction) => {
+    const resultsArr = [];
+
+    if (direction === "horizontal") {
+      for (let i = 0; i < boat.length; i++) {
+        resultsArr.push(startRow, startCol + i);
+      }
+    } else if (direction === "vertical") {
+      for (let i = 0; i < boat.length; i++) {
+        resultsArr.push(startRow + i, startCol);
+      }
+    }
+
+    const overflow = resultsArr.some((element) => element >= 10);
+
+    return overflow;
   };
 
   const checkForOccupiedSquares = (boat, startRow, startCol, direction) => {
@@ -86,10 +98,14 @@ export const Gameboard = () => {
         return "Starting number cannot be negative";
       }
 
-      const overflowResult = checkForOverFlow(boat, startRow, startCol);
+      const overflowResult = checkForOverflow(
+        boat,
+        startRow,
+        startCol,
+        direction,
+      );
       if (overflowResult === true) {
         return "Boat cannot be placed outside of gameboard";
-        // return board;
       }
 
       const allValuesNull = checkForOccupiedSquares(
