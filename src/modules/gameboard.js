@@ -19,23 +19,37 @@ export const Gameboard = () => {
   pb = patrolBoat | size = 2
 
   [
-  0: [pBoat, pBoat, null, null, null, null, null, null, null, pBoat,]
-  1: [null, null, null, null, null, null, null, null, null, null,]
-  2: [null, null, null, null, null, null, null, null, null, null,]
-  3: [null, null, null, null, null, null, null, null, null, null,]
-  4: [null, null, null, null, null, null, null, null, null, null,]
-  5: [null, null, null, null, null, null, null, null, null, null,]
-  6: [null, null, null, null, null, null, null, null, null, null,]
-  7: [null, null, null, null, null, null, null, null, null, null,]
-  8: [null, null, null, null, null, null, null, null, null, null,]
-  9: [null, null, null, null, null, null, null, null, null, null,]
+  0: [pBoat, pBoat, nulll, nulll, dBoat, dBoat, dBoat, nulll, nulll, nulll,]
+  1: [pBoat, nulll, nulll, nulll, dBoat, nulll, nulll, nulll, nulll, nulll,]
+  2: [pBoat, nulll, nulll, nulll, dBoat, nulll, nulll, nulll, nulll, nulll,]
+  3: [nulll, nulll, nulll, nulll, dBoat, cBoat, cBoat, cBoat, cBoat, cBoat,]
+  4: [nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
+  5: [nulll, nulll, nulll, nulll, bBoat, bBoat, bBoat, bBoat, nulll, nulll,]
+  6: [sBoat, sBoat, sBoat, nulll, nulll, nulll, nulll, nulll, nulll, bBoat,]
+  7: [sBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, bBoat,]
+  8: [sBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, bBoat,]
+  9: [sBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, bBoat,]
   ]
 
   Pseudo:
   • If 'direction' is horizontal, boat's length spreads across row
   • If 'direction' is vertical, boat's length spreads across column
 
+  Three Checks:
+  • Check for overflow
+  • Check for negative value
+  • Check to ensure board is clear
+  
+  Need to address:
+  • New ships can overlay on top of ships that have already been placed.
+    • Need to fix!
   */
+
+  const checkForNegativeValue = (startRow, startCol) => {
+    if (startRow < 0 || startCol < 0) {
+      return true;
+    } else return false;
+  };
 
   const checkForOverFlow = (boat, startRow, startCol) => {
     if (startRow + boat.length > rows || startCol + boat.length > columns) {
@@ -43,30 +57,90 @@ export const Gameboard = () => {
     } else return false;
   };
 
+  const checkForOccupiedSquares = (boat, startRow, startCol, direction) => {
+    const resultsArr = [];
+
+    if (direction === "horizontal") {
+      for (let i = 0; i < boat.length; i++) {
+        resultsArr.push(board[startRow][startCol + i]);
+      }
+    }
+
+    if (direction === "vertical") {
+      for (let i = 0; i < boat.length; i++) {
+        resultsArr.push(board[startRow + i][startCol]);
+      }
+    }
+
+    const allNull = resultsArr.every((element) => element === null);
+
+    return allNull;
+  };
+
   return {
     placeShip: function (boat, startRow, startCol, direction) {
       const finalCoords = [];
 
-      if (startRow < 0 || startCol < 0) {
+      const valueResult = checkForNegativeValue(startRow, startCol);
+      if (valueResult === true) {
         return "Starting number cannot be negative";
-      } else {
-        const overflowResult = checkForOverFlow(boat, startRow, startCol);
-        if (overflowResult === true) {
-          return "Boat cannot be placed outside of gameboard";
-        } else {
-          for (let i = 0; i < boat.length; i++) {
-            if (direction === "horizontal") {
-              board[startRow][startCol + i] = boat;
-              finalCoords.push([startRow, startCol + i]);
-            } else if (direction === "vertical") {
-              board[startRow + i][startCol] = boat;
-              finalCoords.push([startRow + i, startCol]);
-            }
-          }
-        }
       }
 
-      return finalCoords;
+      const overflowResult = checkForOverFlow(boat, startRow, startCol);
+      if (overflowResult === true) {
+        return "Boat cannot be placed outside of gameboard";
+        // return board;
+      }
+
+      const allValuesNull = checkForOccupiedSquares(
+        boat,
+        startRow,
+        startCol,
+        direction,
+      );
+
+      // console.log(allValuesNull);
+
+      if (allValuesNull === false) {
+        return "These coordinates are occupied by another vessel";
+      } else {
+        for (let i = 0; i < boat.length; i++) {
+          if (direction === "horizontal") {
+            board[startRow][startCol + i] = boat;
+            finalCoords.push([startRow, startCol + i]);
+          } else if (direction === "vertical") {
+            board[startRow + i][startCol] = boat;
+            finalCoords.push([startRow + i, startCol]);
+          }
+        }
+        return finalCoords;
+      }
     },
   };
 };
+
+// Second draft
+// placeShip: function (boat, startRow, startCol, direction) {
+//       const finalCoords = [];
+
+//       if (startRow < 0 || startCol < 0) {
+//         return "Starting number cannot be negative";
+//       } else {
+//         const overflowResult = checkForOverFlow(boat, startRow, startCol);
+//         if (overflowResult === true) {
+//           return "Boat cannot be placed outside of gameboard";
+//         } else {
+//           for (let i = 0; i < boat.length; i++) {
+//             if (direction === "horizontal") {
+//               board[startRow][startCol + i] = boat;
+//               finalCoords.push([startRow, startCol + i]);
+//             } else if (direction === "vertical") {
+//               board[startRow + i][startCol] = boat;
+//               finalCoords.push([startRow + i, startCol]);
+//             }
+//           }
+//         }
+//       }
+
+//       return finalCoords;
+//     },
