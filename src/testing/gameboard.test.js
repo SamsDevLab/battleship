@@ -7,10 +7,99 @@ const destroyerBoat = Ship(3);
 const battleshipBoat = Ship(4);
 const carrierBoat = Ship(5);
 
-const board = Gameboard();
+// ********** Return Boat Coordinates: ************ //
+
+// Patrol:
+test("this should return the patrolBoat's coordinates", () => {
+  expect(Gameboard().placeShip(patrolBoat, 0, 0, "horizontal")).toEqual([
+    [0, 0],
+    [0, 1],
+  ]);
+});
+
+test("this should return the patrolBoat's coordinates", () => {
+  expect(Gameboard().placeShip(patrolBoat, 0, 0, "vertical")).toEqual([
+    [0, 0],
+    [1, 0],
+  ]);
+});
+
+// Submarine:
+test("this should return the submarineBoat's coordinates", () => {
+  expect(Gameboard().placeShip(submarineBoat, 0, 0, "horizontal")).toEqual([
+    [0, 0],
+    [0, 1],
+    [0, 2],
+  ]);
+});
+
+test("this should return the submarineBoat's coordinates", () => {
+  expect(Gameboard().placeShip(submarineBoat, 0, 0, "vertical")).toEqual([
+    [0, 0],
+    [1, 0],
+    [2, 0],
+  ]);
+});
+
+// Destroyer:
+test("this should return the destroyerBoat's coordinates", () => {
+  expect(Gameboard().placeShip(destroyerBoat, 0, 0, "horizontal")).toEqual([
+    [0, 0],
+    [0, 1],
+    [0, 2],
+  ]);
+});
+
+test("this should return the destroyerBoat's coordinates", () => {
+  expect(Gameboard().placeShip(destroyerBoat, 0, 0, "vertical")).toEqual([
+    [0, 0],
+    [1, 0],
+    [2, 0],
+  ]);
+});
+
+// Battleship:
+test("this should return the battleshipBoat's coordinates", () => {
+  expect(Gameboard().placeShip(battleshipBoat, 0, 0, "horizontal")).toEqual([
+    [0, 0],
+    [0, 1],
+    [0, 2],
+    [0, 3],
+  ]);
+});
+
+test("this should return the battleshipBoat's coordinates", () => {
+  expect(Gameboard().placeShip(battleshipBoat, 0, 0, "vertical")).toEqual([
+    [0, 0],
+    [1, 0],
+    [2, 0],
+    [3, 0],
+  ]);
+});
+
+// Carrier:
+test("this should return the carrierBoat's coordinates", () => {
+  expect(Gameboard().placeShip(carrierBoat, 0, 0, "horizontal")).toEqual([
+    [0, 0],
+    [0, 1],
+    [0, 2],
+    [0, 3],
+    [0, 4],
+  ]);
+});
+
+test("this should return the carrierBoat's coordinates", () => {
+  expect(Gameboard().placeShip(carrierBoat, 0, 0, "vertical")).toEqual([
+    [0, 0],
+    [1, 0],
+    [2, 0],
+    [3, 0],
+    [4, 0],
+  ]);
+});
 
 // ******************************** //
-// ** Check for Negative Values ** //
+// ** Testing for Negative Nums ** //
 // ****************************** //
 
 // Patrol
@@ -78,9 +167,9 @@ test("this should return an error, as starting nums cannot be negative", () => {
   );
 });
 
-// *******************************************************//
-// *** Check for Overflow (Can't Exceed 10 on Board) *** //
-// *****************************************************//
+// ************************ //
+// *** Can't Exceed 10 *** //
+// ********************** //
 
 // Patrol:
 test("this should return an error, as patrolBoat should not be placed outside board", () => {
@@ -146,6 +235,7 @@ test("this should return an error, as carrierBoat should not be placed outside b
     "Boat cannot be placed outside of gameboard",
   );
 });
+<<<<<<< HEAD
 
 // // ************************************ //
 // // *** Check for Occupied Squares: *** //
@@ -249,3 +339,5 @@ test("this should return the carrierBoat's coordinates", () => {
     [9, 9],
   ]);
 });
+=======
+>>>>>>> parent of ca6f4b9 (fix: reorder tests, include single board instance)
