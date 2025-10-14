@@ -7,99 +7,10 @@ const destroyerBoat = Ship(3);
 const battleshipBoat = Ship(4);
 const carrierBoat = Ship(5);
 
-// ********** Return Boat Coordinates: ************ //
-
-// Patrol:
-test("this should return the patrolBoat's coordinates", () => {
-  expect(Gameboard().placeShip(patrolBoat, 0, 0, "horizontal")).toEqual([
-    [0, 0],
-    [0, 1],
-  ]);
-});
-
-test("this should return the patrolBoat's coordinates", () => {
-  expect(Gameboard().placeShip(patrolBoat, 0, 0, "vertical")).toEqual([
-    [0, 0],
-    [1, 0],
-  ]);
-});
-
-// Submarine:
-test("this should return the submarineBoat's coordinates", () => {
-  expect(Gameboard().placeShip(submarineBoat, 0, 0, "horizontal")).toEqual([
-    [0, 0],
-    [0, 1],
-    [0, 2],
-  ]);
-});
-
-test("this should return the submarineBoat's coordinates", () => {
-  expect(Gameboard().placeShip(submarineBoat, 0, 0, "vertical")).toEqual([
-    [0, 0],
-    [1, 0],
-    [2, 0],
-  ]);
-});
-
-// Destroyer:
-test("this should return the destroyerBoat's coordinates", () => {
-  expect(Gameboard().placeShip(destroyerBoat, 0, 0, "horizontal")).toEqual([
-    [0, 0],
-    [0, 1],
-    [0, 2],
-  ]);
-});
-
-test("this should return the destroyerBoat's coordinates", () => {
-  expect(Gameboard().placeShip(destroyerBoat, 0, 0, "vertical")).toEqual([
-    [0, 0],
-    [1, 0],
-    [2, 0],
-  ]);
-});
-
-// Battleship:
-test("this should return the battleshipBoat's coordinates", () => {
-  expect(Gameboard().placeShip(battleshipBoat, 0, 0, "horizontal")).toEqual([
-    [0, 0],
-    [0, 1],
-    [0, 2],
-    [0, 3],
-  ]);
-});
-
-test("this should return the battleshipBoat's coordinates", () => {
-  expect(Gameboard().placeShip(battleshipBoat, 0, 0, "vertical")).toEqual([
-    [0, 0],
-    [1, 0],
-    [2, 0],
-    [3, 0],
-  ]);
-});
-
-// Carrier:
-test("this should return the carrierBoat's coordinates", () => {
-  expect(Gameboard().placeShip(carrierBoat, 0, 0, "horizontal")).toEqual([
-    [0, 0],
-    [0, 1],
-    [0, 2],
-    [0, 3],
-    [0, 4],
-  ]);
-});
-
-test("this should return the carrierBoat's coordinates", () => {
-  expect(Gameboard().placeShip(carrierBoat, 0, 0, "vertical")).toEqual([
-    [0, 0],
-    [1, 0],
-    [2, 0],
-    [3, 0],
-    [4, 0],
-  ]);
-});
+const board = Gameboard();
 
 // ******************************** //
-// ** Testing for Negative Nums ** //
+// ** Check For Negative Values ** //
 // ****************************** //
 
 // Patrol
@@ -167,9 +78,9 @@ test("this should return an error, as starting nums cannot be negative", () => {
   );
 });
 
-// ************************ //
-// *** Can't Exceed 10 *** //
-// ********************** //
+// *************************** //
+// *** Check for Overflow *** //
+// ************************* //
 
 // Patrol:
 test("this should return an error, as patrolBoat should not be placed outside board", () => {
@@ -235,17 +146,6 @@ test("this should return an error, as carrierBoat should not be placed outside b
     "Boat cannot be placed outside of gameboard",
   );
 });
-<<<<<<< HEAD
-
-// // ************************************ //
-// // *** Check for Occupied Squares: *** //
-// // ********************************** //
-// test("this should return 'The ", () => {
-//   expect(board.placeShip(patrolBoat, 0, 0, "horizontal")).toEqual([
-//     [0, 0],
-//     [0, 1],
-//   ]);
-// });
 
 // ********************************* //
 // *** Return Boat Coordinates: *** //
@@ -339,5 +239,72 @@ test("this should return the carrierBoat's coordinates", () => {
     [9, 9],
   ]);
 });
-=======
->>>>>>> parent of ca6f4b9 (fix: reorder tests, include single board instance)
+
+// ************************************ //
+// *** Check for Occupied Squares: *** //
+// ********************************** //
+
+// Patrol:
+test("this should return an error announcing patrolBoat cannot be placed at the coords", () => {
+  expect(board.placeShip(patrolBoat, 0, 0, "horizontal")).toEqual(
+    "These coordinates are occupied by another vessel",
+  );
+});
+
+test("this should return an error announcing patrolBoat cannot be placed at the coords", () => {
+  expect(board.placeShip(patrolBoat, 1, 0, "vertical")).toEqual(
+    "These coordinates are occupied by another vessel",
+  );
+});
+
+// Submarine:
+test("this should return an error announcing submarineBoat cannot be placed at the coords", () => {
+  expect(board.placeShip(submarineBoat, 6, 0, "horizontal")).toEqual(
+    "These coordinates are occupied by another vessel",
+  );
+});
+
+test("this should return an error announcing submarineBoat cannot be placed at the coords", () => {
+  expect(board.placeShip(submarineBoat, 7, 0, "vertical")).toEqual(
+    "These coordinates are occupied by another vessel",
+  );
+});
+
+// Destroyer:
+test("this should return an error announcing destroyerBoat cannot be placed at the coords", () => {
+  expect(board.placeShip(destroyerBoat, 0, 4, "horizontal")).toEqual(
+    "These coordinates are occupied by another vessel",
+  );
+});
+
+test("this should return an error announcing destroyerBoat cannot be placed at the coords", () => {
+  expect(board.placeShip(destroyerBoat, 1, 4, "vertical")).toEqual(
+    "These coordinates are occupied by another vessel",
+  );
+});
+
+// Battleship:
+test("this should return an error announcing battleshipBoat cannot be placed at the coords", () => {
+  expect(board.placeShip(battleshipBoat, 5, 4, "horizontal")).toEqual(
+    "These coordinates are occupied by another vessel",
+  );
+});
+
+test("this should return an error announcing battleshipBoat cannot be placed at the coords", () => {
+  expect(board.placeShip(battleshipBoat, 6, 4, "vertical")).toEqual(
+    "These coordinates are occupied by another vessel",
+  );
+});
+
+// Carrier:
+test("this should return an error announcing carrierBoat cannot be placed at the coords", () => {
+  expect(board.placeShip(carrierBoat, 3, 5, "horizontal")).toEqual(
+    "These coordinates are occupied by another vessel",
+  );
+});
+
+test("this should return an error announcing carrierBoat cannot be placed at the coords", () => {
+  expect(board.placeShip(carrierBoat, 5, 9, "vertical")).toEqual(
+    "These coordinates are occupied by another vessel",
+  );
+});
