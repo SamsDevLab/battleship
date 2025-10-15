@@ -133,13 +133,16 @@ export const Gameboard = () => {
 
       if (target === null) {
         board[row][col] = "missed";
-        console.log(board);
+        // console.log(board);
         return "Missed shot!";
       }
 
       if (typeof target === "object") {
         target.hit();
-        return `Direct hit to ${target.name} vessel!`;
+        const isSunkResult = target.isSunk();
+        if (isSunkResult === true) {
+          return `The ${target.name} boat has been sunk!`;
+        } else return `Direct hit to ${target.name} boat!`;
       }
     },
   };
@@ -153,7 +156,7 @@ export const Gameboard = () => {
   sB = submarineBoat | size = 3
   pb = patrolBoat | size = 2
 
-  [
+  [      0     1      2       3     4      5      6      7      8      9
   0: [dBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
   1: [dBoat, nulll, missd, nulll, nulll, nulll, nulll, nulll, pBoat, nulll,]
   2: [dBoat, nulll, nulll, nulll, nulll, missd, nulll, nulll, pBoat, nulll,]
