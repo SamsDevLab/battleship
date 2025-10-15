@@ -460,9 +460,13 @@ test("this should return with a message that the battleship boat has been sunk",
   );
 });
 
+// ******************************************* //
+// *** "All Boats Have Been Sunk" Testing *** //
+// ***************************************** //
+
 // Carrier:
-test("this should return with a message that the carrier boat has been sunk", () => {
+test("this should return with a message that all boats have been sunk", () => {
   expect(attackTestingBoard.receiveAttack(9, 1)).toBe(
-    "The carrier boat has been sunk!",
+    "All boats have been sunk!",
   );
 });
