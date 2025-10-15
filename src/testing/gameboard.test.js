@@ -331,42 +331,84 @@ attackTestingBoard.placeShip(destroyerBoat, 0, 0, "vertical");
 attackTestingBoard.placeShip(battleshipBoat, 9, 6, "horizontal");
 attackTestingBoard.placeShip(carrierBoat, 5, 1, "vertical");
 
-// ****************************************** //
-// *** Direct Hit Testing / Sink Testing *** //
-// **************************************** //
+// *************************** //
+// *** Direct Hit Testing *** //
+// ************************* //
 
 // Patrol:
 test("this should return a hit to the patrolBoat", () => {
   expect(attackTestingBoard.receiveAttack(1, 8)).toBe(
-    "Direct hit to patrol vessel!",
+    "Direct hit to patrol boat!",
   );
 });
 
 // Submarine:
 test("this should return a hit to the submarineBoat", () => {
   expect(attackTestingBoard.receiveAttack(4, 3)).toBe(
-    "Direct hit to submarine vessel!",
+    "Direct hit to submarine boat!",
+  );
+});
+
+test("this should return a hit to the submarineBoat", () => {
+  expect(attackTestingBoard.receiveAttack(4, 4)).toBe(
+    "Direct hit to submarine boat!",
   );
 });
 
 // Destroyer:
 test("this should return a hit to the destroyerBoat", () => {
   expect(attackTestingBoard.receiveAttack(0, 0)).toBe(
-    "Direct hit to destroyer vessel!",
+    "Direct hit to destroyer boat!",
+  );
+});
+
+test("this should return a hit to the destroyerBoat", () => {
+  expect(attackTestingBoard.receiveAttack(1, 0)).toBe(
+    "Direct hit to destroyer boat!",
   );
 });
 
 // Battleship:
 test("this should return a hit to the battleshipBoat", () => {
   expect(attackTestingBoard.receiveAttack(9, 6)).toBe(
-    "Direct hit to battleship vessel!",
+    "Direct hit to battleship boat!",
+  );
+});
+
+test("this should return a hit to the battleshipBoat", () => {
+  expect(attackTestingBoard.receiveAttack(9, 7)).toBe(
+    "Direct hit to battleship boat!",
+  );
+});
+
+test("this should return a hit to the battleshipBoat", () => {
+  expect(attackTestingBoard.receiveAttack(9, 8)).toBe(
+    "Direct hit to battleship boat!",
   );
 });
 
 // Carrier
 test("this should return a hit to the carrierBoat", () => {
   expect(attackTestingBoard.receiveAttack(5, 1)).toBe(
-    "Direct hit to carrier vessel!",
+    "Direct hit to carrier boat!",
+  );
+});
+
+test("this should return a hit to the carrierBoat", () => {
+  expect(attackTestingBoard.receiveAttack(6, 1)).toBe(
+    "Direct hit to carrier boat!",
+  );
+});
+
+test("this should return a hit to the carrierBoat", () => {
+  expect(attackTestingBoard.receiveAttack(7, 1)).toBe(
+    "Direct hit to carrier boat!",
+  );
+});
+
+test("this should return a hit to the carrierBoat", () => {
+  expect(attackTestingBoard.receiveAttack(8, 1)).toBe(
+    "Direct hit to carrier boat!",
   );
 });
 
@@ -384,4 +426,43 @@ test("this should return a missed shot", () => {
 
 test("this should return a missed shot", () => {
   expect(attackTestingBoard.receiveAttack(4, 9)).toBe("Missed shot!");
+});
+
+// ****************************** //
+// *** Sinking Ships Testing *** //
+// **************************** //
+
+// Patrol:
+test("this should return with a message that the patrol boat has been sunk", () => {
+  expect(attackTestingBoard.receiveAttack(2, 8)).toBe(
+    "The patrol boat has been sunk!",
+  );
+});
+
+// Submarine:
+test("this should return with a message that the submarine boat has been sunk", () => {
+  expect(attackTestingBoard.receiveAttack(4, 5)).toBe(
+    "The submarine boat has been sunk!",
+  );
+});
+
+// Destroyer:
+test("this should return with a message that the destroyer boat has been sunk", () => {
+  expect(attackTestingBoard.receiveAttack(2, 0)).toBe(
+    "The destroyer boat has been sunk!",
+  );
+});
+
+// Battleship:
+test("this should return with a message that the battleship boat has been sunk", () => {
+  expect(attackTestingBoard.receiveAttack(9, 9)).toBe(
+    "The battleship boat has been sunk!",
+  );
+});
+
+// Carrier:
+test("this should return with a message that the carrier boat has been sunk", () => {
+  expect(attackTestingBoard.receiveAttack(9, 1)).toBe(
+    "The carrier boat has been sunk!",
+  );
 });
