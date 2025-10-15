@@ -28,6 +28,7 @@ export const Ship = (name, length) => {
     },
     isSunk: function () {
       if (this.length === this.hitCount) {
+        this.sinkStatus = true;
         return true;
       } else return false;
     },
