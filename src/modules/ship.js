@@ -28,8 +28,8 @@ export const Ship = (name, length) => {
     },
     isSunk: function () {
       if (this.length === this.hitCount) {
-        return "The vessel has been sunk!";
-      } else return "The vessel is still afloat!";
+        return true;
+      } else return false;
     },
   };
 };
