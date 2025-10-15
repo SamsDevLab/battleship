@@ -9,6 +9,10 @@ const carrierBoat = Ship(5);
 
 const board = Gameboard();
 
+// ************************** //
+// *** placeShip Testing *** //
+// ************************* //
+
 // ******************************** //
 // ** Check For Negative Values ** //
 // ****************************** //
@@ -307,4 +311,47 @@ test("this should return an error announcing carrierBoat cannot be placed at the
   expect(board.placeShip(carrierBoat, 5, 9, "vertical")).toEqual(
     "These coordinates are occupied by another vessel",
   );
+});
+
+// ****************************** //
+// *** receiveAttack Testing *** //
+// **************************** //
+
+// const patrolBoat = Ship(2);
+// const submarineBoat = Ship(3);
+// const destroyerBoat = Ship(3);
+// const battleshipBoat = Ship(4);
+// const carrierBoat = Ship(5);
+
+const attackTestingBoard = Gameboard();
+
+attackTestingBoard.placeShip(patrolBoat, 1, 8, "vertical");
+attackTestingBoard.placeShip(submarineBoat, 4, 3, "horizontal");
+attackTestingBoard.placeShip(destroyerBoat, 0, 0, "vertical");
+attackTestingBoard.placeShip(battleshipBoat, 9, 6, "horizontal");
+attackTestingBoard.placeShip(carrierBoat, 5, 1, "vertical");
+
+// Patrol:
+test("this should return a hit to the patrolBoat", () => {
+  expect(attackTestingBoard.receiveAttack(1, 8)).toBe("Hit a vessel!");
+});
+
+// Submarine:
+test("this should return a hit to the submarineBoat", () => {
+  expect(attackTestingBoard.receiveAttack(4, 3)).toBe("Hit a vessel!");
+});
+
+// Destroyer:
+test("this should return a hit to the destroyerBoat", () => {
+  expect(attackTestingBoard.receiveAttack(0, 0)).toBe("Hit a vessel!");
+});
+
+// Battleship:
+test("this should return a hit to the battleshipBoat", () => {
+  expect(attackTestingBoard.receiveAttack(9, 6)).toBe("Hit a vessel!");
+});
+
+// Carrier
+test("this should return a hit to the carrierBoat", () => {
+  expect(attackTestingBoard.receiveAttack(5, 1)).toBe("Hit a vessel!");
 });
