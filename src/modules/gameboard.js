@@ -77,6 +77,24 @@ export const Gameboard = () => {
     return allNull;
   };
 
+  const checkAllBoats = () => {
+    const filteredRowsArr = [];
+
+    board.forEach((row) =>
+      row.forEach((element) => {
+        if (element !== null && typeof element === "object") {
+          filteredRowsArr.push(element);
+        }
+      }),
+    );
+
+    const allBoatsSankStatus = filteredRowsArr.every(
+      (element) => element.sinkStatus === true,
+    );
+
+    return allBoatsSankStatus;
+  };
+
   return {
     placeShip: function (boat, startRow, startCol, direction) {
       const finalCoords = [];
@@ -118,29 +136,23 @@ export const Gameboard = () => {
         return finalCoords;
       }
     },
-    /*
-      Pseudo:
-
-      • Take in a pair of coords
-      • Determine what's sitting at coords (is there a ship at those coords or is it empty?)
-      • If there is a ship there, send the 'hit' function to that spot
-        • This will increase the ship's hit count by 1
-      • If there is no ship, will need to record the coordinates of the missed shot
-    
-      */
     receiveAttack: function (row, col) {
       const target = board[row][col];
 
       if (target === null) {
         board[row][col] = "missed";
-        // console.log(board);
         return "Missed shot!";
       }
 
       if (typeof target === "object") {
         target.hit();
+
         const isSunkResult = target.isSunk();
-        if (isSunkResult === true) {
+        const allBoatsSank = checkAllBoats();
+
+        if (allBoatsSank === true) {
+          return "All boats have been sunk!";
+        } else if (isSunkResult === true) {
           return `The ${target.name} boat has been sunk!`;
         } else return `Direct hit to ${target.name} boat!`;
       }
