@@ -1,11 +1,11 @@
 import { Gameboard } from "../modules/gameboard";
 import { Ship } from "../modules/ship";
 
-const patrolBoat = Ship(2);
-const submarineBoat = Ship(3);
-const destroyerBoat = Ship(3);
-const battleshipBoat = Ship(4);
-const carrierBoat = Ship(5);
+const patrolBoat = Ship("patrol", 2);
+const submarineBoat = Ship("submarine", 3);
+const destroyerBoat = Ship("destroyer", 3);
+const battleshipBoat = Ship("battleship", 4);
+const carrierBoat = Ship("carrier", 5);
 
 const board = Gameboard();
 
@@ -331,27 +331,57 @@ attackTestingBoard.placeShip(destroyerBoat, 0, 0, "vertical");
 attackTestingBoard.placeShip(battleshipBoat, 9, 6, "horizontal");
 attackTestingBoard.placeShip(carrierBoat, 5, 1, "vertical");
 
+// ****************************************** //
+// *** Direct Hit Testing / Sink Testing *** //
+// **************************************** //
+
 // Patrol:
 test("this should return a hit to the patrolBoat", () => {
-  expect(attackTestingBoard.receiveAttack(1, 8)).toBe("Hit a vessel!");
+  expect(attackTestingBoard.receiveAttack(1, 8)).toBe(
+    "Direct hit to patrol vessel!",
+  );
 });
 
 // Submarine:
 test("this should return a hit to the submarineBoat", () => {
-  expect(attackTestingBoard.receiveAttack(4, 3)).toBe("Hit a vessel!");
+  expect(attackTestingBoard.receiveAttack(4, 3)).toBe(
+    "Direct hit to submarine vessel!",
+  );
 });
 
 // Destroyer:
 test("this should return a hit to the destroyerBoat", () => {
-  expect(attackTestingBoard.receiveAttack(0, 0)).toBe("Hit a vessel!");
+  expect(attackTestingBoard.receiveAttack(0, 0)).toBe(
+    "Direct hit to destroyer vessel!",
+  );
 });
 
 // Battleship:
 test("this should return a hit to the battleshipBoat", () => {
-  expect(attackTestingBoard.receiveAttack(9, 6)).toBe("Hit a vessel!");
+  expect(attackTestingBoard.receiveAttack(9, 6)).toBe(
+    "Direct hit to battleship vessel!",
+  );
 });
 
 // Carrier
 test("this should return a hit to the carrierBoat", () => {
-  expect(attackTestingBoard.receiveAttack(5, 1)).toBe("Hit a vessel!");
+  expect(attackTestingBoard.receiveAttack(5, 1)).toBe(
+    "Direct hit to carrier vessel!",
+  );
+});
+
+// **************************** //
+// *** Missed Shot Testing *** //
+// ************************** //
+
+test("this should return a missed shot", () => {
+  expect(attackTestingBoard.receiveAttack(1, 2)).toBe("Missed shot!");
+});
+
+test("this should return a missed shot", () => {
+  expect(attackTestingBoard.receiveAttack(2, 5)).toBe("Missed shot!");
+});
+
+test("this should return a missed shot", () => {
+  expect(attackTestingBoard.receiveAttack(4, 9)).toBe("Missed shot!");
 });
