@@ -131,9 +131,15 @@ export const Gameboard = () => {
     receiveAttack: function (row, col) {
       const target = board[row][col];
 
+      if (target === null) {
+        board[row][col] = "missed";
+        console.log(board);
+        return "Missed shot!";
+      }
+
       if (typeof target === "object") {
         target.hit();
-        return "Hit a vessel!";
+        return `Direct hit to ${target.name} vessel!`;
       }
     },
   };
@@ -149,10 +155,10 @@ export const Gameboard = () => {
 
   [
   0: [dBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
-  1: [dBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, pBoat, nulll,]
-  2: [dBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, pBoat, nulll,]
+  1: [dBoat, nulll, missd, nulll, nulll, nulll, nulll, nulll, pBoat, nulll,]
+  2: [dBoat, nulll, nulll, nulll, nulll, missd, nulll, nulll, pBoat, nulll,]
   3: [nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
-  4: [nulll, nulll, nulll, sBoat, sBoat, sBoat, nulll, nulll, nulll, nulll,]
+  4: [nulll, nulll, nulll, sBoat, sBoat, sBoat, nulll, nulll, nulll, missd,]
   5: [nulll, cBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
   6: [nulll, cBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
   7: [nulll, cBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
