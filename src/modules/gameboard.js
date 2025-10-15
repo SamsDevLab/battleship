@@ -118,5 +118,46 @@ export const Gameboard = () => {
         return finalCoords;
       }
     },
+    /*
+      Pseudo:
+
+      • Take in a pair of coords
+      • Determine what's sitting at coords (is there a ship at those coords or is it empty?)
+      • If there is a ship there, send the 'hit' function to that spot
+        • This will increase the ship's hit count by 1
+      • If there is no ship, will need to record the coordinates of the missed shot
+    
+      */
+    receiveAttack: function (row, col) {
+      const target = board[row][col];
+
+      if (typeof target === "object") {
+        target.hit();
+        return "Hit a vessel!";
+      }
+    },
   };
 };
+
+/*
+  Boats:
+  cB = carrierBoat | size = 5
+  bB = battleshipBoat | size = 4
+  dB = destroyerBoat | size = 3
+  sB = submarineBoat | size = 3
+  pb = patrolBoat | size = 2
+
+  [
+  0: [dBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
+  1: [dBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, pBoat, nulll,]
+  2: [dBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, pBoat, nulll,]
+  3: [nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
+  4: [nulll, nulll, nulll, sBoat, sBoat, sBoat, nulll, nulll, nulll, nulll,]
+  5: [nulll, cBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
+  6: [nulll, cBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
+  7: [nulll, cBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
+  8: [nulll, cBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
+  9: [nulll, cBoat, nulll, nulll, nulll, nulll, bBoat, bBoat, bBoat, bBoat,]
+  ]
+
+  */
