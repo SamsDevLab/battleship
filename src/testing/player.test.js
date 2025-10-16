@@ -1,6 +1,8 @@
 import { Player } from "../modules/game-rules-and-logic/index.js";
 import { Ship } from "../modules/game-rules-and-logic/index.js";
 
+//game-rules-and-logic
+
 // *************************** //
 // *** Test Player Object *** //
 // ************************* //
