@@ -1,4 +1,4 @@
-import { Ship } from "../modules/ship.js";
+import { Ship } from "../modules/game-rules-and-logic/index";
 
 const newShip = Ship(2);
 

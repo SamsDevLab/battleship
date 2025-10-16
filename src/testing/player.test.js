@@ -1,5 +1,5 @@
-import { Player } from "../modules/player.js";
-import { Ship } from "../modules/ship.js";
+import { Player } from "../modules/game-rules-and-logic/index.js";
+import { Ship } from "../modules/game-rules-and-logic/index.js";
 
 // *************************** //
 // *** Test Player Object *** //
