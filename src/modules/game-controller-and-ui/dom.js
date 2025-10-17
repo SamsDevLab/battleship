@@ -1,29 +1,31 @@
 import { InitGame } from "../game-controller-and-ui/index.js";
 
-const addRowsAndColumns = (boards) => {
-  const rows = 10;
-  const columns = 10;
+const addRowsAndColumns = (playerArr, computerArr) => {
+  const playerDiv = document.querySelector(".player");
+  const computerDiv = document.querySelector(".computer");
 
-  boards.forEach((board) => {
-    for (let i = 0; i < rows; i++) {
-      const row = document.createElement("div");
-      row.classList.add("row");
-      board.append(row);
-      for (let j = 0; j < columns; j++) {
-        const column = document.createElement("div");
-        column.classList.add("column");
-        row.append(column);
-      }
-    }
-  });
+  const createElements = (arr, div) => {
+    arr.forEach((row) => {
+      const boardRow = document.createElement("div");
+      boardRow.classList.add("row");
+      div.append(boardRow);
+
+      row.forEach((column) => {
+        const boardColumn = document.createElement("button");
+        boardRow.append(boardColumn);
+      });
+    });
+  };
+
+  createElements(playerArr, playerDiv);
+  createElements(computerArr, computerDiv);
 };
 
 export const RenderToDom = () => {
   const players = InitGame();
-  const realPlayerBoard = players.realPlayerObj;
-  const computerPlayerBoard = players.computerPlayerObj;
 
-  const boards = document.querySelectorAll(".board");
+  const playerArr = players.realPlayerObj.board.board;
+  const computerArr = players.computerPlayerObj.board.board;
 
-  addRowsAndColumns(boards);
+  addRowsAndColumns(playerArr, computerArr);
 };
