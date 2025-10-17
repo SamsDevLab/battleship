@@ -9,11 +9,10 @@ const battleshipBoat = Ship("battleship", 4);
 const carrierBoat = Ship("carrier", 5);
 
 export const InitGame = () => {
-  const realPlayer = Player().realPlayer("Sam's Dev Lab");
-  const computerPlayer = Player().computerPlayer();
+  const realPlayerObj = Player().realPlayer("Sam's Dev Lab");
+  const computerPlayerObj = Player().computerPlayer();
 
-  const playerName = realPlayer.name;
-  const playerBoard = realPlayer.board;
+  const playerBoard = realPlayerObj.board;
 
   playerBoard.placeShip(patrolBoat, 0, 4, "horizontal");
   playerBoard.placeShip(submarineBoat, 0, 9, "vertical");
@@ -21,14 +20,18 @@ export const InitGame = () => {
   playerBoard.placeShip(battleshipBoat, 7, 5, "horizontal");
   playerBoard.placeShip(carrierBoat, 4, 0, "vertical");
 
-  const computerBoard = computerPlayer.board;
+  const computerBoard = computerPlayerObj.board;
 
   computerBoard.placeShip(patrolBoat, 0, 4, "horizontal");
   computerBoard.placeShip(submarineBoat, 0, 9, "vertical");
   computerBoard.placeShip(destroyerBoat, 4, 2, "vertical");
   computerBoard.placeShip(battleshipBoat, 7, 5, "horizontal");
   computerBoard.placeShip(carrierBoat, 4, 0, "vertical");
+
+  return { realPlayerObj, computerPlayerObj };
 };
+
+InitGame();
 
 /*
   Boats:
