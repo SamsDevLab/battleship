@@ -96,6 +96,7 @@ export const Gameboard = () => {
   };
 
   return {
+    board,
     placeShip: function (boat, startRow, startCol, direction) {
       const finalCoords = [];
 
