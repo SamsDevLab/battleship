@@ -129,4 +129,8 @@ h1 {
   height: 50vh;
   width: 25vw;
   border-radius: 0.5rem;
+  display: grid;
+  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: repeat(10, 1fr);
+  gap: 1px;
 }
