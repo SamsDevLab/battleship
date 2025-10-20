@@ -4,12 +4,12 @@ import { GameController } from "./game-controller.js";
 /*
 Dom Responsibilites:
 
-• Render divs and buttons
-    • Add classes to divs and buttons
+✅ • Render divs and buttons
+ ✅  • Add classes to divs and buttons
 
 • Accept input from user (name)
 
-• Allow users to click on squares and pass coords to gameController to make a 'hit'
+✅ • Allow users to click on squares and pass coords to gameController to make a 'hit'
 
 • Dragging & dropping ships onto coordinates (this will work in tandem with placeShip)
   in GameController once the system is implemented
@@ -50,25 +50,32 @@ const renderPlayerBoardsToDom = (playerBoard, computerBoard) => {
   addRowsAndColumns(computerBoard, computerDiv);
 };
 
-const addButtonFunctionality = () => {
-  const boards = Array.from(document.querySelectorAll("[data-board]"));
+const addButtonFunctionality = (obj) => {
+  const computerBoard = document.querySelector("[data-board='computer']");
 
-  boards.forEach((board) => {
-    board.addEventListener("click", (event) => {
-      const targetRow = event.target.parentElement.dataset.row;
-      const targetColumn = event.target.dataset.column;
+  computerBoard.addEventListener("click", (event) => {
+    const targetRow = event.target.parentElement.dataset.row;
+    const targetColumn = event.target.dataset.column;
 
-      gameController.attack(targetRow, targetColumn);
-    });
+    gameController.attack(targetRow, targetColumn, obj);
   });
 };
 
 export const RenderToDom = () => {
   const players = gameController.initGame();
+  const computerPlayerObj = players.computerPlayerObj;
+
+  console.log(players);
 
   const realPlayerBoard = players.realPlayerObj.gameMechanics.board;
   const computerPlayerBoard = players.computerPlayerObj.gameMechanics.board;
 
   renderPlayerBoardsToDom(realPlayerBoard, computerPlayerBoard);
-  addButtonFunctionality();
+  addButtonFunctionality(computerPlayerObj);
 };
+
+/*
+For committing later:
+
+- Line 42: added '.name'
+*/
