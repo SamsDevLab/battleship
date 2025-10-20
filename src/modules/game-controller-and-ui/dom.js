@@ -6,49 +6,69 @@ Dom Responsibilites:
 
 • Render divs and buttons
     • Add classes to divs and buttons
+
 • Accept input from user (name)
-• Allow users to click on squares?? (Maybe, maybe not - maybe 
-this should go to gameController)
-• Dragging & dropping ships onto coordinates
-• Render player turn to a banner
+
+• Allow users to click on squares and pass coords to gameController to make a 'hit'
+
+• Dragging & dropping ships onto coordinates (this will work in tandem with placeShip)
+  in GameController once the system is implemented
+
+• Render player turn to a banner that announces whose turn it is
+
 • Render name of player under board
 
 */
 
-const addRowsAndColumns = (playerArr, computerArr) => {
-  const playerDiv = document.querySelector(".player");
-  const computerDiv = document.querySelector(".computer");
+const gameController = GameController();
 
-  const createElements = (arr, div) => {
-    arr.forEach((row) => {
+const renderPlayerBoardsToDom = (playerBoard, computerBoard) => {
+  const divs = Array.from(document.querySelectorAll("[data-board]"));
+  const playerDiv = divs[0];
+  const computerDiv = divs[1];
+
+  const addRowsAndColumns = (board, div) => {
+    for (let i = 0; i < board.length; i++) {
       const boardRow = document.createElement("div");
       boardRow.classList.add("row");
+      boardRow.dataset.row = `${i}`;
       div.append(boardRow);
 
-      row.forEach((column) => {
+      for (let j = 0; j < board.length; j++) {
         const boardColumn = document.createElement("button");
+        boardColumn.classList.add("column");
+        boardColumn.dataset.column = `${j}`;
+        if (board[i][j] !== null) {
+          boardColumn.textContent = board[i][j].name;
+        }
         boardRow.append(boardColumn);
-      });
-    });
+      }
+    }
   };
 
-  createElements(playerArr, playerDiv);
-  createElements(computerArr, computerDiv);
+  addRowsAndColumns(playerBoard, playerDiv);
+  addRowsAndColumns(computerBoard, computerDiv);
+};
+
+const addButtonFunctionality = () => {
+  const boards = Array.from(document.querySelectorAll("[data-board]"));
+
+  boards.forEach((board) => {
+    board.addEventListener("click", (event) => {
+      const targetRow = event.target.parentElement.dataset.row;
+      const targetColumn = event.target.dataset.column;
+
+      gameController.attack(targetRow, targetColumn);
+    });
+  });
 };
 
 export const RenderToDom = () => {
-  const players = GameController().initGame();
+  const players = gameController.initGame();
 
-  const realPlayerObj = players.realPlayerObj;
-  const computerPlayerObj = players.computerPlayerObj;
+  const realPlayerBoard = players.realPlayerObj.gameMechanics.board;
+  const computerPlayerBoard = players.computerPlayerObj.gameMechanics.board;
 
-  addRowsAndColumns(realPlayerObj.board.board, computerPlayerObj.board.board);
-
-  //   const buttons = document.querySelectorAll("button");
-
-  //   buttons.forEach((button) => {
-  //     button.addEventListener("click", () => {});
-  //   });
-
-  console.log(realPlayerObj);
+  renderPlayerBoardsToDom(realPlayerBoard, computerPlayerBoard);
+  addButtonFunctionality();
 };
