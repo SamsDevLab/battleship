@@ -2,36 +2,62 @@ import { Gameboard } from "../game-controller-and-ui/index.js";
 import { Ship } from "../game-controller-and-ui/index.js";
 import { Player } from "../game-controller-and-ui/index.js";
 
+/*
+Responsibilities of Game Controller:
+
+Start here and with the DOM on Monday. 
+• You'll probably need to embed InitGame into the
+GameController which also means that the import/exports will change.
+• After figuring this out, you'll want to work on the event listeners for the buttons
+to begin dealing with the methods for the game logic
+
+
+• Add event listeners from buttons to manipulate game logic
+• DOM passes name input to GameController to give realPlayer a name??
+  • Maybe does this through InitGame
+• DOM passes boat placement coords to GameController so GameController can utilize
+placeShip?
+
+*/
+
 const patrolBoat = Ship("patrol", 2);
 const submarineBoat = Ship("submarine", 3);
 const destroyerBoat = Ship("destroyer", 3);
 const battleshipBoat = Ship("battleship", 4);
 const carrierBoat = Ship("carrier", 5);
 
-export const InitGame = () => {
-  const realPlayerObj = Player().realPlayer("Sam's Dev Lab");
-  const computerPlayerObj = Player().computerPlayer();
+// Second Draft:
+export const GameController = () => {
+  const buttons = document.querySelectorAll("button");
+  console.log(buttons);
 
-  const playerBoard = realPlayerObj.board;
+  return {
+    initGame: function () {
+      const realPlayerObj = Player().realPlayer("Sam's Dev Lab");
+      const computerPlayerObj = Player().computerPlayer();
 
-  playerBoard.placeShip(patrolBoat, 0, 4, "horizontal");
-  playerBoard.placeShip(submarineBoat, 0, 9, "vertical");
-  playerBoard.placeShip(destroyerBoat, 4, 2, "vertical");
-  playerBoard.placeShip(battleshipBoat, 7, 5, "horizontal");
-  playerBoard.placeShip(carrierBoat, 4, 0, "vertical");
+      const playerBoard = realPlayerObj.board;
 
-  const computerBoard = computerPlayerObj.board;
+      playerBoard.placeShip(patrolBoat, 0, 4, "horizontal");
+      playerBoard.placeShip(submarineBoat, 0, 9, "vertical");
+      playerBoard.placeShip(destroyerBoat, 4, 2, "vertical");
+      playerBoard.placeShip(battleshipBoat, 7, 5, "horizontal");
+      playerBoard.placeShip(carrierBoat, 4, 0, "vertical");
 
-  computerBoard.placeShip(patrolBoat, 0, 4, "horizontal");
-  computerBoard.placeShip(submarineBoat, 0, 9, "vertical");
-  computerBoard.placeShip(destroyerBoat, 4, 2, "vertical");
-  computerBoard.placeShip(battleshipBoat, 7, 5, "horizontal");
-  computerBoard.placeShip(carrierBoat, 4, 0, "vertical");
+      const computerBoard = computerPlayerObj.board;
 
-  return { realPlayerObj, computerPlayerObj };
+      computerBoard.placeShip(patrolBoat, 0, 4, "horizontal");
+      computerBoard.placeShip(submarineBoat, 0, 9, "vertical");
+      computerBoard.placeShip(destroyerBoat, 4, 2, "vertical");
+      computerBoard.placeShip(battleshipBoat, 7, 5, "horizontal");
+      computerBoard.placeShip(carrierBoat, 4, 0, "vertical");
+
+      return { realPlayerObj, computerPlayerObj };
+    },
+  };
 };
 
-InitGame();
+GameController();
 
 /*
   Boats:
