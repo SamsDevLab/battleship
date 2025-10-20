@@ -3,10 +3,10 @@ import { Gameboard } from "./index.js";
 export const Player = () => {
   return {
     realPlayer: function (name) {
-      return { name: name, board: Gameboard() };
+      return { name: name, gameMechanics: Gameboard() };
     },
     computerPlayer: function () {
-      return { board: Gameboard() };
+      return { name: "Computer", gameMechanics: Gameboard() };
     },
   };
 };
