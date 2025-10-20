@@ -1,4 +1,19 @@
-import { InitGame } from "../game-controller-and-ui/index.js";
+// import { InitGame } from "../game-controller-and-ui/index.js";
+import { GameController } from "./game-controller.js";
+
+/*
+Dom Responsibilites:
+
+• Render divs and buttons
+    • Add classes to divs and buttons
+• Accept input from user (name)
+• Allow users to click on squares?? (Maybe, maybe not - maybe 
+this should go to gameController)
+• Dragging & dropping ships onto coordinates
+• Render player turn to a banner
+• Render name of player under board
+
+*/
 
 const addRowsAndColumns = (playerArr, computerArr) => {
   const playerDiv = document.querySelector(".player");
@@ -22,10 +37,18 @@ const addRowsAndColumns = (playerArr, computerArr) => {
 };
 
 export const RenderToDom = () => {
-  const players = InitGame();
+  const players = GameController().initGame();
 
-  const playerArr = players.realPlayerObj.board.board;
-  const computerArr = players.computerPlayerObj.board.board;
+  const realPlayerObj = players.realPlayerObj;
+  const computerPlayerObj = players.computerPlayerObj;
 
-  addRowsAndColumns(playerArr, computerArr);
+  addRowsAndColumns(realPlayerObj.board.board, computerPlayerObj.board.board);
+
+  //   const buttons = document.querySelectorAll("button");
+
+  //   buttons.forEach((button) => {
+  //     button.addEventListener("click", () => {});
+  //   });
+
+  console.log(realPlayerObj);
 };
