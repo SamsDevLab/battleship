@@ -23,6 +23,13 @@ Dom Responsibilites:
 const gameController = GameController();
 const playerObjs = gameController.initGame();
 
+const markAttackOnBoard = (attack, boardColumn) => {
+  const markAttackSpan = document.createElement("span");
+  markAttackSpan.classList.add(`${attack}-circle`);
+  boardColumn.dataset.hitOrMiss = `${attack}`;
+  boardColumn.append(markAttackSpan);
+};
+
 export const RenderToDom = () => {
   const addRowsAndColumns = (board, div) => {
     for (let i = 0; i < board.length; i++) {
@@ -36,16 +43,8 @@ export const RenderToDom = () => {
         boardColumn.classList.add("column");
         boardColumn.dataset.column = `${j}`;
 
-        if (board[i][j] === "missed") {
-          const missedCircle = document.createElement("span");
-          missedCircle.classList.add("missed-circle");
-          boardColumn.dataset.hitOrMiss = "missed";
-          boardColumn.append(missedCircle);
-        } else if (board[i][j] === "hit") {
-          const hitCircle = document.createElement("span");
-          hitCircle.classList.add("hit-circle");
-          boardColumn.dataset.hitOrMiss = "hit";
-          boardColumn.append(hitCircle);
+        if (board[i][j] === "missed" || board[i][j] === "hit") {
+          markAttackOnBoard(board[i][j], boardColumn);
         } else if (board[i][j] !== null) {
           boardColumn.textContent = board[i][j].name;
         }
