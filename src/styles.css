@@ -152,9 +152,17 @@ button {
   border: 0.5px solid #b5a67c;
 }
 
-.missed-circle {
+.missed-circle,
+.hit-circle {
   height: 50%;
   width: 50%;
   border-radius: 25%;
+}
+
+.missed-circle {
   background-color: #95a5a6;
+}
+
+.hit-circle {
+  background-color: #e63946;
 }
