@@ -21,10 +21,9 @@ Dom Responsibilites:
 */
 
 const gameController = GameController();
+const playerObjs = gameController.initGame();
 
-const renderPlayerBoardsToDom = (playerObjs) => {
-  const playerDivs = Array.from(document.querySelectorAll("[data-board]"));
-
+export const RenderToDom = () => {
   const addRowsAndColumns = (board, div) => {
     for (let i = 0; i < board.length; i++) {
       const boardRow = document.createElement("div");
@@ -36,7 +35,13 @@ const renderPlayerBoardsToDom = (playerObjs) => {
         const boardColumn = document.createElement("button");
         boardColumn.classList.add("column");
         boardColumn.dataset.column = `${j}`;
-        if (board[i][j] !== null) {
+
+        if (board[i][j] === "missed") {
+          const missedCircle = document.createElement("span");
+          missedCircle.classList.add("missed-circle");
+          boardColumn.dataset.hitOrMiss = "missed";
+          boardColumn.append(missedCircle);
+        } else if (board[i][j] !== null) {
           boardColumn.textContent = board[i][j].name;
         }
         boardRow.append(boardColumn);
@@ -44,13 +49,13 @@ const renderPlayerBoardsToDom = (playerObjs) => {
     }
   };
 
-  addRowsAndColumns(
-    playerObjs.realPlayerObj.gameMechanics.board,
-    playerDivs[0],
-  );
+  const playerDiv = document.querySelector("[data-board='player']");
+  const computerDiv = document.querySelector("[data-board='computer']");
+
+  addRowsAndColumns(playerObjs.realPlayerObj.gameMechanics.board, playerDiv);
   addRowsAndColumns(
     playerObjs.computerPlayerObj.gameMechanics.board,
-    playerDivs[1],
+    computerDiv,
   );
 };
 
@@ -58,42 +63,49 @@ const addButtonFunctionality = (obj) => {
   const computerBoard = document.querySelector("[data-board='computer']");
 
   computerBoard.addEventListener("click", (event) => {
+    if (
+      event.target.dataset.hitOrMiss === "missed" ||
+      event.target.parentNode.dataset.hitOrMiss === "missed"
+    ) {
+      console.log("This has already been clicked!");
+      return "This has already been clicked!";
+    }
+
     const targetRow = event.target.parentElement.dataset.row;
     const targetColumn = event.target.dataset.column;
 
     gameController.attack(targetRow, targetColumn, obj);
 
-    /* 
-    Start in this general area tomorrow (10/21)
-    
-    "For attacks, let the user click on a coordinate in the enemy Gameboard. 
-    Send the user input to methods on your objects, and re-render the boards to display the 
-    new information."
+    const boards = Array.from(document.querySelectorAll("[data-board]"));
 
-    You'll need to re-render the board (here in dom.js) and probably disable the event
-    listener on that particular column. Also, maybe use a mock up color to denote that 
-    the cell has been clicked.
+    boards.forEach((board) => {
+      board.innerHTML = "";
+    });
 
-    After this is done, you may want to mangage whose turn it is by creating a banner for both
+    RenderToDom();
+  });
+  /* 
+ When a hit occurs:
+
+  • Re-render the board
+  • Any square that has been marked as "missed" will need to:
+    • re-render with a colorful circle which denotes a "miss"
+    • Send message to user if they try to re-click on a "missed" target
+  • Any square that results in a 'hit' will need to be marked in a different color/graphic
+    and prevent user from re-clicking
+
+    After this is done, you may want to manage whose turn it is by creating a banner for both
     the Player and the computer
 
     And you'll have to start looking into how to manipulate the computer so that it chooses
     a random attack on the player board
     */
-  });
 };
 
-// Second Draft:
-export const RenderToDom = () => {
-  const playerObjs = gameController.initGame();
-
-  renderPlayerBoardsToDom(playerObjs);
-
-  addButtonFunctionality(playerObjs.computerPlayerObj);
-};
-
+RenderToDom();
+addButtonFunctionality(playerObjs.computerPlayerObj);
 /*
-For committing later:
+Polished edits to consider for dom.js module:
 
-- Line 42: added '.name'
+• Refactoring 'renderPlayerBoardsToDom' to make it less clunky
 */
