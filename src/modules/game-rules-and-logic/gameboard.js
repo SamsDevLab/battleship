@@ -147,6 +147,7 @@ export const Gameboard = () => {
 
       if (typeof target === "object") {
         target.hit();
+        board[row][col] = "hit";
 
         const isSunkResult = target.isSunk();
         const allBoatsSank = checkAllBoats();
