@@ -139,9 +139,22 @@ h1 {
   grid-template-columns: repeat(10, 1fr);
 }
 
+.column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 button {
   grid-column: 1/1fr;
   background-color: #3e5c76;
   border-radius: 0.2rem;
   border: 0.5px solid #b5a67c;
+}
+
+.missed-circle {
+  height: 50%;
+  width: 50%;
+  border-radius: 25%;
+  background-color: #95a5a6;
 }
