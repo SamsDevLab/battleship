@@ -41,6 +41,11 @@ export const RenderToDom = () => {
           missedCircle.classList.add("missed-circle");
           boardColumn.dataset.hitOrMiss = "missed";
           boardColumn.append(missedCircle);
+        } else if (board[i][j] === "hit") {
+          const hitCircle = document.createElement("span");
+          hitCircle.classList.add("hit-circle");
+          boardColumn.dataset.hitOrMiss = "hit";
+          boardColumn.append(hitCircle);
         } else if (board[i][j] !== null) {
           boardColumn.textContent = board[i][j].name;
         }
@@ -65,7 +70,9 @@ const addButtonFunctionality = (obj) => {
   computerBoard.addEventListener("click", (event) => {
     if (
       event.target.dataset.hitOrMiss === "missed" ||
-      event.target.parentNode.dataset.hitOrMiss === "missed"
+      event.target.parentNode.dataset.hitOrMiss === "missed" ||
+      event.target.dataset.hitOrMiss === "hit" ||
+      event.target.parentNode.dataset.hitOrMiss === "hit"
     ) {
       console.log("This has already been clicked!");
       return "This has already been clicked!";
@@ -87,11 +94,11 @@ const addButtonFunctionality = (obj) => {
   /* 
  When a hit occurs:
 
-  • Re-render the board
-  • Any square that has been marked as "missed" will need to:
-    • re-render with a colorful circle which denotes a "miss"
+  ✅ • Re-render the board
+   Any square that has been marked as "missed" will need to:
+  ✅ • re-render with a colorful circle which denotes a "miss"
     • Send message to user if they try to re-click on a "missed" target
-  • Any square that results in a 'hit' will need to be marked in a different color/graphic
+  ✅ • Any square that results in a 'hit' will need to be marked in a different color/graphic
     and prevent user from re-clicking
 
     After this is done, you may want to manage whose turn it is by creating a banner for both
