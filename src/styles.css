@@ -206,6 +206,9 @@ h3 {
 }
 
 .column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 2rem;
   width: 3rem;
   background-color: #3e5c76;
@@ -217,7 +220,7 @@ h3 {
 .hit-circle {
   height: 50%;
   width: 50%;
-  border-radius: 25%;
+  border-radius: 2rem;
 }
 
 .missed-circle {
