@@ -117,14 +117,26 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 3rem;
+  gap: 1.5rem;
 }
 
 h1 {
   font-family: "BlackOpsOne";
   font-size: 3.75rem;
-  margin-bottom: 3rem;
   color: #00b8d9;
+  margin-top: 2.5rem;
+}
+
+#banner {
+  height: 3.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2e4052;
+  color: #00b8d9;
+  font-family: "MontserratMedium";
+  font-size: 1.75rem;
 }
 
 #container {
@@ -163,22 +175,6 @@ h3 {
 h3 {
   font-size: 1rem;
 }
-
-/*
-Start here when you return from lunch:
-
-✅ • Review stylesheet and remove extraneous code
-• Make a commit of everything up to this point
-• Add a banner above the game boards to denote turns, messages to users, etc.
-  • Style banner
-• Make another commit
-• Debug why boards are loading duplicates upon rendering the project
-  • Once a button is clicked, the re-render doesn't duplicate (figure out why)
-• Once debugged, make a commit
-• Debug hits - they are no longer registering on the board
-• Once debugged, make a commit
-• Look into adding random shot from computer to player board
-*/
 
 .number-coords {
   display: grid;
