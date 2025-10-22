@@ -4,26 +4,31 @@ import { GameController } from "./game-controller.js";
 /*
 Dom Responsibilites:
 
+COMPLETE:
 ✅ • Render divs and buttons
- ✅  • Add classes to divs and buttons
-
-• Accept input from user (name)
-
+✅ • Add classes to divs and buttons
 ✅ • Allow users to click on squares and pass coords to gameController to make a 'hit'
+✅ • Re-render the board
+✅ • Re-render a 'miss' with a colorful circle which denotes a "miss"  
+✅ • Any square that results in a 'hit' will need to be marked in a different color/graphic
+✅ • Debug why boards are loading duplicates upon rendering the project
+✅ • Once a button is clicked, the re-render doesn't duplicate (figure out why)
+✅ • Once debugged, make a commit
+✅ • Debug hits - they are no longer registering on the board
 
+TO-DOs:  
+✅ • Send message to user if they try to re-click on a "missed" target
+• Look into adding random shot from computer to player board
+• Render name of player under board
+• Accept input from user (name)
 • Dragging & dropping ships onto coordinates (this will work in tandem with placeShip)
   in GameController once the system is implemented
-
-• Render player turn to a banner that announces whose turn it is
-
-• Render name of player under board
-
 */
 
 const gameController = GameController();
 const playerObjs = gameController.initGame();
 
-const markAttackOnBoard = (attack, boardColumn) => {
+const markPreviousAttackOnBoard = (attack, boardColumn) => {
   const markAttackSpan = document.createElement("span");
   markAttackSpan.classList.add(`${attack}-circle`);
   boardColumn.dataset.hitOrMiss = `${attack}`;
@@ -44,7 +49,7 @@ export const RenderToDom = () => {
         boardColumn.dataset.column = `${j}`;
 
         if (board[i][j] === "missed" || board[i][j] === "hit") {
-          markAttackOnBoard(board[i][j], boardColumn);
+          markPreviousAttackOnBoard(board[i][j], boardColumn);
         } else if (board[i][j] !== null) {
           boardColumn.textContent = board[i][j].name;
         }
@@ -65,6 +70,7 @@ export const RenderToDom = () => {
 
 const addButtonFunctionality = (obj) => {
   const computerBoard = document.querySelector("[data-board='computer']");
+  const messageBanner = document.querySelector("#banner");
 
   computerBoard.addEventListener("click", (event) => {
     if (
@@ -80,7 +86,9 @@ const addButtonFunctionality = (obj) => {
     const targetRow = event.target.parentElement.dataset.row;
     const targetColumn = event.target.dataset.column;
 
-    gameController.attack(targetRow, targetColumn, obj);
+    const result = gameController.attack(targetRow, targetColumn, obj);
+    messageBanner.innerText = "";
+    messageBanner.innerText = result;
 
     const boards = Array.from(document.querySelectorAll("[data-board]"));
 
@@ -90,28 +98,7 @@ const addButtonFunctionality = (obj) => {
 
     RenderToDom();
   });
-  /* 
- When a hit occurs:
-
-  ✅ • Re-render the board
-   Any square that has been marked as "missed" will need to:
-  ✅ • re-render with a colorful circle which denotes a "miss"
-    • Send message to user if they try to re-click on a "missed" target
-  ✅ • Any square that results in a 'hit' will need to be marked in a different color/graphic
-    and prevent user from re-clicking
-
-    After this is done, you may want to manage whose turn it is by creating a banner for both
-    the Player and the computer
-
-    And you'll have to start looking into how to manipulate the computer so that it chooses
-    a random attack on the player board
-    */
 };
 
 RenderToDom();
 addButtonFunctionality(playerObjs.computerPlayerObj);
-/*
-Polished edits to consider for dom.js module:
-
-• Refactoring 'renderPlayerBoardsToDom' to make it less clunky
-*/
