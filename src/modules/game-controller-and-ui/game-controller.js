@@ -57,7 +57,7 @@ export const GameController = () => {
     },
     attack: function (row, column, obj) {
       const result = obj.gameMechanics.receiveAttack(row, column);
-      console.log(result);
+      return result;
     },
   };
 };
