@@ -16,17 +16,12 @@ COMPLETE:
 ✅ • Once debugged, make a commit
 ✅ • Debug hits - they are no longer registering on the board
 ✅ • Look into adding random shot from computer to player board
+✅ • Use player name when updating who missed or hit shot in banner
+✅ • Send message to user if they try to re-click on a "missed" target
+✅ • Prevent computer from 'clicking' an already clicked target (see below)
+✅ • Debug: Receiving an "undefined" on some shots to player board
 
-Start here tomorrow (10/23)
 TO-DOs:
-• Use player name when updating who missed or hit shot in banner
-  • Tried doing this on 10/22 but it requires grabbing the opposite object name
-    • e.g., If realPlayer is attacking the computer board, can't use computer board name
-• Send message to user if they try to re-click on a "missed" target
-• Debug: Receiving an "undefined" on some shots to player board
-  • I THINK this one is happening because the computer is attempting to click on the same cell
-  twice and there is not a failsafe in place for the computer clicking on a "missed" cell.
-  Only a failsafe for the player clicking on a "missed" cell
 • Also some boats are being sunk even though they have only been hit one time
 • Render name of player under board
 • Accept input from user (name)
@@ -47,15 +42,26 @@ const markPreviousAttackOnBoard = (attack, boardColumn) => {
   boardColumn.append(markAttackSpan);
 };
 
-const attackPlayer = (messageBanner) => {
+const getRandomCoords = (playerBoard) => {
+  const row = Math.floor(Math.random(playerBoard.length) * 10);
+  const col = Math.floor(Math.random(playerBoard[0].length) * 10);
+
+  return { row, col };
+};
+
+const attackPlayer = () => {
   const playerBoard = playerObjs.realPlayerObj.gameMechanics.board;
 
-  const randomRow = Math.floor(Math.random(playerBoard.length) * 10);
-  const randomCol = Math.floor(Math.random(playerBoard[0].length) * 10);
+  let random = getRandomCoords(playerBoard);
+
+  if (playerBoard[random.row][random.col] === "missed") {
+    random = getRandomCoords(playerBoard);
+    attackPlayer();
+  }
 
   const attackResult = gameController.attack(
-    randomRow,
-    randomCol,
+    random.row,
+    random.col,
     playerObjs.realPlayerObj,
     playerObjs.computerPlayerObj,
   );
@@ -103,14 +109,16 @@ const addButtonFunctionality = () => {
   const computerBoard = document.querySelector("[data-board='computer']");
 
   computerBoard.addEventListener("click", (event) => {
+    // This isn't working quite correctly. It works if you click on the exact target
+    // (colored circle) but it does not work if you click on the square surrounding the circle
     if (
       event.target.dataset.hitOrMiss === "missed" ||
       event.target.parentNode.dataset.hitOrMiss === "missed" ||
       event.target.dataset.hitOrMiss === "hit" ||
       event.target.parentNode.dataset.hitOrMiss === "hit"
     ) {
-      console.log("This has already been clicked!");
-      return "This has already been clicked!";
+      messageBanner.textContent = "";
+      messageBanner.textContent = "Target already hit. Try another target!";
     }
 
     const targetRow = event.target.parentElement.dataset.row;
@@ -127,7 +135,7 @@ const addButtonFunctionality = () => {
     messageBanner.textContent = computerAttackResult;
 
     RenderToDom();
-    setTimeout(attackPlayer, 1200, messageBanner);
+    setTimeout(attackPlayer, 1200);
   });
 };
 
