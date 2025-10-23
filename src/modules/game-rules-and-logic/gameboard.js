@@ -138,7 +138,7 @@ export const Gameboard = () => {
       }
     },
     receiveAttack: function (row, col, attackerObj) {
-      const target = board[row][col];
+      const target = this.board[row][col];
 
       if (target === null) {
         board[row][col] = "missed";
