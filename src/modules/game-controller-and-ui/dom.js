@@ -22,11 +22,15 @@ COMPLETE:
 ✅ • Debug: Receiving an "undefined" on some shots to player board
 
 TO-DOs:
-• Also some boats are being sunk even though they have only been hit one time
-• Render name of player under board
+// Start here after break:
+• Also some boats are being sunk even though they have only been hit one time   
 • Accept input from user (name)
+• Render name of player under board
+• Gap may be too large between D and E rows - looks larger than the others
+• Create conditions so that the game ends once one player’s ships have all been sunk.
 • Dragging & dropping ships onto coordinates (this will work in tandem with placeShip)
   in GameController once the system is implemented
+• Add actual boat coordinates? e.g. A1, B9, etc. so banner can read "Sam's Dev Lab hit at A1"
 */
 
 const gameController = GameController();
@@ -109,8 +113,6 @@ const addButtonFunctionality = () => {
   const computerBoard = document.querySelector("[data-board='computer']");
 
   computerBoard.addEventListener("click", (event) => {
-    // This isn't working quite correctly. It works if you click on the exact target
-    // (colored circle) but it does not work if you click on the square surrounding the circle
     if (
       event.target.dataset.hitOrMiss === "missed" ||
       event.target.parentNode.dataset.hitOrMiss === "missed" ||
@@ -119,6 +121,7 @@ const addButtonFunctionality = () => {
     ) {
       messageBanner.textContent = "";
       messageBanner.textContent = "Target already hit. Try another target!";
+      return;
     }
 
     const targetRow = event.target.parentElement.dataset.row;
