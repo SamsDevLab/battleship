@@ -137,12 +137,12 @@ export const Gameboard = () => {
         return finalCoords;
       }
     },
-    receiveAttack: function (row, col) {
+    receiveAttack: function (row, col, attackerObj) {
       const target = board[row][col];
 
       if (target === null) {
         board[row][col] = "missed";
-        return "Missed shot!";
+        return `${attackerObj.name} missed!`;
       }
 
       if (typeof target === "object") {
@@ -155,8 +155,8 @@ export const Gameboard = () => {
         if (allBoatsSank === true) {
           return "All boats have been sunk!";
         } else if (isSunkResult === true) {
-          return `The ${target.name} boat has been sunk!`;
-        } else return `Direct hit to ${target.name} boat!`;
+          return `${attackerObj.name} has sunk the ${target.name} vessel!`;
+        } else return `Direct hit to ${target.name} vessel!`;
       }
     },
   };
