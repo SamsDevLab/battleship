@@ -55,8 +55,13 @@ export const GameController = () => {
 
       return { realPlayerObj, computerPlayerObj };
     },
-    attack: function (row, column, obj) {
-      const result = obj.gameMechanics.receiveAttack(row, column);
+    attack: function (row, column, opponentObj, attackerObj) {
+      const result = opponentObj.gameMechanics.receiveAttack(
+        row,
+        column,
+        attackerObj,
+      );
+
       return result;
     },
   };
