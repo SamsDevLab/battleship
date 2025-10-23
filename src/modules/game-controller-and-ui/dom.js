@@ -15,10 +15,19 @@ COMPLETE:
 ✅ • Once a button is clicked, the re-render doesn't duplicate (figure out why)
 ✅ • Once debugged, make a commit
 ✅ • Debug hits - they are no longer registering on the board
+✅ • Look into adding random shot from computer to player board
 
-TO-DOs:  
-✅ • Send message to user if they try to re-click on a "missed" target
-• Look into adding random shot from computer to player board
+Start here tomorrow (10/23)
+TO-DOs:
+• Use player name when updating who missed or hit shot in banner
+  • Tried doing this on 10/22 but it requires grabbing the opposite object name
+    • e.g., If realPlayer is attacking the computer board, can't use computer board name
+• Send message to user if they try to re-click on a "missed" target
+• Debug: Receiving an "undefined" on some shots to player board
+  • I THINK this one is happening because the computer is attempting to click on the same cell
+  twice and there is not a failsafe in place for the computer clicking on a "missed" cell.
+  Only a failsafe for the player clicking on a "missed" cell
+• Also some boats are being sunk even though they have only been hit one time
 • Render name of player under board
 • Accept input from user (name)
 • Dragging & dropping ships onto coordinates (this will work in tandem with placeShip)
@@ -27,12 +36,34 @@ TO-DOs:
 
 const gameController = GameController();
 const playerObjs = gameController.initGame();
+const messageBanner = document.querySelector("#banner");
+const playerDiv = document.querySelector("[data-board='player']");
+const computerDiv = document.querySelector("[data-board='computer']");
 
 const markPreviousAttackOnBoard = (attack, boardColumn) => {
   const markAttackSpan = document.createElement("span");
   markAttackSpan.classList.add(`${attack}-circle`);
   boardColumn.dataset.hitOrMiss = `${attack}`;
   boardColumn.append(markAttackSpan);
+};
+
+const attackPlayer = (messageBanner) => {
+  const playerBoard = playerObjs.realPlayerObj.gameMechanics.board;
+
+  const randomRow = Math.floor(Math.random(playerBoard.length) * 10);
+  const randomCol = Math.floor(Math.random(playerBoard[0].length) * 10);
+
+  const attackResult = gameController.attack(
+    randomRow,
+    randomCol,
+    playerObjs.realPlayerObj,
+    playerObjs.computerPlayerObj,
+  );
+
+  messageBanner.textContent = "";
+  messageBanner.textContent = attackResult;
+
+  RenderToDom();
 };
 
 export const RenderToDom = () => {
@@ -58,8 +89,8 @@ export const RenderToDom = () => {
     }
   };
 
-  const playerDiv = document.querySelector("[data-board='player']");
-  const computerDiv = document.querySelector("[data-board='computer']");
+  playerDiv.textContent = "";
+  computerDiv.textContent = "";
 
   addRowsAndColumns(playerObjs.realPlayerObj.gameMechanics.board, playerDiv);
   addRowsAndColumns(
@@ -68,9 +99,8 @@ export const RenderToDom = () => {
   );
 };
 
-const addButtonFunctionality = (obj) => {
+const addButtonFunctionality = () => {
   const computerBoard = document.querySelector("[data-board='computer']");
-  const messageBanner = document.querySelector("#banner");
 
   computerBoard.addEventListener("click", (event) => {
     if (
@@ -86,19 +116,20 @@ const addButtonFunctionality = (obj) => {
     const targetRow = event.target.parentElement.dataset.row;
     const targetColumn = event.target.dataset.column;
 
-    const result = gameController.attack(targetRow, targetColumn, obj);
-    messageBanner.innerText = "";
-    messageBanner.innerText = result;
+    const computerAttackResult = gameController.attack(
+      targetRow,
+      targetColumn,
+      playerObjs.computerPlayerObj,
+      playerObjs.realPlayerObj,
+    );
 
-    const boards = Array.from(document.querySelectorAll("[data-board]"));
-
-    boards.forEach((board) => {
-      board.innerHTML = "";
-    });
+    messageBanner.textContent = "";
+    messageBanner.textContent = computerAttackResult;
 
     RenderToDom();
+    setTimeout(attackPlayer, 1200, messageBanner);
   });
 };
 
 RenderToDom();
-addButtonFunctionality(playerObjs.computerPlayerObj);
+addButtonFunctionality();
