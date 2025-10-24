@@ -10,29 +10,6 @@ export const Gameboard = () => {
     }
   }
 
-  /*
-  Boats:
-  cB = carrierBoat | size = 5
-  bB = battleshipBoat | size = 4
-  dB = destroyerBoat | size = 3
-  sB = submarineBoat | size = 3
-  pb = patrolBoat | size = 2
-
-  [
-  0: [pBoat, pBoat, nulll, nulll, dBoat, dBoat, dBoat, nulll, nulll, nulll,]
-  1: [pBoat, nulll, nulll, nulll, dBoat, nulll, nulll, nulll, nulll, nulll,]
-  2: [pBoat, nulll, nulll, nulll, dBoat, nulll, nulll, nulll, nulll, nulll,]
-  3: [nulll, nulll, nulll, nulll, dBoat, cBoat, cBoat, cBoat, cBoat, cBoat,]
-  4: [nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
-  5: [nulll, nulll, nulll, nulll, bBoat, bBoat, bBoat, bBoat, nulll, cBoat,]
-  6: [sBoat, sBoat, sBoat, nulll, bBoat, nulll, nulll, nulll, nulll, cBoat,]
-  7: [sBoat, nulll, nulll, nulll, bBoat, nulll, nulll, nulll, nulll, cBoat,]
-  8: [sBoat, nulll, nulll, nulll, bBoat, nulll, nulll, nulll, nulll, cBoat,]
-  9: [sBoat, nulll, nulll, nulll, bBoat, nulll, nulll, nulll, nulll, cBoat,]
-  ]
-
-  */
-
   const checkForNegativeValue = (startRow, startCol) => {
     if (startRow < 0 || startCol < 0) {
       return true;
@@ -161,26 +138,3 @@ export const Gameboard = () => {
     },
   };
 };
-
-/*
-  Boats:
-  cB = carrierBoat | size = 5
-  bB = battleshipBoat | size = 4
-  dB = destroyerBoat | size = 3
-  sB = submarineBoat | size = 3
-  pb = patrolBoat | size = 2
-
-  [      0     1      2       3     4      5      6      7      8      9
-  0: [dBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
-  1: [dBoat, nulll, missd, nulll, nulll, nulll, nulll, nulll, pBoat, nulll,]
-  2: [dBoat, nulll, nulll, nulll, nulll, missd, nulll, nulll, pBoat, nulll,]
-  3: [nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
-  4: [nulll, nulll, nulll, sBoat, sBoat, sBoat, nulll, nulll, nulll, missd,]
-  5: [nulll, cBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
-  6: [nulll, cBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
-  7: [nulll, cBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
-  8: [nulll, cBoat, nulll, nulll, nulll, nulll, nulll, nulll, nulll, nulll,]
-  9: [nulll, cBoat, nulll, nulll, nulll, nulll, bBoat, bBoat, bBoat, bBoat,]
-  ]
-
-  */

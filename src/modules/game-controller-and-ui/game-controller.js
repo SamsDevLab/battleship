@@ -27,20 +27,15 @@ export const GameController = () => {
       This method will be refactored in the future as there will be a drag and drop system
       from the DOM that will pass the coordinates to initGame to properly place the boats
       */
-
       const realPlayerObj = Player().realPlayer("Sam's Dev Lab");
       const computerPlayerObj = Player().computerPlayer();
-
       const playerGameMechanics = realPlayerObj.gameMechanics;
-
       playerGameMechanics.placeShip(Ship("patrol", 2), 0, 4, "horizontal");
       playerGameMechanics.placeShip(Ship("submarine", 3), 0, 9, "vertical");
       playerGameMechanics.placeShip(Ship("destroyer", 3), 4, 2, "vertical");
       playerGameMechanics.placeShip(Ship("battleship", 4), 7, 5, "horizontal");
       playerGameMechanics.placeShip(Ship("carrier", 5), 4, 0, "vertical");
-
       const computerGameMechanics = computerPlayerObj.gameMechanics;
-
       computerGameMechanics.placeShip(Ship("patrol", 2), 0, 4, "horizontal");
       computerGameMechanics.placeShip(Ship("submarine", 3), 0, 9, "vertical");
       computerGameMechanics.placeShip(Ship("destroyer", 3), 4, 2, "vertical");
@@ -51,7 +46,6 @@ export const GameController = () => {
         "horizontal",
       );
       computerGameMechanics.placeShip(Ship("carrier", 5), 4, 0, "vertical");
-
       return { realPlayerObj, computerPlayerObj };
     },
     attack: function (row, column, opponentObj, attackerObj) {

@@ -21,9 +21,9 @@ COMPLETE:
 ✅ • Debug: Receiving an "undefined" on some shots to player board
 ✅ • Prevent computer from 'clicking' an already clicked target (see below)
 ✅ • Also some boats are being sunk even though they have only been hit one time   
+✅ • Create conditions so that the game ends once one a player’s ships have all been sunk.
 
 TO-DOs:
-• Create conditions so that the game ends once one a player’s ships have all been sunk.
 • Accept input from user (name)
 • Render name of player under board
 • Gap may be too large between D and E rows - looks larger than the others
