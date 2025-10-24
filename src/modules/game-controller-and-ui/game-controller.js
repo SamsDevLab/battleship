@@ -19,12 +19,6 @@ placeShip ( this will happen when Drag and Drop system is in place)
 
 */
 
-const patrolBoat = Ship("patrol", 2);
-const submarineBoat = Ship("submarine", 3);
-const destroyerBoat = Ship("destroyer", 3);
-const battleshipBoat = Ship("battleship", 4);
-const carrierBoat = Ship("carrier", 5);
-
 // Second Draft:
 export const GameController = () => {
   return {
@@ -39,19 +33,24 @@ export const GameController = () => {
 
       const playerGameMechanics = realPlayerObj.gameMechanics;
 
-      playerGameMechanics.placeShip(patrolBoat, 0, 4, "horizontal");
-      playerGameMechanics.placeShip(submarineBoat, 0, 9, "vertical");
-      playerGameMechanics.placeShip(destroyerBoat, 4, 2, "vertical");
-      playerGameMechanics.placeShip(battleshipBoat, 7, 5, "horizontal");
-      playerGameMechanics.placeShip(carrierBoat, 4, 0, "vertical");
+      playerGameMechanics.placeShip(Ship("patrol", 2), 0, 4, "horizontal");
+      playerGameMechanics.placeShip(Ship("submarine", 3), 0, 9, "vertical");
+      playerGameMechanics.placeShip(Ship("destroyer", 3), 4, 2, "vertical");
+      playerGameMechanics.placeShip(Ship("battleship", 4), 7, 5, "horizontal");
+      playerGameMechanics.placeShip(Ship("carrier", 5), 4, 0, "vertical");
 
       const computerGameMechanics = computerPlayerObj.gameMechanics;
 
-      computerGameMechanics.placeShip(patrolBoat, 0, 4, "horizontal");
-      computerGameMechanics.placeShip(submarineBoat, 0, 9, "vertical");
-      computerGameMechanics.placeShip(destroyerBoat, 4, 2, "vertical");
-      computerGameMechanics.placeShip(battleshipBoat, 7, 5, "horizontal");
-      computerGameMechanics.placeShip(carrierBoat, 4, 0, "vertical");
+      computerGameMechanics.placeShip(Ship("patrol", 2), 0, 4, "horizontal");
+      computerGameMechanics.placeShip(Ship("submarine", 3), 0, 9, "vertical");
+      computerGameMechanics.placeShip(Ship("destroyer", 3), 4, 2, "vertical");
+      computerGameMechanics.placeShip(
+        Ship("battleship", 4),
+        7,
+        5,
+        "horizontal",
+      );
+      computerGameMechanics.placeShip(Ship("carrier", 5), 4, 0, "vertical");
 
       return { realPlayerObj, computerPlayerObj };
     },
