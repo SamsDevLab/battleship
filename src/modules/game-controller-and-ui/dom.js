@@ -18,11 +18,10 @@ COMPLETE:
 ✅ • Look into adding random shot from computer to player board
 ✅ • Use player name when updating who missed or hit shot in banner
 ✅ • Send message to user if they try to re-click on a "missed" target
-✅ • Prevent computer from 'clicking' an already clicked target (see below)
 ✅ • Debug: Receiving an "undefined" on some shots to player board
 
 TO-DOs:
-// Start here after break:
+• Prevent computer from 'clicking' an already clicked target (see below)
 • Also some boats are being sunk even though they have only been hit one time   
 • Accept input from user (name)
 • Render name of player under board
@@ -50,18 +49,17 @@ const getRandomCoords = (playerBoard) => {
   const row = Math.floor(Math.random(playerBoard.length) * 10);
   const col = Math.floor(Math.random(playerBoard[0].length) * 10);
 
-  return { row, col };
+  if (playerBoard[row][col] === "hit" || playerBoard[row][col] === "missed") {
+    return getRandomCoords(playerBoard);
+  } else {
+    return { row, col };
+  }
 };
 
 const attackPlayer = () => {
   const playerBoard = playerObjs.realPlayerObj.gameMechanics.board;
 
   let random = getRandomCoords(playerBoard);
-
-  if (playerBoard[random.row][random.col] === "missed") {
-    random = getRandomCoords(playerBoard);
-    attackPlayer();
-  }
 
   const attackResult = gameController.attack(
     random.row,
