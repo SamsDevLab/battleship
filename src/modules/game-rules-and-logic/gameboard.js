@@ -141,13 +141,13 @@ export const Gameboard = () => {
       const target = this.board[row][col];
 
       if (target === null) {
-        board[row][col] = "missed";
+        this.board[row][col] = "missed";
         return `${attackerObj.name} missed!`;
       }
 
       if (typeof target === "object") {
         target.hit();
-        board[row][col] = "hit";
+        this.board[row][col] = "hit";
 
         const isSunkResult = target.isSunk();
         const allBoatsSank = checkAllBoats();
