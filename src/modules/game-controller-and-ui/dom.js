@@ -19,17 +19,19 @@ COMPLETE:
 ✅ • Use player name when updating who missed or hit shot in banner
 ✅ • Send message to user if they try to re-click on a "missed" target
 ✅ • Debug: Receiving an "undefined" on some shots to player board
+✅ • Prevent computer from 'clicking' an already clicked target (see below)
+✅ • Also some boats are being sunk even though they have only been hit one time   
 
 TO-DOs:
-• Prevent computer from 'clicking' an already clicked target (see below)
-• Also some boats are being sunk even though they have only been hit one time   
+• Create conditions so that the game ends once one a player’s ships have all been sunk.
 • Accept input from user (name)
 • Render name of player under board
 • Gap may be too large between D and E rows - looks larger than the others
-• Create conditions so that the game ends once one player’s ships have all been sunk.
 • Dragging & dropping ships onto coordinates (this will work in tandem with placeShip)
   in GameController once the system is implemented
 • Add actual boat coordinates? e.g. A1, B9, etc. so banner can read "Sam's Dev Lab hit at A1"
+• Refactor
+• Complete README
 */
 
 const gameController = GameController();
@@ -37,6 +39,19 @@ const playerObjs = gameController.initGame();
 const messageBanner = document.querySelector("#banner");
 const playerDiv = document.querySelector("[data-board='player']");
 const computerDiv = document.querySelector("[data-board='computer']");
+const winnerPopUp = document.querySelector("[data-modal]");
+const winnerHeader = document.querySelector("[data-winner-header]");
+const modalButton = document.querySelector("[data-modal-button]");
+
+const announceWinner = (winnerObj) => {
+  winnerPopUp.showModal();
+  winnerHeader.textContent = `${winnerObj.name} wins the game!`;
+};
+
+modalButton.addEventListener("click", () => {
+  console.log("You won, big dog!");
+  winnerPopUp.close();
+});
 
 const markPreviousAttackOnBoard = (attack, boardColumn) => {
   const markAttackSpan = document.createElement("span");
@@ -67,6 +82,9 @@ const attackPlayer = () => {
     playerObjs.realPlayerObj,
     playerObjs.computerPlayerObj,
   );
+
+  if (attackResult === "All boats have been sunk!")
+    announceWinner(playerObjs.computerPlayerObj);
 
   messageBanner.textContent = "";
   messageBanner.textContent = attackResult;
@@ -131,6 +149,9 @@ const addButtonFunctionality = () => {
       playerObjs.computerPlayerObj,
       playerObjs.realPlayerObj,
     );
+
+    if (computerAttackResult === "All boats have been sunk!")
+      announceWinner(playerObjs.realPlayerObj);
 
     messageBanner.textContent = "";
     messageBanner.textContent = computerAttackResult;
