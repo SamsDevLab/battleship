@@ -230,3 +230,32 @@ h3 {
 .hit-circle {
   background-color: #e63946;
 }
+
+#modal:open {
+  display: none;
+  top: 20%;
+  left: 34.5%;
+  height: 25%;
+  width: 30%;
+  border-radius: 0.5rem;
+  background-color: #2e4052;
+  border: 2px solid #8899a6;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* #modal::backdrop {
+  backdrop-filter: blur(5px);
+} */
+
+#modal-button {
+  padding: 0.75rem;
+  background-color: #3e5c76;
+  border: 0.5px solid #b5a67c;
+  border-radius: 0.2rem;
+  color: #95a5a6;
+  font-family: "MontserratMedium";
+}
