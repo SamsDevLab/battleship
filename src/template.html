@@ -7,6 +7,62 @@
     <title>Battleship!</title>
   </head>
   <body>
+    <dialog id="start-game-modal" data-modal="start-screen">
+      <h2>Let's Play Battleship!</h2>
+      <!-- <div id="boat-placement-container">
+        <div class="boat-container">
+          <img
+            src="./svgs/carrier.svg"
+            alt="carrier-boat"
+            class="boat-image carrier"
+          />
+          <h4>Carrier</h4>
+        </div>
+        <div class="boat-container">
+          <img
+            src="./svgs/battleship.svg"
+            alt="battleship-boat"
+            class="boat-image battleship"
+          />
+          <h4>Battleship</h4>
+        </div>
+        <div class="boat-container">
+          <img
+            src="./svgs/destroyer.svg"
+            alt="destroyer-boat"
+            class="boat-image destroyer"
+          />
+          <h4>Destroyer</h4>
+        </div>
+        <div class="boat-container">
+          <img
+            src="./svgs/submarine.svg"
+            alt="submarine-boat"
+            class="boat-image submarine"
+          />
+          <h4>Submarine</h4>
+        </div>
+        <div class="boat-container">
+          <img
+            src="./svgs/patrol-boat.svg"
+            alt="patrol-boat"
+            class="boat-image patrol"
+          />
+          <h4>Patrol</h4>
+        </div>
+      </div> -->
+      <div id="start-instructions-and-gameboard">
+        <!-- <h3>Drag and Drop to Place Your Boats</h3> -->
+        <div id="start-screen-gameboard" data-board="start-screen"></div>
+      </div>
+      <!-- <div id="username-and-button-container">
+        <div id="username">
+          <label for="username">Enter your name, Admiral!</label>
+          <input type="text" id="username" name="username" />
+        </div>
+        <button id="start-game-button">Start Battle!</button>
+      </div> -->
+    </dialog>
     <h1>Battleship!</h1>
     <div id="banner">Player Info Here</div>
     <div id="container">
@@ -67,7 +123,7 @@
         <div class="computer board" data-board="computer"></div>
       </div>
     </div>
-    <dialog id="modal" data-modal>
+    <dialog id="winner-modal" data-modal="winner-screen">
       <h2 data-winner-header></h2>
       <button id="modal-button" data-modal-button>Play Again</button>
     </dialog>
