@@ -319,6 +319,15 @@ DOM > Game Controller and pass in the values from the board that the ships repre
   gap: 0.5rem;
 }
 
+#username input {
+  padding-left: 1px;
+}
+
+#username:focus {
+  outline: 2px solid #e63946;
+  border-radius: 0.2rem;
+}
+
 #start-game-button {
   grid-row: 3/4;
   grid-column: 1/3;
