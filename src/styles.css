@@ -231,7 +231,107 @@ h3 {
   background-color: #e63946;
 }
 
-#modal:open {
+/*
+✅ • Grab SVGs for the ships - snagged from macrovector at freepik.com
+✅ • Get modal to stretch across entire screen to get more real estate (do this after lunch) 
+• Create the drag and drop system for your ships within the modal.
+• Use SVGs to represent the ships and drap and drop them to call placeShip from the
+DOM > Game Controller and pass in the values from the board that the ships represent
+*/
+
+#start-game-modal {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 0.5fr 1.5fr 0.75fr;
+  background-color: #0a192f;
+  font-family: "MontserratMedium";
+}
+
+#start-game-modal h2 {
+  font-family: "BlackOpsOne";
+  font-size: 4rem;
+  grid-column: 1/3;
+  margin-top: 1rem;
+}
+
+#boat-placement-container {
+  justify-self: end;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-right: 7rem;
+}
+
+.boat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: #00b8d9;
+}
+
+.boat-image {
+  height: 3.5rem;
+}
+
+.battleship {
+  width: 12rem;
+}
+
+.destroyer,
+.submarine {
+  width: 10rem;
+}
+
+.patrol {
+  width: 7.5rem;
+}
+
+/* #start-instructions-and-gameboard {
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  align-items: start;
+  height: 100%;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+} */
+
+#start-instructions-and-gameboard h3 {
+  font-size: 1.75rem;
+}
+
+#username-and-button-container {
+  grid-column: 1/3;
+  align-self: center;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: #00b8d9;
+}
+
+#username {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#start-game-button {
+  grid-row: 3/4;
+  grid-column: 1/3;
+  height: 3rem;
+  width: 10rem;
+  border-radius: 0.5rem;
+  justify-self: center;
+  align-self: center;
+  background-color: #e63946;
+  border: none;
+}
+
+#winner-modal:open {
   display: none;
   top: 20%;
   left: 34.5%;
@@ -246,10 +346,6 @@ h3 {
   justify-content: center;
   align-items: center;
 }
-
-/* #modal::backdrop {
-  backdrop-filter: blur(5px);
-} */
 
 #modal-button {
   padding: 0.75rem;
