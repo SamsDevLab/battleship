@@ -22,9 +22,23 @@ COMPLETE:
 ✅ • Prevent computer from 'clicking' an already clicked target (see below)
 ✅ • Also some boats are being sunk even though they have only been hit one time   
 ✅ • Create conditions so that the game ends once one a player’s ships have all been sunk.
+✅ • Create and style boat placement menu (svgs represent the boats)
+✅ • Work on consistent sizing for board propagation
 
 TO-DOs:
-• Accept input from user (name)
+Start in stylesheet
+• Put finishing touches on boat-placement-container
+• Ensure IDs, classes, etc are organized
+• Remove comments from here and HTML
+• Go through everything you've done and ensure it makes sense
+• Commit the changes
+• Start on drag and drop system
+
+• Drag and drop system:
+  • Start with just being able to click on boats
+  • Then work on actually moving them to the board
+• Create rotation system for boats (horizontal/vertical)
+• (halfway done - still have to pass data but input is styled) Accept input from user (name)
 • Render name of player under board
 • Gap may be too large between D and E rows - looks larger than the others
 • Dragging & dropping ships onto coordinates (this will work in tandem with placeShip)
@@ -39,18 +53,27 @@ const playerObjs = gameController.initGame();
 const messageBanner = document.querySelector("#banner");
 const playerDiv = document.querySelector("[data-board='player']");
 const computerDiv = document.querySelector("[data-board='computer']");
-const winnerPopUp = document.querySelector("[data-modal]");
+const startScreen = document.querySelector("[data-modal='start-screen']");
+const startScreenBoard = document.querySelector("[data-board='start-screen']");
+const winnerScreen = document.querySelector("[data-modal='winner-screen']");
 const winnerHeader = document.querySelector("[data-winner-header]");
 const modalButton = document.querySelector("[data-modal-button]");
 
+const openStartScreen = () => {
+  startScreen.showModal();
+  addRowsAndColumns(
+    playerObjs.realPlayerObj.gameMechanics.board,
+    startScreenBoard,
+  );
+};
+
 const announceWinner = (winnerObj) => {
-  winnerPopUp.showModal();
+  winnerScreen.showModal();
   winnerHeader.textContent = `${winnerObj.name} wins the game!`;
 };
 
 modalButton.addEventListener("click", () => {
-  console.log("You won, big dog!");
-  winnerPopUp.close();
+  winnerScreen.close();
 });
 
 const markPreviousAttackOnBoard = (attack, boardColumn) => {
@@ -92,29 +115,29 @@ const attackPlayer = () => {
   RenderToDom();
 };
 
-export const RenderToDom = () => {
-  const addRowsAndColumns = (board, div) => {
-    for (let i = 0; i < board.length; i++) {
-      const boardRow = document.createElement("div");
-      boardRow.classList.add("row");
-      boardRow.dataset.row = `${i}`;
-      div.append(boardRow);
+const addRowsAndColumns = (board, div) => {
+  for (let i = 0; i < board.length; i++) {
+    const boardRow = document.createElement("div");
+    boardRow.classList.add("row");
+    boardRow.dataset.row = `${i}`;
+    div.append(boardRow);
 
-      for (let j = 0; j < board.length; j++) {
-        const boardColumn = document.createElement("button");
-        boardColumn.classList.add("column");
-        boardColumn.dataset.column = `${j}`;
+    for (let j = 0; j < board.length; j++) {
+      const boardColumn = document.createElement("button");
+      boardColumn.classList.add("column");
+      boardColumn.dataset.column = `${j}`;
 
-        if (board[i][j] === "missed" || board[i][j] === "hit") {
-          markPreviousAttackOnBoard(board[i][j], boardColumn);
-        } else if (board[i][j] !== null) {
-          boardColumn.textContent = board[i][j].name;
-        }
-        boardRow.append(boardColumn);
+      if (board[i][j] === "missed" || board[i][j] === "hit") {
+        markPreviousAttackOnBoard(board[i][j], boardColumn);
+      } else if (board[i][j] !== null) {
+        boardColumn.textContent = board[i][j].name;
       }
+      boardRow.append(boardColumn);
     }
-  };
+  }
+};
 
+export const RenderToDom = () => {
   playerDiv.textContent = "";
   computerDiv.textContent = "";
 
@@ -161,5 +184,6 @@ const addButtonFunctionality = () => {
   });
 };
 
+openStartScreen();
 RenderToDom();
 addButtonFunctionality();
