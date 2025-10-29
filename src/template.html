@@ -9,50 +9,53 @@
   <body>
     <dialog id="start-game-modal" data-modal="start-screen">
       <h2>Let's Play Battleship!</h2>
-      <div id="boat-placement-container">
-        <div class="boat-container">
-          <img
-            src="./svgs/carrier.svg"
-            alt="carrier-boat"
-            class="boat-image carrier"
-          />
-          <h4>Carrier</h4>
+      <div id="start-modal-main">
+        <div id="boat-placement-container">
+          <div class="boat-container">
+            <img
+              src="./svgs/carrier.svg"
+              alt="carrier-boat"
+              class="boat-image"
+            />
+            <h4 class="boat-header">Carrier</h4>
+          </div>
+          <div class="boat-container">
+            <img
+              src="./svgs/battleship.svg"
+              alt="battleship-boat"
+              class="boat-image"
+            />
+            <h4 class="boat-header">Battleship</h4>
+          </div>
+          <div class="boat-container">
+            <img
+              src="./svgs/destroyer.svg"
+              alt="destroyer-boat"
+              class="boat-image"
+            />
+            <h4 class="boat-header">Destroyer</h4>
+          </div>
+          <div class="boat-container">
+            <img
+              src="./svgs/submarine.svg"
+              alt="submarine-boat"
+              class="boat-image submarine"
+            />
+            <h4 class="boat-header">Submarine</h4>
+          </div>
+          <div class="boat-container">
+            <img
+              src="./svgs/patrol-boat.svg"
+              alt="patrol-boat"
+              class="boat-image"
+            />
+            <h4 class="boat-header">Patrol</h4>
+          </div>
+          <div id="directions">
+            <h3>Press "D" to change direction</h3>
+            <h3>Drag and drop to place</h3>
+          </div>
         </div>
-        <div class="boat-container">
-          <img
-            src="./svgs/battleship.svg"
-            alt="battleship-boat"
-            class="boat-image battleship"
-          />
-          <h4>Battleship</h4>
-        </div>
-        <div class="boat-container">
-          <img
-            src="./svgs/destroyer.svg"
-            alt="destroyer-boat"
-            class="boat-image destroyer"
-          />
-          <h4>Destroyer</h4>
-        </div>
-        <div class="boat-container">
-          <img
-            src="./svgs/submarine.svg"
-            alt="submarine-boat"
-            class="boat-image submarine"
-          />
-          <h4>Submarine</h4>
-        </div>
-        <div class="boat-container">
-          <img
-            src="./svgs/patrol-boat.svg"
-            alt="patrol-boat"
-            class="boat-image patrol"
-          />
-          <h4>Patrol</h4>
-        </div>
-      </div>
-      <div id="start-instructions-and-gameboard">
-        <h3>Drag and Drop to Place Your Boats</h3>
         <div id="start-screen-gameboard" data-board="start-screen"></div>
       </div>
       <div id="username-and-button-container">
