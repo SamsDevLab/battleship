@@ -254,6 +254,7 @@ h3 {
   display: grid;
   grid-template-columns: 0.5fr 1fr;
   width: 60%;
+
   gap: 2rem;
 }
 
@@ -282,9 +283,26 @@ h3 {
   width: 12rem;
 }
 
-.submarine {
-  width: 7rem;
+.boat-image:hover {
+  background-color: #3e5c76;
+  border: 1px solid #3e5c76;
+  border-radius: 0.5rem;
+  cursor: pointer;
 }
+
+.grab {
+  cursor: grab;
+  cursor: -webkit-grab;
+}
+
+.grabbing {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+}
+
+/* .submarine {
+  width: 7rem;
+} */
 
 #directions {
   display: flex;
@@ -299,6 +317,10 @@ h3 {
   grid-template-columns: repeat(10, 1fr);
   outline: 4px solid #95a5a6;
   border-radius: 0.2rem;
+}
+
+.highlight {
+  background-color: #95a5a6;
 }
 
 #username-and-button-container {
