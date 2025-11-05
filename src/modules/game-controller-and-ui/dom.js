@@ -64,26 +64,43 @@ Boat-click system
       of the boat
 */
 
-/* 
-Events for boat images:
-• Mouseover - cursor becomes a 'grab' hand
-• Click - boat is moved to 'currentBoat' obj
-*/
 boatImages.forEach((image) => {
   image.addEventListener("click", (event) => {
     currentBoat.name = event.target.dataset.boatImage;
-    currentBoat.length = event.target.dataset.boatLength;
+    currentBoat.length = +event.target.dataset.boatLength;
     currentBoat.direction = "horizontal";
 
     console.log(currentBoat);
   });
 });
 
-/*
-Events for Start Screenboard:
-• Mouseover - length of current boat object is highlighted on board
-• Click - boat is placed (placeShip is called)
-*/
+// Highlight columns to show boat location
+
+const highlightedColumns = () => {
+  const rows = Array.from(startScreenBoard.children);
+  const targetRow = rows[currentBoat.row];
+  const columns = Array.from(targetRow.children);
+  let targetColumn = columns[currentBoat.column];
+
+  for (let i = 0; i <= currentBoat.length; i++) {
+    targetColumn.classList.toggle("highlight");
+    targetColumn = columns[currentBoat.column + i];
+  }
+};
+
+startScreenBoard.addEventListener("mouseover", (event) => {
+  currentBoat.row = +event.target.parentElement.dataset.row;
+  currentBoat.column = +event.target.dataset.column;
+
+  highlightedColumns();
+});
+
+startScreenBoard.addEventListener("mouseout", () => {
+  highlightedColumns();
+  currentBoat.row = null;
+  currentBoat.column = null;
+});
+
 // *********************** //
 
 const openStartScreen = () => {
