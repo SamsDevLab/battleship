@@ -26,19 +26,7 @@ COMPLETE:
 ✅ • Work on consistent sizing for board propagation
 
 TO-DOs:
-Start in stylesheet
-• Put finishing touches on boat-placement-container
-• Ensure IDs, classes, etc are organized
-• Remove comments from here and HTML
-• Go through everything you've done and ensure it makes sense
-• Commit the changes
-• Start on drag and drop system
-
-• Drag and drop system:
-  • Start with just being able to click on boats
-  • Then work on actually moving them to the board
-• Create rotation system for boats (horizontal/vertical)
-• (halfway done - still have to pass data but input is styled) Accept input from user (name)
+• Drop ships on board
 • Render name of player under board
 • Gap may be too large between D and E rows - looks larger than the others
 • Dragging & dropping ships onto coordinates (this will work in tandem with placeShip)
@@ -50,6 +38,7 @@ Start in stylesheet
 
 const gameController = GameController();
 const playerObjs = gameController.initGame();
+const boatImages = Array.from(document.querySelectorAll("[data-boat-image]"));
 const messageBanner = document.querySelector("#banner");
 const playerDiv = document.querySelector("[data-board='player']");
 const computerDiv = document.querySelector("[data-board='computer']");
@@ -58,6 +47,44 @@ const startScreenBoard = document.querySelector("[data-board='start-screen']");
 const winnerScreen = document.querySelector("[data-modal='winner-screen']");
 const winnerHeader = document.querySelector("[data-winner-header]");
 const modalButton = document.querySelector("[data-modal-button]");
+
+let currentBoat = {};
+
+/* 
+Boat-click system
+  • Click a boat and the length of the boat will appear in highlighted tiles on the
+  start-screenboard
+  • Move mouse around the board to place boat
+  • Click a button to change the boat's direction from horizontal to vertical
+   • Boat will always begin horizontally
+  • Clicking a boat in the boat menu will place it in "currentBoat"
+  • Current boat will then be represented on the start-screenboard via colored tiles
+  • Once a boat has been placed, it cannot be re-clicked.
+    • Maybe indicate this to user by darkening the image and removing the event listener 
+      of the boat
+*/
+
+/* 
+Events for boat images:
+• Mouseover - cursor becomes a 'grab' hand
+• Click - boat is moved to 'currentBoat' obj
+*/
+boatImages.forEach((image) => {
+  image.addEventListener("click", (event) => {
+    currentBoat.name = event.target.dataset.boatImage;
+    currentBoat.length = event.target.dataset.boatLength;
+    currentBoat.direction = "horizontal";
+
+    console.log(currentBoat);
+  });
+});
+
+/*
+Events for Start Screenboard:
+• Mouseover - length of current boat object is highlighted on board
+• Click - boat is placed (placeShip is called)
+*/
+// *********************** //
 
 const openStartScreen = () => {
   startScreen.showModal();
