@@ -62,8 +62,10 @@ boatImages.forEach((image) => {
 
 axisButton.addEventListener("click", () => {
   if (currentBoat.direction === "horizontal") {
+    axisButton.textContent = "Vertical Axis";
     currentBoat.direction = "vertical";
   } else if (currentBoat.direction === "vertical") {
+    axisButton.textContent = "Horizontal Axis";
     currentBoat.direction = "horizontal";
   }
 });
