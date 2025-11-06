@@ -44,6 +44,7 @@ const playerDiv = document.querySelector("[data-board='player']");
 const computerDiv = document.querySelector("[data-board='computer']");
 const startScreen = document.querySelector("[data-modal='start-screen']");
 const startScreenBoard = document.querySelector("[data-board='start-screen']");
+const axisButton = document.querySelector("[data-button='axis']");
 const winnerScreen = document.querySelector("[data-modal='winner-screen']");
 const winnerHeader = document.querySelector("[data-winner-header]");
 const modalButton = document.querySelector("[data-modal-button]");
@@ -59,15 +60,12 @@ boatImages.forEach((image) => {
   });
 });
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "d" && currentBoat.direction === "horizontal") {
-    console.log(currentBoat);
+axisButton.addEventListener("click", () => {
+  if (currentBoat.direction === "horizontal") {
     currentBoat.direction = "vertical";
-    highlightedColumns();
-  } else if (event.key === "d" && currentBoat.direction === "vertical") {
+  } else if (currentBoat.direction === "vertical") {
     currentBoat.direction = "horizontal";
-    highlightedColumns();
-  } else console.log("Please use 'D' key to change direction");
+  }
 });
 
 const highlightedColumns = () => {
