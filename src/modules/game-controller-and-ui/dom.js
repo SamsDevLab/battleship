@@ -49,49 +49,50 @@ const winnerHeader = document.querySelector("[data-winner-header]");
 const modalButton = document.querySelector("[data-modal-button]");
 
 let currentBoat = {};
-
-/* 
-Boat-click system
-  • Click a boat and the length of the boat will appear in highlighted tiles on the
-  start-screenboard
-  • Move mouse around the board to place boat
-  • Click a button to change the boat's direction from horizontal to vertical
-   • Boat will always begin horizontally
-  • Clicking a boat in the boat menu will place it in "currentBoat"
-  • Current boat will then be represented on the start-screenboard via colored tiles
-  • Once a boat has been placed, it cannot be re-clicked.
-    • Maybe indicate this to user by darkening the image and removing the event listener 
-      of the boat
-*/
+const rows = startScreenBoard.children;
 
 boatImages.forEach((image) => {
   image.addEventListener("click", (event) => {
     currentBoat.name = event.target.dataset.boatImage;
     currentBoat.length = +event.target.dataset.boatLength;
     currentBoat.direction = "horizontal";
-
-    console.log(currentBoat);
   });
 });
 
-// Highlight columns to show boat location
+document.addEventListener("keydown", (event) => {
+  if (event.key === "d" && currentBoat.direction === "horizontal") {
+    console.log(currentBoat);
+    currentBoat.direction = "vertical";
+    highlightedColumns();
+  } else if (event.key === "d" && currentBoat.direction === "vertical") {
+    currentBoat.direction = "horizontal";
+    highlightedColumns();
+  } else console.log("Please use 'D' key to change direction");
+});
 
 const highlightedColumns = () => {
-  const rows = Array.from(startScreenBoard.children);
-  const targetRow = rows[currentBoat.row];
-  const columns = Array.from(targetRow.children);
+  let targetRow = rows[currentBoat.row];
+  let columns = targetRow.children;
   let targetColumn = columns[currentBoat.column];
 
-  for (let i = 0; i <= currentBoat.length; i++) {
-    targetColumn.classList.toggle("highlight");
-    targetColumn = columns[currentBoat.column + i];
+  if (currentBoat.direction === "horizontal") {
+    for (let i = 0; i < currentBoat.length; i++) {
+      targetColumn = columns[currentBoat.column + i];
+      targetColumn.classList.toggle("highlight");
+    }
+  } else if (currentBoat.direction === "vertical") {
+    for (let i = 0; i < currentBoat.length; i++) {
+      targetRow = rows[currentBoat.row + i];
+      columns = targetRow.children;
+      targetColumn = columns[currentBoat.column];
+      targetColumn.classList.toggle("highlight");
+    }
   }
 };
 
 startScreenBoard.addEventListener("mouseover", (event) => {
   currentBoat.row = +event.target.parentElement.dataset.row;
   currentBoat.column = +event.target.dataset.column;
-
   highlightedColumns();
 });
 
