@@ -47,7 +47,9 @@ TO-DOs:
 
 const gameController = GameController();
 const playerObjs = gameController.initGame();
-const boatImages = Array.from(document.querySelectorAll("[data-boat-image]"));
+const boatPlacementContainer = document.querySelector(
+  "[data-container='boat-placement']",
+);
 const boatContainersArr = Array.from(
   document.querySelectorAll("[data-boat-container]"),
 );
@@ -56,36 +58,51 @@ const playerDiv = document.querySelector("[data-board='player']");
 const computerDiv = document.querySelector("[data-board='computer']");
 const startScreen = document.querySelector("[data-modal='start-screen']");
 const startScreenBoard = document.querySelector("[data-board='start-screen']");
-const axisButton = document.querySelector("[data-button='axis']");
 const winnerScreen = document.querySelector("[data-modal='winner-screen']");
 const winnerHeader = document.querySelector("[data-winner-header]");
 const modalButton = document.querySelector("[data-modal-button]");
 
-let currentBoat = {};
+let currentBoat = { direction: "horizontal" };
 const rows = startScreenBoard.children;
 
-boatContainersArr.forEach((container) => {
-  container.addEventListener("click", (event) => {
-    const currentTarget = event.currentTarget;
-    const firstChild = currentTarget.firstElementChild;
+// Boat Placement Container
+const selectBoat = (boatElement) => {
+  boatElement.classList.remove("hover-effect");
+  boatElement.classList.add("selected");
 
-    currentBoat.name = firstChild.dataset.boatImage;
-    currentBoat.length = +firstChild.dataset.boatLength;
-    currentBoat.direction = "horizontal";
-  });
-});
+  currentBoat.name = boatElement.dataset.boatName;
+  currentBoat.length = +boatElement.dataset.boatLength;
+};
 
-axisButton.addEventListener("click", () => {
+const toggleAxisButton = (button) => {
   if (currentBoat.direction === "horizontal") {
-    axisButton.textContent = "Vertical Axis";
+    button.textContent = "Vertical Axis";
     currentBoat.direction = "vertical";
   } else if (currentBoat.direction === "vertical") {
-    axisButton.textContent = "Horizontal Axis";
+    button.textContent = "Horizontal Axis";
     currentBoat.direction = "horizontal";
   }
-});
+};
 
-const highlightedColumns = () => {
+const handleBoatContainerClick = (event) => {
+  const closestContainer = event.target.closest("[data-container]");
+
+  if (closestContainer.dataset.container === "boat") {
+    selectBoat(closestContainer);
+  } else if (closestContainer.dataset.container === "axis-button") {
+    const axisButton = closestContainer.querySelector("[data-button]");
+    toggleAxisButton(axisButton);
+  }
+};
+
+boatPlacementContainer.addEventListener("click", (event) =>
+  handleBoatContainerClick(event),
+);
+
+/******************************** */
+
+// Start Screen Gameboard
+const highlightedColumns = (event) => {
   let targetRow = rows[currentBoat.row];
   let columns = targetRow.children;
   let targetColumn = columns[currentBoat.column];
@@ -108,11 +125,11 @@ const highlightedColumns = () => {
 startScreenBoard.addEventListener("mouseover", (event) => {
   currentBoat.row = +event.target.parentElement.dataset.row;
   currentBoat.column = +event.target.dataset.column;
-  highlightedColumns();
+  highlightedColumns(event);
 });
 
-startScreenBoard.addEventListener("mouseout", () => {
-  highlightedColumns();
+startScreenBoard.addEventListener("mouseout", (event) => {
+  highlightedColumns(event);
   currentBoat.row = null;
   currentBoat.column = null;
 });
@@ -121,46 +138,42 @@ startScreenBoard.addEventListener("click", (event) => {
   const realPlayer = playerObjs.realPlayerObj;
 
   /*
-  Start here tomorrow (11/7)
   This will need to:
-  • Darken the image to indicate to user that it is no longer clickable
+  ✅ • Remove 'selected' class
+  ✅ • Add 'disabled' class
+    ✅ • Darken the image to indicate to user that it is no longer clickable 
+    ✅ • Disable pointer events from the boat-container
   • Highlight the proper columns
     • Debug issue here - mouseover event is still active on screenboard and is causing
       the highlight to fade in and out even after placement
-  • Remove the click event listener from the particular image
+ 
   • place the ship in the board array (currently working)
   • Prevent user from being able to re-place the ship somewhere else (currentBoatObj still
   • holds the boat) 
   */
 
-  // realPlayer.gameMechanics.placeShip(
-  //   Ship(currentBoat.name, currentBoat.length),
-  //   currentBoat.row,
-  //   currentBoat.column,
-  //   currentBoat.direction,
-  // );
+  realPlayer.gameMechanics.placeShip(
+    Ship(currentBoat.name, currentBoat.length),
+    currentBoat.row,
+    currentBoat.column,
+    currentBoat.direction,
+  );
 
-  // highlightedColumns();
+  highlightedColumns(event);
 
-  // const currentBoatImage = boatImages.find(
-  //   (image) => image.dataset.boatImage === `${currentBoat.name}`,
-  // );
+  const currentBoatContainer = boatContainersArr.find((container) =>
+    container.classList.contains("selected"),
+  );
 
-  // The 'no' sign is working but the :hover pseudoclass for all the images
-  // supercedes this class. Therefore, the pointer is still in place on the
-  // image itself.
+  currentBoatContainer.classList.remove("selected");
+  currentBoatContainer.classList.add("disabled");
+
   // const currentBoatContainer = currentBoatImage.parentElement;
   // currentBoatContainer.classList.add("disable-boat-container");
 
-  // console.log(typeof currentBoatImage);
-
-  // boatImages.forEach((image) => {
-  //   console.log(typeof image);
-  // });
-
   // console.log(realPlayer.gameMechanics.board);
 
-  // console.log(currentBoat);
+  console.log(currentBoat);
 });
 
 const openStartScreen = () => {
@@ -170,6 +183,10 @@ const openStartScreen = () => {
     startScreenBoard,
   );
 };
+
+/******************************* */
+/* Start Screen From Here Up ^ */
+/****************************** */
 
 const announceWinner = (winnerObj) => {
   winnerScreen.showModal();
