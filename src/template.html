@@ -13,8 +13,9 @@
         <div id="boat-placement-container" data-container="boat-placement">
           <div
             class="boat-container hover-effect"
-            data-boat-container="carrier"
+            data-container="boat"
             data-boat-length="5"
+            data-boat-name="carrier"
           >
             <img
               src="./svgs/carrier.svg"
@@ -25,8 +26,9 @@
           </div>
           <div
             class="boat-container hover-effect"
-            data-boat-container="battleship"
+            data-container="boat"
             data-boat-length="4"
+            data-boat-name="battleship"
           >
             <img
               src="./svgs/battleship.svg"
@@ -37,8 +39,9 @@
           </div>
           <div
             class="boat-container hover-effect"
-            data-boat-container="destroyer"
+            data-container="boat"
             data-boat-length="3"
+            data-boat-name="destroyer"
           >
             <img
               src="./svgs/destroyer.svg"
@@ -49,8 +52,9 @@
           </div>
           <div
             class="boat-container hover-effect"
-            data-boat-container="submarine"
+            data-container="boat"
             data-boat-length="3"
+            data-boat-name="submarine"
           >
             <img
               src="./svgs/submarine.svg"
@@ -61,8 +65,9 @@
           </div>
           <div
             class="boat-container hover-effect"
-            data-boat-container="patrol"
+            data-container="boat"
             data-boat-length="2"
+            data-boat-name="patrol"
           >
             <img
               src="./svgs/patrol-boat.svg"
@@ -71,12 +76,10 @@
             />
             <h4 class="boat-header">Patrol</h4>
           </div>
-          <!-- <div id="directions"> -->
           <h3>Click Boat to Place</h3>
-          <div data-button="axis">
+          <div data-container="axis-button">
             <button id="axis-button" data-button="axis">Horizontal Axis</button>
           </div>
-          <!-- </div> -->
         </div>
         <div id="start-screen-gameboard" data-board="start-screen"></div>
       </div>
