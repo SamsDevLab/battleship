@@ -1,4 +1,5 @@
 // import { InitGame } from "../game-controller-and-ui/index.js";
+import { Ship } from "../game-rules-and-logic/ship.js";
 import { GameController } from "./game-controller.js";
 
 /*
@@ -24,9 +25,17 @@ COMPLETE:
 ✅ • Create conditions so that the game ends once one a player’s ships have all been sunk.
 ✅ • Create and style boat placement menu (svgs represent the boats)
 ✅ • Work on consistent sizing for board propagation
+✅ • Respace everything on the startScreenBoard (it's overflowing the screen now)
+✅ • Maybe respace the boats - I still don't care for the look
 
 TO-DOs:
-• Drop ships on board
+• Dropping ships on board (boat placement)
+  • Once a boat is placed and shows up on the boat grid, the event listener
+    should be removed from the boat's image and image should be darkened indicating that
+    the boat has already been placed.
+    • May be able to create this effect with opacity
+• Should probably place an "Enter" keydown listener on the Start Battle button so that
+  the user can just hit "Enter" after entering their name
 • Render name of player under board
 • Gap may be too large between D and E rows - looks larger than the others
 • Dragging & dropping ships onto coordinates (this will work in tandem with placeShip)
@@ -39,6 +48,9 @@ TO-DOs:
 const gameController = GameController();
 const playerObjs = gameController.initGame();
 const boatImages = Array.from(document.querySelectorAll("[data-boat-image]"));
+const boatContainersArr = Array.from(
+  document.querySelectorAll("[data-boat-container]"),
+);
 const messageBanner = document.querySelector("#banner");
 const playerDiv = document.querySelector("[data-board='player']");
 const computerDiv = document.querySelector("[data-board='computer']");
@@ -52,10 +64,13 @@ const modalButton = document.querySelector("[data-modal-button]");
 let currentBoat = {};
 const rows = startScreenBoard.children;
 
-boatImages.forEach((image) => {
-  image.addEventListener("click", (event) => {
-    currentBoat.name = event.target.dataset.boatImage;
-    currentBoat.length = +event.target.dataset.boatLength;
+boatContainersArr.forEach((container) => {
+  container.addEventListener("click", (event) => {
+    const currentTarget = event.currentTarget;
+    const firstChild = currentTarget.firstElementChild;
+
+    currentBoat.name = firstChild.dataset.boatImage;
+    currentBoat.length = +firstChild.dataset.boatLength;
     currentBoat.direction = "horizontal";
   });
 });
@@ -102,7 +117,51 @@ startScreenBoard.addEventListener("mouseout", () => {
   currentBoat.column = null;
 });
 
-// *********************** //
+startScreenBoard.addEventListener("click", (event) => {
+  const realPlayer = playerObjs.realPlayerObj;
+
+  /*
+  Start here tomorrow (11/7)
+  This will need to:
+  • Darken the image to indicate to user that it is no longer clickable
+  • Highlight the proper columns
+    • Debug issue here - mouseover event is still active on screenboard and is causing
+      the highlight to fade in and out even after placement
+  • Remove the click event listener from the particular image
+  • place the ship in the board array (currently working)
+  • Prevent user from being able to re-place the ship somewhere else (currentBoatObj still
+  • holds the boat) 
+  */
+
+  // realPlayer.gameMechanics.placeShip(
+  //   Ship(currentBoat.name, currentBoat.length),
+  //   currentBoat.row,
+  //   currentBoat.column,
+  //   currentBoat.direction,
+  // );
+
+  // highlightedColumns();
+
+  // const currentBoatImage = boatImages.find(
+  //   (image) => image.dataset.boatImage === `${currentBoat.name}`,
+  // );
+
+  // The 'no' sign is working but the :hover pseudoclass for all the images
+  // supercedes this class. Therefore, the pointer is still in place on the
+  // image itself.
+  // const currentBoatContainer = currentBoatImage.parentElement;
+  // currentBoatContainer.classList.add("disable-boat-container");
+
+  // console.log(typeof currentBoatImage);
+
+  // boatImages.forEach((image) => {
+  //   console.log(typeof image);
+  // });
+
+  // console.log(realPlayer.gameMechanics.board);
+
+  // console.log(currentBoat);
+});
 
 const openStartScreen = () => {
   startScreen.showModal();
