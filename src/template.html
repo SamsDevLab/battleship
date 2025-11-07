@@ -10,78 +10,73 @@
     <dialog id="start-game-modal" data-modal="start-screen">
       <h2>Let's Play Battleship!</h2>
       <div id="start-modal-main">
-        <div id="boat-placement-container">
+        <div id="boat-placement-container" data-container="boat-placement">
           <div
             class="boat-container hover-effect"
             data-boat-container="carrier"
+            data-boat-length="5"
           >
             <img
               src="./svgs/carrier.svg"
               alt="carrier-boat"
               class="boat-image carrier"
-              draggable="true"
-              data-boat-image="carrier"
-              data-boat-length="5"
             />
             <h4 class="boat-header">Carrier</h4>
           </div>
           <div
             class="boat-container hover-effect"
             data-boat-container="battleship"
+            data-boat-length="4"
           >
             <img
               src="./svgs/battleship.svg"
               alt="battleship-boat"
               class="boat-image"
-              draggable="true"
-              data-boat-image="battleship"
-              data-boat-length="4"
             />
             <h4 class="boat-header">Battleship</h4>
           </div>
           <div
             class="boat-container hover-effect"
             data-boat-container="destroyer"
+            data-boat-length="3"
           >
             <img
               src="./svgs/destroyer.svg"
               alt="destroyer-boat"
               class="boat-image"
-              draggable="true"
-              data-boat-image="destroyer"
-              data-boat-length="3"
             />
             <h4 class="boat-header">Destroyer</h4>
           </div>
           <div
             class="boat-container hover-effect"
             data-boat-container="submarine"
+            data-boat-length="3"
           >
             <img
               src="./svgs/submarine.svg"
               alt="submarine-boat"
               class="boat-image submarine"
-              draggable="true"
-              data-boat-image="submarine"
-              data-boat-length="3"
             />
             <h4 class="boat-header">Submarine</h4>
           </div>
-          <div class="boat-container hover-effect" data-boat-container="patrol">
+          <div
+            class="boat-container hover-effect"
+            data-boat-container="patrol"
+            data-boat-length="2"
+          >
             <img
               src="./svgs/patrol-boat.svg"
               alt="patrol-boat"
               class="boat-image"
-              draggable="true"
-              data-boat-image="patrol"
-              data-boat-length="2"
             />
             <h4 class="boat-header">Patrol</h4>
           </div>
-          <div id="directions">
-            <h3>Click Boat to Place</h3>
+          <!-- <div id="directions"> -->
+          <h3>Click Boat to Place</h3>
+          <div data-button="axis">
             <button id="axis-button" data-button="axis">Horizontal Axis</button>
           </div>
+          <!-- </div> -->
         </div>
         <div id="start-screen-gameboard" data-board="start-screen"></div>
       </div>
