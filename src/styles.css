@@ -287,12 +287,34 @@ h3 {
   cursor: pointer;
 }
 
-#directions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.25rem;
+.selected {
+  background-color: #3e5c76;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.remove-pointer {
+  pointer-events: none;
+}
+
+#start-game-button,
+#axis-button {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #e63946;
+  border: none;
+}
+
+#start-game-button:hover,
+#axis-button:hover {
+  background-color: #95a5a6;
+  cursor: pointer;
 }
 
 #start-screen-gameboard {
@@ -305,11 +327,6 @@ h3 {
 
 .highlight {
   background-color: #95a5a6;
-}
-
-.disable-boat-container {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 #username-and-button-container {
@@ -336,20 +353,6 @@ h3 {
 #username:focus {
   outline: 2px solid #e63946;
   border-radius: 0.2rem;
-}
-
-#start-game-button,
-#axis-button {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: #e63946;
-  border: none;
-}
-
-#start-game-button:hover,
-#axis-button:hover {
-  background-color: #95a5a6;
-  cursor: pointer;
 }
 
 /* Winner Dialog */
