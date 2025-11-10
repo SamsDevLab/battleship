@@ -51,7 +51,7 @@ const boatPlacementContainer = document.querySelector(
   "[data-container='boat-placement']",
 );
 const boatContainersArr = Array.from(
-  document.querySelectorAll("[data-boat-container]"),
+  document.querySelectorAll("[data-container='boat']"),
 );
 const messageBanner = document.querySelector("#banner");
 const playerDiv = document.querySelector("[data-board='player']");
@@ -101,16 +101,17 @@ boatPlacementContainer.addEventListener("click", (event) =>
 
 /******************************** */
 
-// Start Screen Gameboard
-const highlightedColumns = (event) => {
+const highlightedColumns = () => {
   let targetRow = rows[currentBoat.row];
   let columns = targetRow.children;
   let targetColumn = columns[currentBoat.column];
+  const finalColumns = [];
 
   if (currentBoat.direction === "horizontal") {
     for (let i = 0; i < currentBoat.length; i++) {
       targetColumn = columns[currentBoat.column + i];
       targetColumn.classList.toggle("highlight");
+      finalColumns.push(targetColumn);
     }
   } else if (currentBoat.direction === "vertical") {
     for (let i = 0; i < currentBoat.length; i++) {
@@ -118,38 +119,42 @@ const highlightedColumns = (event) => {
       columns = targetRow.children;
       targetColumn = columns[currentBoat.column];
       targetColumn.classList.toggle("highlight");
+      finalColumns.push(targetColumn);
     }
   }
+
+  return finalColumns;
 };
 
+// Before Placement - Columns Light Up as User Hovers
 startScreenBoard.addEventListener("mouseover", (event) => {
   currentBoat.row = +event.target.parentElement.dataset.row;
   currentBoat.column = +event.target.dataset.column;
-  highlightedColumns(event);
+  highlightedColumns();
 });
 
-startScreenBoard.addEventListener("mouseout", (event) => {
-  highlightedColumns(event);
+startScreenBoard.addEventListener("mouseout", () => {
+  highlightedColumns();
   currentBoat.row = null;
   currentBoat.column = null;
 });
 
-startScreenBoard.addEventListener("click", (event) => {
+startScreenBoard.addEventListener("click", () => {
   const realPlayer = playerObjs.realPlayerObj;
 
   /*
   This will need to:
-  ✅ • Remove 'selected' class
-  ✅ • Add 'disabled' class
+  ✅ • Remove 'selected' class from boat in boat container
+  ✅ • Add 'disabled' class to boat in boat container
     ✅ • Darken the image to indicate to user that it is no longer clickable 
     ✅ • Disable pointer events from the boat-container
-  • Highlight the proper columns
+  ✅ • Highlight the proper columns
     • Debug issue here - mouseover event is still active on screenboard and is causing
       the highlight to fade in and out even after placement
  
-  • place the ship in the board array (currently working)
-  • Prevent user from being able to re-place the ship somewhere else (currentBoatObj still
-  • holds the boat) 
+  ✅ • place the ship in the board array (currently working)
+  • Prevent user from being able to re-place the ship somewhere else 
+      (currentBoatObj still holds the boat) 
   */
 
   realPlayer.gameMechanics.placeShip(
@@ -159,21 +164,18 @@ startScreenBoard.addEventListener("click", (event) => {
     currentBoat.direction,
   );
 
-  highlightedColumns(event);
+  const finalColumns = highlightedColumns();
+  finalColumns.forEach((column) => column.classList.add("remove-pointer"));
 
   const currentBoatContainer = boatContainersArr.find((container) =>
     container.classList.contains("selected"),
   );
 
+  // Darken the boat's image
   currentBoatContainer.classList.remove("selected");
   currentBoatContainer.classList.add("disabled");
 
-  // const currentBoatContainer = currentBoatImage.parentElement;
-  // currentBoatContainer.classList.add("disable-boat-container");
-
   // console.log(realPlayer.gameMechanics.board);
-
-  console.log(currentBoat);
 });
 
 const openStartScreen = () => {
