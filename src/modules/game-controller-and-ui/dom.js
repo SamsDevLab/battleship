@@ -190,41 +190,207 @@ the event type
 
 /******************* */
 
-// Second Draft (Working Draft):
+// Second Draft (Edge Cases Debugged):
+// const handleHoverAddHighlight = () => {
+//   let targetRow = rows[currentBoat.row];
+//   let columns = targetRow.children;
+//   let targetColumn = columns[currentBoat.column];
+//   const finalColumns = [];
 
-const handleHoverAddHighlight = () => {
+//   if (currentBoat.direction === "horizontal") {
+//     for (let i = 0; i < currentBoat.length; i++) {
+//       targetColumn = columns[currentBoat.column + i];
+//       if (targetColumn === undefined) {
+//         return;
+//       }
+//       finalColumns.push(targetColumn);
+//     }
+//   } else if (currentBoat.direction === "vertical") {
+//     for (let i = 0; i < currentBoat.length; i++) {
+//       targetRow = rows[currentBoat.row + i];
+//       if (targetRow === undefined) {
+//         return;
+//       }
+//       columns = targetRow.children;
+//       targetColumn = columns[currentBoat.column];
+//       finalColumns.push(targetColumn);
+//     }
+//   }
+
+//   const hasRemovePointer = finalColumns.some((column) =>
+//     column.classList.contains("remove-pointer"),
+//   );
+
+//   if (hasRemovePointer === true) {
+//     return;
+//   } else finalColumns.forEach((column) => column.classList.add("highlight"));
+// };
+
+// const handleHoverRemoveHighlight = (event) => {
+//   if (event.target.classList.contains("remove-pointer")) {
+//     return;
+//   }
+
+//   let targetRow = rows[currentBoat.row];
+//   let columns = targetRow.children;
+//   let targetColumn = columns[currentBoat.column];
+//   const finalColumns = [];
+
+//   if (currentBoat.direction === "horizontal") {
+//     for (let i = 0; i < currentBoat.length; i++) {
+//       targetColumn = columns[currentBoat.column + i];
+//       if (targetColumn === undefined) {
+//         return;
+//       }
+//       finalColumns.push(targetColumn);
+//     }
+//   } else if (currentBoat.direction === "vertical") {
+//     for (let i = 0; i < currentBoat.length; i++) {
+//       targetRow = rows[currentBoat.row + i];
+//       if (targetRow === undefined) {
+//         return;
+//       }
+//       columns = targetRow.children;
+//       targetColumn = columns[currentBoat.column];
+//       finalColumns.push(targetColumn);
+//     }
+//   }
+
+//   const hasRemovePointer = finalColumns.some((column) =>
+//     column.classList.contains("remove-pointer"),
+//   );
+
+//   if (hasRemovePointer === true) {
+//     return;
+//   } else finalColumns.forEach((column) => column.classList.remove("highlight"));
+// };
+
+// const handleClickBoatSelectHighlight = () => {
+//   let targetRow = rows[currentBoat.row];
+//   let columns = targetRow.children;
+//   let targetColumn = columns[currentBoat.column];
+//   const finalColumns = [];
+
+//   if (currentBoat.direction === "horizontal") {
+//     for (let i = 0; i < currentBoat.length; i++) {
+//       targetColumn = columns[currentBoat.column + i];
+//       if (targetColumn === undefined) {
+//         return undefined;
+//       } else {
+//         finalColumns.push(targetColumn);
+//       }
+//     }
+//   } else if (currentBoat.direction === "vertical") {
+//     for (let i = 0; i < currentBoat.length; i++) {
+//       targetRow = rows[currentBoat.row + i];
+//       if (targetRow === undefined) {
+//         return undefined;
+//       } else {
+//         columns = targetRow.children;
+//         targetColumn = columns[currentBoat.column];
+//         finalColumns.push(targetColumn);
+//       }
+//     }
+//   }
+
+//   const hasRemovePointer = finalColumns.some((column) =>
+//     column.classList.contains("remove-pointer"),
+//   );
+
+//   if (hasRemovePointer === true) {
+//     return false;
+//   } else {
+//     finalColumns.forEach((column) => {
+//       column.classList.add("highlight", "remove-pointer");
+//       setCurrentBoatToDefault();
+//     });
+//   }
+// };
+
+// startScreenBoard.addEventListener("mouseover", (event) => {
+//   // Change from parentElement to using 'closest' = parentElement can change so it's brittle
+//   currentBoat.row = +event.target.parentElement.dataset.row;
+//   currentBoat.column = +event.target.dataset.column;
+
+//   if (Number.isNaN(currentBoat.row)) return;
+
+//   handleHoverAddHighlight();
+// });
+
+// startScreenBoard.addEventListener("mouseout", (event) => {
+//   // Change from parentElement to using 'closest' = parentElement can change so it's brittle
+//   currentBoat.row = +event.target.parentElement.dataset.row;
+
+//   if (Number.isNaN(currentBoat.row)) return;
+
+//   handleHoverRemoveHighlight(event);
+//   currentBoat.row = null;
+//   currentBoat.column = null;
+// });
+
+// startScreenBoard.addEventListener("click", () => {
+//   const realPlayer = playerObjs.realPlayerObj;
+
+//   realPlayer.gameMechanics.placeShip(
+//     Ship(currentBoat.name, currentBoat.length),
+//     currentBoat.row,
+//     currentBoat.column,
+//     currentBoat.direction,
+//   );
+
+//   const clickedAvailableSquares = handleClickBoatSelectHighlight();
+
+//   if (
+//     clickedAvailableSquares === false ||
+//     clickedAvailableSquares === undefined
+//   )
+//     return;
+
+//   const currentBoatContainer = boatContainersArr.find((container) =>
+//     container.classList.contains("selected"),
+//   );
+
+//   // // Darken the boat's image
+//   currentBoatContainer.classList.remove("selected");
+//   currentBoatContainer.classList.add("disabled");
+// });
+
+/************* */
+
+// Final Draft (Working Draft - Refactor/Clean Up):
+const getTargetColumns = () => {
   let targetRow = rows[currentBoat.row];
   let columns = targetRow.children;
   let targetColumn = columns[currentBoat.column];
-  const finalColumns = [];
+  const finalTargetColumns = [];
 
   if (currentBoat.direction === "horizontal") {
     for (let i = 0; i < currentBoat.length; i++) {
       targetColumn = columns[currentBoat.column + i];
-      if (targetColumn === undefined) {
-        return;
-      }
-      finalColumns.push(targetColumn);
+      finalTargetColumns.push(targetColumn);
     }
   } else if (currentBoat.direction === "vertical") {
     for (let i = 0; i < currentBoat.length; i++) {
       targetRow = rows[currentBoat.row + i];
-      if (targetRow === undefined) {
-        return;
-      }
       columns = targetRow.children;
       targetColumn = columns[currentBoat.column];
-      finalColumns.push(targetColumn);
+      finalTargetColumns.push(targetColumn);
     }
   }
 
-  const hasRemovePointer = finalColumns.some((column) =>
+  return finalTargetColumns;
+};
+
+const handleHoverAddHighlight = () => {
+  const targetColumns = getTargetColumns();
+
+  const hasRemovePointer = targetColumns.some((column) =>
     column.classList.contains("remove-pointer"),
   );
 
-  if (hasRemovePointer === true) {
+  if (hasRemovePointer === true || hasRemovePointer === undefined) {
     return;
-  } else finalColumns.forEach((column) => column.classList.add("highlight"));
+  } else targetColumns.forEach((column) => column.classList.add("highlight"));
 };
 
 const handleHoverRemoveHighlight = (event) => {
@@ -232,85 +398,38 @@ const handleHoverRemoveHighlight = (event) => {
     return;
   }
 
-  let targetRow = rows[currentBoat.row];
-  let columns = targetRow.children;
-  let targetColumn = columns[currentBoat.column];
-  const finalColumns = [];
+  const targetColumns = getTargetColumns();
 
-  if (currentBoat.direction === "horizontal") {
-    for (let i = 0; i < currentBoat.length; i++) {
-      targetColumn = columns[currentBoat.column + i];
-      if (targetColumn === undefined) {
-        return;
-      }
-      finalColumns.push(targetColumn);
-    }
-  } else if (currentBoat.direction === "vertical") {
-    for (let i = 0; i < currentBoat.length; i++) {
-      targetRow = rows[currentBoat.row + i];
-      if (targetRow === undefined) {
-        return;
-      }
-      columns = targetRow.children;
-      targetColumn = columns[currentBoat.column];
-      finalColumns.push(targetColumn);
-    }
-  }
-
-  const hasRemovePointer = finalColumns.some((column) =>
+  const hasRemovePointer = targetColumns.some((column) =>
     column.classList.contains("remove-pointer"),
   );
 
   if (hasRemovePointer === true) {
     return;
-  } else finalColumns.forEach((column) => column.classList.remove("highlight"));
+  } else
+    targetColumns.forEach((column) => column.classList.remove("highlight"));
 };
 
 const handleClickBoatSelectHighlight = () => {
-  let targetRow = rows[currentBoat.row];
-  let columns = targetRow.children;
-  let targetColumn = columns[currentBoat.column];
-  const finalColumns = [];
+  const targetColumns = getTargetColumns();
 
-  if (currentBoat.direction === "horizontal") {
-    for (let i = 0; i < currentBoat.length; i++) {
-      targetColumn = columns[currentBoat.column + i];
-      if (targetColumn === undefined) {
-        return undefined;
-      } else {
-        finalColumns.push(targetColumn);
-      }
-    }
-  } else if (currentBoat.direction === "vertical") {
-    for (let i = 0; i < currentBoat.length; i++) {
-      targetRow = rows[currentBoat.row + i];
-      if (targetRow === undefined) {
-        return undefined;
-      } else {
-        columns = targetRow.children;
-        targetColumn = columns[currentBoat.column];
-        finalColumns.push(targetColumn);
-      }
-    }
-  }
-
-  const hasRemovePointer = finalColumns.some((column) =>
+  const hasRemovePointer = targetColumns.some((column) =>
     column.classList.contains("remove-pointer"),
   );
 
   if (hasRemovePointer === true) {
     return false;
   } else {
-    finalColumns.forEach((column) => {
+    targetColumns.forEach((column) => {
       column.classList.add("highlight", "remove-pointer");
-      console.log(column);
       setCurrentBoatToDefault();
     });
   }
 };
 
 startScreenBoard.addEventListener("mouseover", (event) => {
-  currentBoat.row = +event.target.parentElement.dataset.row;
+  // Commit this after big commit:
+  // currentBoat.row = +event.target.closest("[data-row]").dataset.row;
   currentBoat.column = +event.target.dataset.column;
 
   if (Number.isNaN(currentBoat.row)) return;
@@ -319,7 +438,8 @@ startScreenBoard.addEventListener("mouseover", (event) => {
 });
 
 startScreenBoard.addEventListener("mouseout", (event) => {
-  currentBoat.row = +event.target.parentElement.dataset.row;
+  // Commit this after big commit:
+  // currentBoat.row = +event.target.closest("[data-row]").dataset.row;
 
   if (Number.isNaN(currentBoat.row)) return;
 
@@ -340,11 +460,7 @@ startScreenBoard.addEventListener("click", () => {
 
   const clickedAvailableSquares = handleClickBoatSelectHighlight();
 
-  if (
-    clickedAvailableSquares === false ||
-    clickedAvailableSquares === undefined
-  )
-    return;
+  if (clickedAvailableSquares === false) return;
 
   const currentBoatContainer = boatContainersArr.find((container) =>
     container.classList.contains("selected"),
