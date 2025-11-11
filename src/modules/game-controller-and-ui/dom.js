@@ -280,13 +280,13 @@ const handleClickBoatSelectHighlight = () => {
     }
   }
 
-  // Keep after commit:
-  // finalColumns.forEach((column) => {
-  //   column.classList.add("highlight", "remove-pointer");
+  finalColumns.forEach((column) => {
+    column.classList.add("highlight", "remove-pointer");
 
-  //   setCurrentBoatToDefault();
-  //   console.log(currentBoat);
-  // });
+    // Keep after commit:
+    // setCurrentBoatToDefault();
+    // console.log(currentBoat);
+  });
 
   // Delete after commit:
   // return finalColumns
