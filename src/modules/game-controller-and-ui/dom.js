@@ -327,7 +327,7 @@ startScreenBoard.addEventListener("mouseout", (event) => {
   currentBoat.column = null;
 });
 
-startScreenBoard.addEventListener("click", (event) => {
+startScreenBoard.addEventListener("click", () => {
   const realPlayer = playerObjs.realPlayerObj;
 
   realPlayer.gameMechanics.placeShip(
@@ -339,10 +339,8 @@ startScreenBoard.addEventListener("click", (event) => {
 
   handleClickBoatSelectHighlight();
 
-  // Keep After Commit:
-  // const clickedAvailableSquares = handleClickBoatSelectHighlight();
-
-  // if (clickedAvailableSquares === false) return;
+  const clickedAvailableSquares = handleClickBoatSelectHighlight();
+  if (clickedAvailableSquares === false) return;
 
   const currentBoatContainer = boatContainersArr.find((container) =>
     container.classList.contains("selected"),
