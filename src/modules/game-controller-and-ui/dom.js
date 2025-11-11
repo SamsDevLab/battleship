@@ -428,8 +428,7 @@ const handleClickBoatSelectHighlight = () => {
 };
 
 startScreenBoard.addEventListener("mouseover", (event) => {
-  // Commit this after big commit:
-  // currentBoat.row = +event.target.closest("[data-row]").dataset.row;
+  currentBoat.row = +event.target.closest("[data-row]").dataset.row;
   currentBoat.column = +event.target.dataset.column;
 
   if (Number.isNaN(currentBoat.row)) return;
@@ -438,8 +437,7 @@ startScreenBoard.addEventListener("mouseover", (event) => {
 });
 
 startScreenBoard.addEventListener("mouseout", (event) => {
-  // Commit this after big commit:
-  // currentBoat.row = +event.target.closest("[data-row]").dataset.row;
+  currentBoat.row = +event.target.closest("[data-row]").dataset.row;
 
   if (Number.isNaN(currentBoat.row)) return;
 
