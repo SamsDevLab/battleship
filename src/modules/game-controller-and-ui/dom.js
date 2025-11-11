@@ -78,7 +78,6 @@ const setCurrentBoatToDefault = () => {
   currentBoat.column = 0;
 };
 
-// console.log(currentBoat);
 const rows = startScreenBoard.children;
 
 // Boat Placement Container
@@ -88,7 +87,6 @@ const selectBoat = (boatElement) => {
 
   currentBoat.name = boatElement.dataset.boatName;
   currentBoat.length = +boatElement.dataset.boatLength;
-  console.log(currentBoat);
 };
 
 const toggleAxisButton = (button) => {
@@ -198,6 +196,7 @@ const handleHoverAddHighlight = () => {
   let targetRow = rows[currentBoat.row];
   let columns = targetRow.children;
   let targetColumn = columns[currentBoat.column];
+  const finalColumns = [];
 
   if (currentBoat.direction === "horizontal") {
     for (let i = 0; i < currentBoat.length; i++) {
@@ -205,7 +204,7 @@ const handleHoverAddHighlight = () => {
       if (targetColumn === undefined) {
         return;
       }
-      targetColumn.classList.add("highlight");
+      finalColumns.push(targetColumn);
     }
   } else if (currentBoat.direction === "vertical") {
     for (let i = 0; i < currentBoat.length; i++) {
@@ -215,9 +214,17 @@ const handleHoverAddHighlight = () => {
       }
       columns = targetRow.children;
       targetColumn = columns[currentBoat.column];
-      targetColumn.classList.add("highlight");
+      finalColumns.push(targetColumn);
     }
   }
+
+  const hasRemovePointer = finalColumns.some((column) =>
+    column.classList.contains("remove-pointer"),
+  );
+
+  if (hasRemovePointer === true) {
+    return;
+  } else finalColumns.forEach((column) => column.classList.add("highlight"));
 };
 
 const handleHoverRemoveHighlight = (event) => {
@@ -228,6 +235,7 @@ const handleHoverRemoveHighlight = (event) => {
   let targetRow = rows[currentBoat.row];
   let columns = targetRow.children;
   let targetColumn = columns[currentBoat.column];
+  const finalColumns = [];
 
   if (currentBoat.direction === "horizontal") {
     for (let i = 0; i < currentBoat.length; i++) {
@@ -235,7 +243,7 @@ const handleHoverRemoveHighlight = (event) => {
       if (targetColumn === undefined) {
         return;
       }
-      targetColumn.classList.remove("highlight");
+      finalColumns.push(targetColumn);
     }
   } else if (currentBoat.direction === "vertical") {
     for (let i = 0; i < currentBoat.length; i++) {
@@ -245,9 +253,17 @@ const handleHoverRemoveHighlight = (event) => {
       }
       columns = targetRow.children;
       targetColumn = columns[currentBoat.column];
-      targetColumn.classList.remove("highlight");
+      finalColumns.push(targetColumn);
     }
   }
+
+  const hasRemovePointer = finalColumns.some((column) =>
+    column.classList.contains("remove-pointer"),
+  );
+
+  if (hasRemovePointer === true) {
+    return;
+  } else finalColumns.forEach((column) => column.classList.remove("highlight"));
 };
 
 const handleClickBoatSelectHighlight = () => {
@@ -278,10 +294,18 @@ const handleClickBoatSelectHighlight = () => {
     }
   }
 
-  finalColumns.forEach((column) => {
-    column.classList.add("highlight", "remove-pointer");
-    setCurrentBoatToDefault();
-  });
+  const hasRemovePointer = finalColumns.some((column) =>
+    column.classList.contains("remove-pointer"),
+  );
+
+  if (hasRemovePointer === true) {
+    return false;
+  } else {
+    finalColumns.forEach((column) => {
+      column.classList.add("highlight", "remove-pointer");
+      setCurrentBoatToDefault();
+    });
+  }
 };
 
 startScreenBoard.addEventListener("mouseover", (event) => {
@@ -303,7 +327,7 @@ startScreenBoard.addEventListener("mouseout", (event) => {
   currentBoat.column = null;
 });
 
-startScreenBoard.addEventListener("click", () => {
+startScreenBoard.addEventListener("click", (event) => {
   const realPlayer = playerObjs.realPlayerObj;
 
   realPlayer.gameMechanics.placeShip(
@@ -315,11 +339,16 @@ startScreenBoard.addEventListener("click", () => {
 
   handleClickBoatSelectHighlight();
 
+  // Keep After Commit:
+  // const clickedAvailableSquares = handleClickBoatSelectHighlight();
+
+  // if (clickedAvailableSquares === false) return;
+
   const currentBoatContainer = boatContainersArr.find((container) =>
     container.classList.contains("selected"),
   );
 
-  // Darken the boat's image
+  // // Darken the boat's image
   currentBoatContainer.classList.remove("selected");
   currentBoatContainer.classList.add("disabled");
 });
