@@ -221,11 +221,9 @@ const handleHoverAddHighlight = () => {
 };
 
 const handleHoverRemoveHighlight = (event) => {
-  // Keep after commit:
-  // if (event.target.classList.contains("remove-pointer")) {
-  //   console.log(event.target);
-  //   return;
-  // }
+  if (event.target.classList.contains("remove-pointer")) {
+    return;
+  }
 
   let targetRow = rows[currentBoat.row];
   let columns = targetRow.children;
