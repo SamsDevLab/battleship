@@ -202,19 +202,17 @@ const handleHoverAddHighlight = () => {
   if (currentBoat.direction === "horizontal") {
     for (let i = 0; i < currentBoat.length; i++) {
       targetColumn = columns[currentBoat.column + i];
-      // Keep after commit:
-      // if (targetColumn === undefined) {
-      //   return;
-      // }
+      if (targetColumn === undefined) {
+        return;
+      }
       targetColumn.classList.add("highlight");
     }
   } else if (currentBoat.direction === "vertical") {
     for (let i = 0; i < currentBoat.length; i++) {
       targetRow = rows[currentBoat.row + i];
-      // Keep after commit:
-      // if (targetRow === undefined) {
-      //   return;
-      // }
+      if (targetRow === undefined) {
+        return;
+      }
       columns = targetRow.children;
       targetColumn = columns[currentBoat.column];
       targetColumn.classList.add("highlight");
@@ -236,19 +234,17 @@ const handleHoverRemoveHighlight = (event) => {
   if (currentBoat.direction === "horizontal") {
     for (let i = 0; i < currentBoat.length; i++) {
       targetColumn = columns[currentBoat.column + i];
-      // Keep after commit:
-      // if (targetColumn === undefined) {
-      //   return;
-      // }
+      if (targetColumn === undefined) {
+        return;
+      }
       targetColumn.classList.remove("highlight");
     }
   } else if (currentBoat.direction === "vertical") {
     for (let i = 0; i < currentBoat.length; i++) {
       targetRow = rows[currentBoat.row + i];
-      // Keep after commit:
-      // if (targetRow === undefined) {
-      //   return;
-      // }
+      if (targetRow === undefined) {
+        return;
+      }
       columns = targetRow.children;
       targetColumn = columns[currentBoat.column];
       targetColumn.classList.remove("highlight");
@@ -265,12 +261,11 @@ const handleClickBoatSelectHighlight = () => {
   if (currentBoat.direction === "horizontal") {
     for (let i = 0; i < currentBoat.length; i++) {
       targetColumn = columns[currentBoat.column + i];
-      // Keep after commit:
-      // if (targetColumn === undefined) {
-      //   return;
-      // } else {
-      //   finalColumns.push(targetColumn);
-      // }
+      if (targetColumn === undefined) {
+        return;
+      } else {
+        finalColumns.push(targetColumn);
+      }
     }
   } else if (currentBoat.direction === "vertical") {
     for (let i = 0; i < currentBoat.length; i++) {
@@ -280,8 +275,7 @@ const handleClickBoatSelectHighlight = () => {
       } else {
         columns = targetRow.children;
         targetColumn = columns[currentBoat.column];
-        // Keep after commit:
-        // finalColumns.push(targetColumn);
+        finalColumns.push(targetColumn);
       }
     }
   }
