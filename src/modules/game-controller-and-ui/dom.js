@@ -282,9 +282,6 @@ const handleClickBoatSelectHighlight = () => {
     column.classList.add("highlight", "remove-pointer");
     setCurrentBoatToDefault();
   });
-
-  // Delete after commit:
-  // return finalColumns
 };
 
 startScreenBoard.addEventListener("mouseover", (event) => {
@@ -292,8 +289,6 @@ startScreenBoard.addEventListener("mouseover", (event) => {
   currentBoat.column = +event.target.dataset.column;
 
   if (Number.isNaN(currentBoat.row)) return;
-
-  // console.log(currentBoat);
 
   handleHoverAddHighlight();
 });
@@ -306,8 +301,6 @@ startScreenBoard.addEventListener("mouseout", (event) => {
   handleHoverRemoveHighlight(event);
   currentBoat.row = null;
   currentBoat.column = null;
-
-  // console.log(currentBoat);
 });
 
 startScreenBoard.addEventListener("click", () => {
@@ -320,23 +313,11 @@ startScreenBoard.addEventListener("click", () => {
     currentBoat.direction,
   );
 
-  console.log(realPlayer.gameMechanics.board);
-
-  // Delete after commit:
-  // const finalColumns = handleClickBoatSelectHighlight();
-
-  // if (finalColumns === undefined) {
-  //   console.log(finalColumns);
-  //   return;
-  // }
-
-  // finalColumns.forEach((column) => column.classList.add("remove-pointer"));
+  handleClickBoatSelectHighlight();
 
   const currentBoatContainer = boatContainersArr.find((container) =>
     container.classList.contains("selected"),
   );
-
-  console.log(currentBoatContainer);
 
   // Darken the boat's image
   currentBoatContainer.classList.remove("selected");
