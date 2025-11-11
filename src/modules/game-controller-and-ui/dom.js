@@ -302,8 +302,7 @@ startScreenBoard.addEventListener("mouseover", (event) => {
   currentBoat.row = +event.target.parentElement.dataset.row;
   currentBoat.column = +event.target.dataset.column;
 
-  // Keep after commit:
-  // if (Number.isNaN(currentBoat.row)) return;
+  if (Number.isNaN(currentBoat.row)) return;
 
   // console.log(currentBoat);
 
@@ -313,8 +312,7 @@ startScreenBoard.addEventListener("mouseover", (event) => {
 startScreenBoard.addEventListener("mouseout", (event) => {
   currentBoat.row = +event.target.parentElement.dataset.row;
 
-  // Keep after commit:
-  // if (Number.isNaN(currentBoat.row)) return;
+  if (Number.isNaN(currentBoat.row)) return;
 
   handleHoverRemoveHighlight(event);
   currentBoat.row = null;
