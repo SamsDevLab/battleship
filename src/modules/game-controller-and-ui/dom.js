@@ -276,7 +276,7 @@ const handleClickBoatSelectHighlight = () => {
     for (let i = 0; i < currentBoat.length; i++) {
       targetColumn = columns[currentBoat.column + i];
       if (targetColumn === undefined) {
-        return;
+        return undefined;
       } else {
         finalColumns.push(targetColumn);
       }
@@ -285,7 +285,7 @@ const handleClickBoatSelectHighlight = () => {
     for (let i = 0; i < currentBoat.length; i++) {
       targetRow = rows[currentBoat.row + i];
       if (targetRow === undefined) {
-        return;
+        return undefined;
       } else {
         columns = targetRow.children;
         targetColumn = columns[currentBoat.column];
@@ -303,6 +303,7 @@ const handleClickBoatSelectHighlight = () => {
   } else {
     finalColumns.forEach((column) => {
       column.classList.add("highlight", "remove-pointer");
+      console.log(column);
       setCurrentBoatToDefault();
     });
   }
@@ -337,10 +338,13 @@ startScreenBoard.addEventListener("click", () => {
     currentBoat.direction,
   );
 
-  handleClickBoatSelectHighlight();
-
   const clickedAvailableSquares = handleClickBoatSelectHighlight();
-  if (clickedAvailableSquares === false) return;
+
+  if (
+    clickedAvailableSquares === false ||
+    clickedAvailableSquares === undefined
+  )
+    return;
 
   const currentBoatContainer = boatContainersArr.find((container) =>
     container.classList.contains("selected"),
