@@ -42,6 +42,7 @@ TO-DOs:
 
 const gameController = GameController();
 const playerObjs = gameController.initGame();
+const realPlayerObj = playerObjs.realPlayerObj;
 const boatPlacementContainer = document.querySelector(
   "[data-container='boat-placement']",
 );
@@ -206,9 +207,9 @@ const handleHoverRemoveHighlight = (event) => {
 };
 
 const placeBoatInPlayerArr = () => {
-  const realPlayer = playerObjs.realPlayerObj;
+  // const realPlayer = playerObjs.realPlayerObj;
 
-  realPlayer.gameMechanics.placeShip(
+  realPlayerObj.gameMechanics.placeShip(
     Ship(currentBoat.name, currentBoat.length),
     currentBoat.row,
     currentBoat.column,
@@ -255,8 +256,28 @@ startScreenBoard.addEventListener("click", () => {
   handleClickBoatSelectHighlight();
 });
 
-/*********************** */
+/*************************/
 
+// Start Screen Name Input
+// const realPlayerObj = playerObjs.realPlayerObj;
+
+const handleInput = (event) => {
+  const inputValue = event.target.value;
+  realPlayerObj.name = inputValue;
+
+  console.log(realPlayerObj);
+};
+
+const usernameInput = startScreen.querySelector("[data-input='username']");
+
+usernameInput.addEventListener("change", (event) => handleInput(event));
+/*************************/
+
+// Start Battle Button
+
+/*************************/
+
+// Open Start Screen
 const openStartScreen = () => {
   startScreen.showModal();
   addRowsAndColumns(
