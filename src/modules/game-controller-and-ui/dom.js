@@ -29,11 +29,6 @@ COMPLETE:
 ✅ • Maybe respace the boats - I still don't care for the look
 
 TO-DOs:
-• Dropping ships on board (boat placement)
-  • Once a boat is placed and shows up on the boat grid, the event listener
-    should be removed from the boat's image and image should be darkened indicating that
-    the boat has already been placed.
-    • May be able to create this effect with opacity
 • Should probably place an "Enter" keydown listener on the Start Battle button so that
   the user can just hit "Enter" after entering their name
 • Render name of player under board
@@ -80,7 +75,7 @@ const setCurrentBoatToDefault = () => {
 
 const rows = startScreenBoard.children;
 
-// Boat Placement Container
+// Handle Boat Selection
 const selectBoat = (boatElement) => {
   boatElement.classList.remove("hover-effect");
   boatElement.classList.add("selected");
@@ -99,7 +94,20 @@ const toggleAxisButton = (button) => {
   }
 };
 
+const checkForAlreadySelectedBoat = () => {
+  const alreadySelectedBoat = boatContainersArr.find((boatContainer) =>
+    boatContainer.classList.contains("selected"),
+  );
+
+  if (alreadySelectedBoat !== undefined) {
+    alreadySelectedBoat.classList.remove("selected");
+    alreadySelectedBoat.classList.add("hover-effect");
+  }
+};
+
 const handleBoatContainerClick = (event) => {
+  checkForAlreadySelectedBoat();
+
   const closestContainer = event.target.closest("[data-container]");
 
   if (closestContainer.dataset.container === "boat") {
@@ -114,250 +122,9 @@ boatPlacementContainer.addEventListener("click", (event) =>
   handleBoatContainerClick(event),
 );
 
-/******************************** */
-
-/*
-
-Refactor highlightColumns function as the actions of this function need to be based on 
-the event type
-
-*/
-
-// First Draft:
-// const highlightColumns = (event) => {
-//   console.log(event.type);
-
-//   let targetRow = rows[currentBoat.row];
-//   let columns = targetRow.children;
-//   let targetColumn = columns[currentBoat.column];
-//   const finalColumns = [];
-
-//   if (currentBoat.direction === "horizontal") {
-//     for (let i = 0; i < currentBoat.length; i++) {
-//       targetColumn = columns[currentBoat.column + i];
-//       targetColumn.classList.toggle("highlight");
-//       finalColumns.push(targetColumn);
-//     }
-//   } else if (currentBoat.direction === "vertical") {
-//     for (let i = 0; i < currentBoat.length; i++) {
-//       targetRow = rows[currentBoat.row + i];
-//       columns = targetRow.children;
-//       targetColumn = columns[currentBoat.column];
-//       targetColumn.classList.toggle("highlight");
-//       finalColumns.push(targetColumn);
-//     }
-//   }
-
-//   return finalColumns;
-// };
-
-/************************ */
-// First Draft:
-// Before Placement - Columns Light Up as User Hovers
-// startScreenBoard.addEventListener("mouseover", (event) => {
-//   currentBoat.row = +event.target.parentElement.dataset.row;
-//   currentBoat.column = +event.target.dataset.column;
-//   highlightColumns(event);
-// });
-
-// startScreenBoard.addEventListener("mouseout", (event) => {
-//   highlightColumns(event);
-//   currentBoat.row = null;
-//   currentBoat.column = null;
-// });
-
-// startScreenBoard.addEventListener("click", (event) => {
-//   const realPlayer = playerObjs.realPlayerObj;
 /************************ */
 
-/*
-  This will need to:
-  ✅ • Remove 'selected' class from boat in boat container
-  ✅ • Add 'disabled' class to boat in boat container
-    ✅ • Darken the image to indicate to user that it is no longer clickable 
-    ✅ • Disable pointer events from the boat-container
-  ✅ • Highlight the proper columns  
-  ✅ • Debug issue here - mouseover event is still active on screenboard and is causing
-      the highlight to fade in and out even after placement
-      • Though this issue is fixed, the mouseover is still trying to work on it so it's
-        throwing an Uncaught TypeError. Need to address these errors
-      • Also, the new boat is still trying to highlight -through- the placed boat. Need to
-        prevent this from happening
-  ✅ • place the ship in the board array (currently working)
-  • Prevent user from being able to re-place the ship somewhere else 
-      (currentBoatObj still holds the boat) 
-  */
-
-/******************* */
-
-// Second Draft (Edge Cases Debugged):
-// const handleHoverAddHighlight = () => {
-//   let targetRow = rows[currentBoat.row];
-//   let columns = targetRow.children;
-//   let targetColumn = columns[currentBoat.column];
-//   const finalColumns = [];
-
-//   if (currentBoat.direction === "horizontal") {
-//     for (let i = 0; i < currentBoat.length; i++) {
-//       targetColumn = columns[currentBoat.column + i];
-//       if (targetColumn === undefined) {
-//         return;
-//       }
-//       finalColumns.push(targetColumn);
-//     }
-//   } else if (currentBoat.direction === "vertical") {
-//     for (let i = 0; i < currentBoat.length; i++) {
-//       targetRow = rows[currentBoat.row + i];
-//       if (targetRow === undefined) {
-//         return;
-//       }
-//       columns = targetRow.children;
-//       targetColumn = columns[currentBoat.column];
-//       finalColumns.push(targetColumn);
-//     }
-//   }
-
-//   const hasRemovePointer = finalColumns.some((column) =>
-//     column.classList.contains("remove-pointer"),
-//   );
-
-//   if (hasRemovePointer === true) {
-//     return;
-//   } else finalColumns.forEach((column) => column.classList.add("highlight"));
-// };
-
-// const handleHoverRemoveHighlight = (event) => {
-//   if (event.target.classList.contains("remove-pointer")) {
-//     return;
-//   }
-
-//   let targetRow = rows[currentBoat.row];
-//   let columns = targetRow.children;
-//   let targetColumn = columns[currentBoat.column];
-//   const finalColumns = [];
-
-//   if (currentBoat.direction === "horizontal") {
-//     for (let i = 0; i < currentBoat.length; i++) {
-//       targetColumn = columns[currentBoat.column + i];
-//       if (targetColumn === undefined) {
-//         return;
-//       }
-//       finalColumns.push(targetColumn);
-//     }
-//   } else if (currentBoat.direction === "vertical") {
-//     for (let i = 0; i < currentBoat.length; i++) {
-//       targetRow = rows[currentBoat.row + i];
-//       if (targetRow === undefined) {
-//         return;
-//       }
-//       columns = targetRow.children;
-//       targetColumn = columns[currentBoat.column];
-//       finalColumns.push(targetColumn);
-//     }
-//   }
-
-//   const hasRemovePointer = finalColumns.some((column) =>
-//     column.classList.contains("remove-pointer"),
-//   );
-
-//   if (hasRemovePointer === true) {
-//     return;
-//   } else finalColumns.forEach((column) => column.classList.remove("highlight"));
-// };
-
-// const handleClickBoatSelectHighlight = () => {
-//   let targetRow = rows[currentBoat.row];
-//   let columns = targetRow.children;
-//   let targetColumn = columns[currentBoat.column];
-//   const finalColumns = [];
-
-//   if (currentBoat.direction === "horizontal") {
-//     for (let i = 0; i < currentBoat.length; i++) {
-//       targetColumn = columns[currentBoat.column + i];
-//       if (targetColumn === undefined) {
-//         return undefined;
-//       } else {
-//         finalColumns.push(targetColumn);
-//       }
-//     }
-//   } else if (currentBoat.direction === "vertical") {
-//     for (let i = 0; i < currentBoat.length; i++) {
-//       targetRow = rows[currentBoat.row + i];
-//       if (targetRow === undefined) {
-//         return undefined;
-//       } else {
-//         columns = targetRow.children;
-//         targetColumn = columns[currentBoat.column];
-//         finalColumns.push(targetColumn);
-//       }
-//     }
-//   }
-
-//   const hasRemovePointer = finalColumns.some((column) =>
-//     column.classList.contains("remove-pointer"),
-//   );
-
-//   if (hasRemovePointer === true) {
-//     return false;
-//   } else {
-//     finalColumns.forEach((column) => {
-//       column.classList.add("highlight", "remove-pointer");
-//       setCurrentBoatToDefault();
-//     });
-//   }
-// };
-
-// startScreenBoard.addEventListener("mouseover", (event) => {
-//   // Change from parentElement to using 'closest' = parentElement can change so it's brittle
-//   currentBoat.row = +event.target.parentElement.dataset.row;
-//   currentBoat.column = +event.target.dataset.column;
-
-//   if (Number.isNaN(currentBoat.row)) return;
-
-//   handleHoverAddHighlight();
-// });
-
-// startScreenBoard.addEventListener("mouseout", (event) => {
-//   // Change from parentElement to using 'closest' = parentElement can change so it's brittle
-//   currentBoat.row = +event.target.parentElement.dataset.row;
-
-//   if (Number.isNaN(currentBoat.row)) return;
-
-//   handleHoverRemoveHighlight(event);
-//   currentBoat.row = null;
-//   currentBoat.column = null;
-// });
-
-// startScreenBoard.addEventListener("click", () => {
-//   const realPlayer = playerObjs.realPlayerObj;
-
-//   realPlayer.gameMechanics.placeShip(
-//     Ship(currentBoat.name, currentBoat.length),
-//     currentBoat.row,
-//     currentBoat.column,
-//     currentBoat.direction,
-//   );
-
-//   const clickedAvailableSquares = handleClickBoatSelectHighlight();
-
-//   if (
-//     clickedAvailableSquares === false ||
-//     clickedAvailableSquares === undefined
-//   )
-//     return;
-
-//   const currentBoatContainer = boatContainersArr.find((container) =>
-//     container.classList.contains("selected"),
-//   );
-
-//   // // Darken the boat's image
-//   currentBoatContainer.classList.remove("selected");
-//   currentBoatContainer.classList.add("disabled");
-// });
-
-/************* */
-
-// Final Draft (Working Draft - Refactor/Clean Up):
+// Handle Boat Placement on Screen Board:
 const getTargetColumns = () => {
   let targetRow = rows[currentBoat.row];
   let columns = targetRow.children;
