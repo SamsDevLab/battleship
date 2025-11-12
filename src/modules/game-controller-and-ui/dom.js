@@ -426,21 +426,42 @@ const handleHoverRemoveHighlight = (event) => {
   currentBoat.column = null;
 };
 
+const placeBoatInPlayerArr = () => {
+  const realPlayer = playerObjs.realPlayerObj;
+
+  realPlayer.gameMechanics.placeShip(
+    Ship(currentBoat.name, currentBoat.length),
+    currentBoat.row,
+    currentBoat.column,
+    currentBoat.direction,
+  );
+};
+
+const highlightColumnsAddRemovePointer = (targetColumnsArr) => {
+  targetColumnsArr.forEach((column) => {
+    column.classList.add("highlight", "remove-pointer");
+    setCurrentBoatToDefault();
+  });
+};
+
+const disableBoatContainer = () => {
+  const currentBoatContainer = boatContainersArr.find((container) =>
+    container.classList.contains("selected"),
+  );
+
+  currentBoatContainer.classList.remove("selected");
+  currentBoatContainer.classList.add("disabled");
+};
+
 const handleClickBoatSelectHighlight = () => {
   const targetColumns = getTargetColumns();
 
-  const hasRemovePointer = targetColumns.some((column) =>
-    column.classList.contains("remove-pointer"),
-  );
+  const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
+  if (checkResult === true) return;
 
-  if (hasRemovePointer === true) {
-    return false;
-  } else {
-    targetColumns.forEach((column) => {
-      column.classList.add("highlight", "remove-pointer");
-      setCurrentBoatToDefault();
-    });
-  }
+  placeBoatInPlayerArr();
+  highlightColumnsAddRemovePointer(targetColumns);
+  disableBoatContainer();
 };
 
 startScreenBoard.addEventListener("mouseover", (event) => {
@@ -452,26 +473,7 @@ startScreenBoard.addEventListener("mouseout", (event) => {
 });
 
 startScreenBoard.addEventListener("click", () => {
-  const realPlayer = playerObjs.realPlayerObj;
-
-  realPlayer.gameMechanics.placeShip(
-    Ship(currentBoat.name, currentBoat.length),
-    currentBoat.row,
-    currentBoat.column,
-    currentBoat.direction,
-  );
-
-  const clickedAvailableSquares = handleClickBoatSelectHighlight();
-
-  if (clickedAvailableSquares === false) return;
-
-  const currentBoatContainer = boatContainersArr.find((container) =>
-    container.classList.contains("selected"),
-  );
-
-  // // Darken the boat's image
-  currentBoatContainer.classList.remove("selected");
-  currentBoatContainer.classList.add("disabled");
+  handleClickBoatSelectHighlight();
 });
 
 /*********************** */
