@@ -29,12 +29,9 @@ COMPLETE:
 ✅ • Maybe respace the boats - I still don't care for the look
 
 TO-DOs:
-• Should probably place an "Enter" keydown listener on the Start Battle button so that
-  the user can just hit "Enter" after entering their name
+• Click Listener + actions on the "Start Battle" button
 • Render name of player under board
 • Gap may be too large between D and E rows - looks larger than the others
-• Dragging & dropping ships onto coordinates (this will work in tandem with placeShip)
-  in GameController once the system is implemented
 • Add actual boat coordinates? e.g. A1, B9, etc. so banner can read "Sam's Dev Lab hit at A1"
 • Refactor
 • Complete README
@@ -54,6 +51,9 @@ const playerDiv = document.querySelector("[data-board='player']");
 const computerDiv = document.querySelector("[data-board='computer']");
 const startScreen = document.querySelector("[data-modal='start-screen']");
 const startScreenBoard = document.querySelector("[data-board='start-screen']");
+const usernameAndButtonContainer = document.querySelector(
+  "[data-container='username-and-button']",
+);
 const winnerScreen = document.querySelector("[data-modal='winner-screen']");
 const winnerHeader = document.querySelector("[data-winner-header]");
 const modalButton = document.querySelector("[data-modal-button]");
@@ -207,8 +207,6 @@ const handleHoverRemoveHighlight = (event) => {
 };
 
 const placeBoatInPlayerArr = () => {
-  // const realPlayer = playerObjs.realPlayerObj;
-
   realPlayerObj.gameMechanics.placeShip(
     Ship(currentBoat.name, currentBoat.length),
     currentBoat.row,
@@ -234,6 +232,8 @@ const disableBoatContainer = () => {
 };
 
 const handleClickBoatSelectHighlight = () => {
+  // if (currentBoat.name === "") return;
+
   const targetColumns = getTargetColumns();
 
   const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
@@ -258,22 +258,55 @@ startScreenBoard.addEventListener("click", () => {
 
 /*************************/
 
-// Start Screen Name Input
-// const realPlayerObj = playerObjs.realPlayerObj;
-
+// Username Input
 const handleInput = (event) => {
   const inputValue = event.target.value;
   realPlayerObj.name = inputValue;
-
-  console.log(realPlayerObj);
 };
 
-const usernameInput = startScreen.querySelector("[data-input='username']");
+const usernameInput = usernameAndButtonContainer.querySelector(
+  "[data-input='username']",
+);
 
 usernameInput.addEventListener("change", (event) => handleInput(event));
+
 /*************************/
 
 // Start Battle Button
+
+const checkForAllBoatsPlaced = () => {
+  const result = boatContainersArr.every((boatContainer) =>
+    boatContainer.classList.contains("disabled"),
+  );
+
+  return result;
+};
+
+const checkForPlayerNamePlacement = () => {
+  if (realPlayerObj.name === undefined) return false;
+  else return true;
+};
+
+const handleStartButtonClick = () => {
+  const boatPlacementResult = checkForAllBoatsPlaced();
+  const playerNamePlacement = checkForPlayerNamePlacement();
+
+  // Need to create some kind of unintrusive UI component to reveal errors to user
+
+  if (boatPlacementResult === false && playerNamePlacement === false) {
+    console.log("You must place all of the boats and enter your name!");
+  } else if (boatPlacementResult === false && playerNamePlacement === true) {
+    console.log("Place all of your boats!");
+  } else if (boatPlacementResult === true && playerNamePlacement === false) {
+    console.log("Must enter your name!");
+  } else startScreen.close();
+};
+
+const startGameButton = usernameAndButtonContainer.querySelector(
+  "[data-button='start-game']",
+);
+
+startGameButton.addEventListener("click", () => handleStartButtonClick());
 
 /*************************/
 
