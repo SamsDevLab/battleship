@@ -287,18 +287,32 @@ const checkForPlayerNamePlacement = () => {
   else return true;
 };
 
+const checkForErrorTag = () => {
+  const result = document.querySelector("[data-tag='error']");
+  return result;
+};
+
+const insertErrorParagraphTag = () => {
+  const checkResult = checkForErrorTag();
+
+  if (checkResult !== null) return;
+
+  const errorParagraphTag = document.createElement("p");
+  errorParagraphTag.textContent =
+    "Please enter your name and place all 5 of your ships!";
+
+  errorParagraphTag.id = "error-tag";
+  errorParagraphTag.dataset.tag = "error";
+
+  usernameAndButtonContainer.insertBefore(errorParagraphTag, startGameButton);
+};
+
 const handleStartButtonClick = () => {
   const boatPlacementResult = checkForAllBoatsPlaced();
   const playerNamePlacement = checkForPlayerNamePlacement();
 
-  // Need to create some kind of unintrusive UI component to reveal errors to user
-
-  if (boatPlacementResult === false && playerNamePlacement === false) {
-    console.log("You must place all of the boats and enter your name!");
-  } else if (boatPlacementResult === false && playerNamePlacement === true) {
-    console.log("Place all of your boats!");
-  } else if (boatPlacementResult === true && playerNamePlacement === false) {
-    console.log("Must enter your name!");
+  if (boatPlacementResult === false || playerNamePlacement === false) {
+    insertErrorParagraphTag();
   } else startScreen.close();
 };
 
