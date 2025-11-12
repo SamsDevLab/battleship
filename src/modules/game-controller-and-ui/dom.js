@@ -27,9 +27,9 @@ COMPLETE:
 ✅ • Work on consistent sizing for board propagation
 ✅ • Respace everything on the startScreenBoard (it's overflowing the screen now)
 ✅ • Maybe respace the boats - I still don't care for the look
+✅ • Click Listener + actions on the "Start Battle" button
 
 TO-DOs:
-• Click Listener + actions on the "Start Battle" button
 • Render name of player under board
 • Gap may be too large between D and E rows - looks larger than the others
 • Add actual boat coordinates? e.g. A1, B9, etc. so banner can read "Sam's Dev Lab hit at A1"
@@ -313,7 +313,10 @@ const handleStartButtonClick = () => {
 
   if (boatPlacementResult === false || playerNamePlacement === false) {
     insertErrorParagraphTag();
-  } else startScreen.close();
+  } else {
+    startScreen.close();
+    RenderToDom();
+  }
 };
 
 const startGameButton = usernameAndButtonContainer.querySelector(
@@ -400,7 +403,7 @@ const addRowsAndColumns = (board, div) => {
       if (board[i][j] === "missed" || board[i][j] === "hit") {
         markPreviousAttackOnBoard(board[i][j], boardColumn);
       } else if (board[i][j] !== null) {
-        boardColumn.textContent = board[i][j].name;
+        boardColumn.classList.add("highlight");
       }
       boardRow.append(boardColumn);
     }
@@ -410,6 +413,8 @@ const addRowsAndColumns = (board, div) => {
 export const RenderToDom = () => {
   playerDiv.textContent = "";
   computerDiv.textContent = "";
+
+  console.log(playerObjs.realPlayerObj.gameMechanics.board);
 
   addRowsAndColumns(playerObjs.realPlayerObj.gameMechanics.board, playerDiv);
   addRowsAndColumns(
@@ -455,5 +460,4 @@ const addButtonFunctionality = () => {
 };
 
 openStartScreen();
-RenderToDom();
 addButtonFunctionality();
