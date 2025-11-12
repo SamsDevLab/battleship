@@ -232,7 +232,7 @@ const disableBoatContainer = () => {
 };
 
 const handleClickBoatSelectHighlight = () => {
-  // if (currentBoat.name === "") return;
+  if (currentBoat.name === "") return;
 
   const targetColumns = getTargetColumns();
 
