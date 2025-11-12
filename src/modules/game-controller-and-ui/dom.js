@@ -139,9 +139,13 @@ const getTargetColumns = () => {
   } else if (currentBoat.direction === "vertical") {
     for (let i = 0; i < currentBoat.length; i++) {
       targetRow = rows[currentBoat.row + i];
-      columns = targetRow.children;
-      targetColumn = columns[currentBoat.column];
-      finalTargetColumns.push(targetColumn);
+      if (targetRow === undefined) {
+        finalTargetColumns.push(targetRow);
+      } else {
+        columns = targetRow.children;
+        targetColumn = columns[currentBoat.column];
+        finalTargetColumns.push(targetColumn);
+      }
     }
   }
 
