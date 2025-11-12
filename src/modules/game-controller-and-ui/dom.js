@@ -381,33 +381,49 @@ const getTargetColumns = () => {
   return finalTargetColumns;
 };
 
-const handleHoverAddHighlight = () => {
-  const targetColumns = getTargetColumns();
+const checkForUndefinedAndRemovePointerClass = (targetColumnsArr) => {
+  const checkForUndefined = targetColumnsArr.some(
+    (column) => column === undefined,
+  );
 
-  const hasRemovePointer = targetColumns.some((column) =>
+  if (checkForUndefined === true) return true;
+
+  const checkForRemovePointer = targetColumnsArr.some((column) =>
     column.classList.contains("remove-pointer"),
   );
 
-  if (hasRemovePointer === true || hasRemovePointer === undefined) {
-    return;
-  } else targetColumns.forEach((column) => column.classList.add("highlight"));
+  if (checkForRemovePointer === true) return true;
+
+  return false;
+};
+
+const handleHoverAddHighlight = (event) => {
+  if (event.target.dataset.board === "start-screen") return;
+
+  currentBoat.row = +event.target.closest("[data-row]").dataset.row;
+  currentBoat.column = +event.target.dataset.column;
+
+  const targetColumns = getTargetColumns();
+  const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
+
+  if (checkResult === true) return;
+
+  targetColumns.forEach((column) => column.classList.add("highlight"));
 };
 
 const handleHoverRemoveHighlight = (event) => {
-  if (event.target.classList.contains("remove-pointer")) {
-    return;
-  }
+  if (event.target.dataset.board === "start-screen") return;
+
+  currentBoat.row = +event.target.closest("[data-row]").dataset.row;
 
   const targetColumns = getTargetColumns();
 
-  const hasRemovePointer = targetColumns.some((column) =>
-    column.classList.contains("remove-pointer"),
-  );
+  const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
+  if (checkResult === true) return;
 
-  if (hasRemovePointer === true) {
-    return;
-  } else
-    targetColumns.forEach((column) => column.classList.remove("highlight"));
+  targetColumns.forEach((column) => column.classList.remove("highlight"));
+  currentBoat.row = null;
+  currentBoat.column = null;
 };
 
 const handleClickBoatSelectHighlight = () => {
@@ -428,22 +444,11 @@ const handleClickBoatSelectHighlight = () => {
 };
 
 startScreenBoard.addEventListener("mouseover", (event) => {
-  currentBoat.row = +event.target.closest("[data-row]").dataset.row;
-  currentBoat.column = +event.target.dataset.column;
-
-  if (Number.isNaN(currentBoat.row)) return;
-
-  handleHoverAddHighlight();
+  handleHoverAddHighlight(event);
 });
 
 startScreenBoard.addEventListener("mouseout", (event) => {
-  currentBoat.row = +event.target.closest("[data-row]").dataset.row;
-
-  if (Number.isNaN(currentBoat.row)) return;
-
   handleHoverRemoveHighlight(event);
-  currentBoat.row = null;
-  currentBoat.column = null;
 });
 
 startScreenBoard.addEventListener("click", () => {
