@@ -397,6 +397,10 @@ const checkForUndefinedAndRemovePointerClass = (targetColumnsArr) => {
   return false;
 };
 
+const highlightColumns = (targetColumnsArr) => {
+  targetColumnsArr.forEach((column) => column.classList.add("highlight"));
+};
+
 const handleHoverAddHighlight = (event) => {
   if (event.target.dataset.board === "start-screen") return;
 
@@ -408,7 +412,13 @@ const handleHoverAddHighlight = (event) => {
 
   if (checkResult === true) return;
 
-  targetColumns.forEach((column) => column.classList.add("highlight"));
+  highlightColumns(targetColumns);
+};
+
+const removeHighlightSetColsAndRowsToNull = (targetColumnsArr) => {
+  targetColumnsArr.forEach((column) => column.classList.remove("highlight"));
+  currentBoat.row = null;
+  currentBoat.column = null;
 };
 
 const handleHoverRemoveHighlight = (event) => {
@@ -421,9 +431,7 @@ const handleHoverRemoveHighlight = (event) => {
   const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
   if (checkResult === true) return;
 
-  targetColumns.forEach((column) => column.classList.remove("highlight"));
-  currentBoat.row = null;
-  currentBoat.column = null;
+  removeHighlightSetColsAndRowsToNull(targetColumns);
 };
 
 const placeBoatInPlayerArr = () => {
