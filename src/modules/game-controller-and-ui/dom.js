@@ -299,7 +299,7 @@ const insertErrorParagraphTag = () => {
 
   const errorParagraphTag = document.createElement("p");
   errorParagraphTag.textContent =
-    "Please enter your name and place all 5 of your ships!";
+    "⚠️ Please enter your name and place all 5 of your ships!";
 
   errorParagraphTag.id = "error-tag";
   errorParagraphTag.dataset.tag = "error";
