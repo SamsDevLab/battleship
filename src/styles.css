@@ -340,17 +340,17 @@ h3 {
   padding: 0.5rem;
 }
 
-#username {
+#username-container {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-#username input {
+#username-container input {
   padding-left: 1px;
 }
 
-#username:focus {
+#username-container:focus {
   outline: 2px solid #e63946;
   border-radius: 0.2rem;
 }
