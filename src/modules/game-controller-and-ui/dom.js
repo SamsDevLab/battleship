@@ -30,6 +30,8 @@ COMPLETE:
 ✅ • Click Listener + actions on the "Start Battle" button
 
 TO-DOs:
+• Handle toggle bug in toggleAxisButton
+• Finish adding random boats to computer board in placeBoatInComputerArr and helpers
 • Render name of player under board
 • Gap may be too large between D and E rows - looks larger than the others
 • Add actual boat coordinates? e.g. A1, B9, etc. so banner can read "Sam's Dev Lab hit at A1"
@@ -107,11 +109,10 @@ const checkForAlreadySelectedBoat = () => {
 };
 
 const handleBoatContainerClick = (event) => {
-  checkForAlreadySelectedBoat();
-
   const closestContainer = event.target.closest("[data-container]");
 
   if (closestContainer.dataset.container === "boat") {
+    checkForAlreadySelectedBoat();
     selectBoat(closestContainer);
   } else if (closestContainer.dataset.container === "axis-button") {
     const axisButton = closestContainer.querySelector("[data-button]");
@@ -231,6 +232,53 @@ const disableBoatContainer = () => {
   currentBoatContainer.classList.add("disabled");
 };
 
+const addRandomDirectionToCurrentBoat = () => {
+  const directionList = ["horizontal", "vertical"];
+  const randomStrIndex = Math.floor(Math.random() * directionList.length);
+
+  const randomDirection = directionList[randomStrIndex];
+
+  currentBoat.direction = randomDirection;
+};
+
+const addRandomRowAndColumnToCurrentBoat = () => {
+  // This needs to account for direction not just length
+
+  if (currentBoat.length === 5) {
+    currentBoat.row = Math.floor(Math.random() * 6);
+    currentBoat.column = Math.floor(Math.random() * 6);
+  } else if (currentBoat.length === 4) {
+    currentBoat.row = Math.floor(Math.random() * 7);
+    currentBoat.column = Math.floor(Math.random() * 7);
+  } else if (currentBoat.length === 3) {
+    currentBoat.row = Math.floor(Math.random() * 8);
+    currentBoat.column = Math.floor(Math.random() * 8);
+  } else if (currentBoat.length === 2) {
+    currentBoat.row = Math.floor(Math.random() * 9);
+    currentBoat.column = Math.floor(Math.random() * 9);
+  }
+};
+
+const placeBoatInComputerArr = () => {
+  const computerPlayer = playerObjs.computerPlayerObj;
+  const computerBoard = computerPlayer.gameMechanics.board;
+  console.log(currentBoat);
+
+  addRandomDirectionToCurrentBoat();
+  addRandomRowAndColumnToCurrentBoat();
+
+  computerPlayer.gameMechanics.placeShip(
+    Ship(currentBoat.name, currentBoat.length),
+    currentBoat.row,
+    currentBoat.column,
+    currentBoat.direction,
+  );
+
+  console.log(currentBoat);
+  console.log(computerBoard);
+  setCurrentBoatToDefault();
+};
+
 const handleClickBoatSelectHighlight = () => {
   if (currentBoat.name === "") return;
 
@@ -242,6 +290,8 @@ const handleClickBoatSelectHighlight = () => {
   placeBoatInPlayerArr();
   highlightColumnsAddRemovePointer(targetColumns);
   disableBoatContainer();
+  placeBoatInComputerArr();
+  // setCurrentBoatToDefault();
 };
 
 startScreenBoard.addEventListener("mouseover", (event) => {
@@ -316,6 +366,7 @@ const handleStartButtonClick = () => {
   } else {
     startScreen.close();
     RenderToDom();
+    console.log(playerObjs.computerPlayerObj.gameMechanics.board);
   }
 };
 
@@ -413,8 +464,6 @@ const addRowsAndColumns = (board, div) => {
 export const RenderToDom = () => {
   playerDiv.textContent = "";
   computerDiv.textContent = "";
-
-  console.log(playerObjs.realPlayerObj.gameMechanics.board);
 
   addRowsAndColumns(playerObjs.realPlayerObj.gameMechanics.board, playerDiv);
   addRowsAndColumns(
