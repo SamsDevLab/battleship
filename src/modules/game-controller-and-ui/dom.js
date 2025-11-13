@@ -267,27 +267,27 @@ const handleRowAndColumn = () => {
   }
 };
 
-// const checkRowsAndColumnsForOverlap = () => {
-//   const computerBoardArr = computerPlayerObj.gameMechanics.board;
-//   const targetColsArr = getTargetColumns();
+const checkRowsAndColumnsForOverlap = () => {
+  const computerBoardArr = computerPlayerObj.gameMechanics.board;
+  const targetColsArr = getTargetColumns();
 
-//   const trueOrFalseArr = [];
+  const trueOrFalseArr = [];
 
-//   targetColsArr.forEach((col) => {
-//     const row = col.closest("[data-row]").dataset.row;
-//     const column = col.dataset.column;
+  targetColsArr.forEach((col) => {
+    const row = col.closest("[data-row]").dataset.row;
+    const column = col.dataset.column;
 
-//     if (computerBoardArr[row][column] !== null) {
-//       trueOrFalseArr.push(true);
-//     } else trueOrFalseArr.push(false);
-//   });
+    if (computerBoardArr[row][column] !== null) {
+      trueOrFalseArr.push(true);
+    } else trueOrFalseArr.push(false);
+  });
 
-//   const foundTrue = trueOrFalseArr.find((boolean) => boolean === true);
+  const foundTrue = trueOrFalseArr.find((boolean) => boolean === true);
 
-//   if (foundTrue === true) {
-//     return true;
-//   } else return false;
-// };
+  if (foundTrue === true) {
+    return true;
+  } else return false;
+};
 
 // const placeBoatInComputerArr = () => {
 //   computerPlayerObj.gameMechanics.placeShip(
@@ -301,8 +301,8 @@ const handleRowAndColumn = () => {
 const handleBoatInComputerArr = () => {
   addRandomDirectionToCurrentBoat();
   handleRowAndColumn();
-  // const result = checkRowsAndColumnsForOverlap();
-  // if (result === true) handleBoatInComputerArr();
+  const result = checkRowsAndColumnsForOverlap();
+  if (result === true) handleBoatInComputerArr();
   // placeBoatInComputerArr();
 };
 
