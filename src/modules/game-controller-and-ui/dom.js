@@ -237,13 +237,13 @@ const disableBoatContainer = () => {
 /* Computer Boat Placement */
 /**************************/
 
-// const addRandomDirectionToCurrentBoat = () => {
-//   const directionList = ["horizontal", "vertical"];
-//   const randomStrIndex = Math.floor(Math.random() * directionList.length);
+const addRandomDirectionToCurrentBoat = () => {
+  const directionList = ["horizontal", "vertical"];
+  const randomStrIndex = Math.floor(Math.random() * directionList.length);
 
-//   const randomDirection = directionList[randomStrIndex];
-//   currentBoat.direction = randomDirection;
-// };
+  const randomDirection = directionList[randomStrIndex];
+  currentBoat.direction = randomDirection;
+};
 
 // const randomNumBasedOnBoatLength = () => {
 //   if (currentBoat.length === 5) {
@@ -299,7 +299,7 @@ const disableBoatContainer = () => {
 // };
 
 const handleBoatInComputerArr = () => {
-  // addRandomDirectionToCurrentBoat();
+  addRandomDirectionToCurrentBoat();
   // handleRowAndColumn();
   // const result = checkRowsAndColumnsForOverlap();
   // if (result === true) handleBoatInComputerArr();
