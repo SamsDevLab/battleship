@@ -220,7 +220,6 @@ const placeBoatInPlayerArr = () => {
 const highlightColumnsAddRemovePointer = (targetColumnsArr) => {
   targetColumnsArr.forEach((column) => {
     column.classList.add("highlight", "remove-pointer");
-    setCurrentBoatToDefault();
   });
 };
 
@@ -393,7 +392,6 @@ const handleStartButtonClick = () => {
   } else {
     startScreen.close();
     RenderToDom();
-    console.log(playerObjs.computerPlayerObj.gameMechanics.board);
   }
 };
 
@@ -432,6 +430,7 @@ const markPreviousAttackOnBoard = (attack, boardColumn) => {
   markAttackSpan.classList.add(`${attack}-circle`);
   boardColumn.dataset.hitOrMiss = `${attack}`;
   boardColumn.append(markAttackSpan);
+  boardColumn.classList.add("remove-pointer");
 };
 
 const getRandomCoords = (playerBoard) => {
