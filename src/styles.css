@@ -212,6 +212,9 @@ h3 {
 }
 
 .column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #00b8d9;
   border: 1px solid #95a5a6;
 }
@@ -221,19 +224,19 @@ h3 {
   cursor: pointer;
 }
 
-.missed-circle,
-.hit-circle {
-  height: 50%;
-  width: 50%;
-  border-radius: 2rem;
-}
-
 .missed-circle {
-  background-color: #95a5a6;
+  background-color: #1d9bf0;
 }
 
 .hit-circle {
   background-color: #e63946;
+}
+
+.missed-circle,
+.hit-circle {
+  height: 50%;
+  width: 50%;
+  border-radius: 0.5rem;
 }
 
 /* Start Game Dialog */
