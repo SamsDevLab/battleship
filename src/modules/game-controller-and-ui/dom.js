@@ -28,9 +28,9 @@ COMPLETE:
 ✅ • Respace everything on the startScreenBoard (it's overflowing the screen now)
 ✅ • Maybe respace the boats - I still don't care for the look
 ✅ • Click Listener + actions on the "Start Battle" button
+✅ • Handle toggle bug in toggleAxisButton
 
 TO-DOs:
-• Handle toggle bug in toggleAxisButton
 • Finish adding random boats to computer board in placeBoatInComputerArr and helpers
 • Render name of player under board
 • Gap may be too large between D and E rows - looks larger than the others
@@ -42,6 +42,7 @@ TO-DOs:
 const gameController = GameController();
 const playerObjs = gameController.initGame();
 const realPlayerObj = playerObjs.realPlayerObj;
+const computerPlayerObj = playerObjs.computerPlayerObj;
 const boatPlacementContainer = document.querySelector(
   "[data-container='boat-placement']",
 );
@@ -232,51 +233,77 @@ const disableBoatContainer = () => {
   currentBoatContainer.classList.add("disabled");
 };
 
-const addRandomDirectionToCurrentBoat = () => {
-  const directionList = ["horizontal", "vertical"];
-  const randomStrIndex = Math.floor(Math.random() * directionList.length);
+/****************************/
+/* Computer Boat Placement */
+/**************************/
 
-  const randomDirection = directionList[randomStrIndex];
+// const addRandomDirectionToCurrentBoat = () => {
+//   const directionList = ["horizontal", "vertical"];
+//   const randomStrIndex = Math.floor(Math.random() * directionList.length);
 
-  currentBoat.direction = randomDirection;
-};
+//   const randomDirection = directionList[randomStrIndex];
+//   currentBoat.direction = randomDirection;
+// };
 
-const addRandomRowAndColumnToCurrentBoat = () => {
-  // This needs to account for direction not just length
+// const randomNumBasedOnBoatLength = () => {
+//   if (currentBoat.length === 5) {
+//     return Math.floor(Math.random() * 6);
+//   } else if (currentBoat.length === 4) {
+//     return Math.floor(Math.random() * 7);
+//   } else if (currentBoat.length === 3) {
+//     return Math.floor(Math.random() * 8);
+//   } else if (currentBoat.length === 2) {
+//     return Math.floor(Math.random() * 9);
+//   }
+// };
 
-  if (currentBoat.length === 5) {
-    currentBoat.row = Math.floor(Math.random() * 6);
-    currentBoat.column = Math.floor(Math.random() * 6);
-  } else if (currentBoat.length === 4) {
-    currentBoat.row = Math.floor(Math.random() * 7);
-    currentBoat.column = Math.floor(Math.random() * 7);
-  } else if (currentBoat.length === 3) {
-    currentBoat.row = Math.floor(Math.random() * 8);
-    currentBoat.column = Math.floor(Math.random() * 8);
-  } else if (currentBoat.length === 2) {
-    currentBoat.row = Math.floor(Math.random() * 9);
-    currentBoat.column = Math.floor(Math.random() * 9);
-  }
-};
+// const handleRowAndColumn = () => {
+//   if (currentBoat.direction === "horizontal") {
+//     currentBoat.row = Math.floor(Math.random() * 10);
+//     currentBoat.column = randomNumBasedOnBoatLength();
+//   } else if (currentBoat.direction === "vertical") {
+//     currentBoat.row = randomNumBasedOnBoatLength();
+//     currentBoat.column = Math.floor(Math.random() * 10);
+//   }
+// };
 
-const placeBoatInComputerArr = () => {
-  const computerPlayer = playerObjs.computerPlayerObj;
-  const computerBoard = computerPlayer.gameMechanics.board;
-  console.log(currentBoat);
+// const checkRowsAndColumnsForOverlap = () => {
+//   const computerBoardArr = computerPlayerObj.gameMechanics.board;
+//   const targetColsArr = getTargetColumns();
 
-  addRandomDirectionToCurrentBoat();
-  addRandomRowAndColumnToCurrentBoat();
+//   const trueOrFalseArr = [];
 
-  computerPlayer.gameMechanics.placeShip(
-    Ship(currentBoat.name, currentBoat.length),
-    currentBoat.row,
-    currentBoat.column,
-    currentBoat.direction,
-  );
+//   targetColsArr.forEach((col) => {
+//     const row = col.closest("[data-row]").dataset.row;
+//     const column = col.dataset.column;
 
-  console.log(currentBoat);
-  console.log(computerBoard);
-  setCurrentBoatToDefault();
+//     if (computerBoardArr[row][column] !== null) {
+//       trueOrFalseArr.push(true);
+//     } else trueOrFalseArr.push(false);
+//   });
+
+//   const foundTrue = trueOrFalseArr.find((boolean) => boolean === true);
+
+//   if (foundTrue === true) {
+//     return true;
+//   } else return false;
+// };
+
+// const placeBoatInComputerArr = () => {
+//   computerPlayerObj.gameMechanics.placeShip(
+//     Ship(currentBoat.name, currentBoat.length),
+//     currentBoat.row,
+//     currentBoat.column,
+//     currentBoat.direction,
+//   );
+// };
+
+const handleBoatInComputerArr = () => {
+  // addRandomDirectionToCurrentBoat();
+  // handleRowAndColumn();
+  // const result = checkRowsAndColumnsForOverlap();
+  // if (result === true) handleBoatInComputerArr();
+  // placeBoatInComputerArr();
 };
 
 const handleClickBoatSelectHighlight = () => {
@@ -288,10 +315,10 @@ const handleClickBoatSelectHighlight = () => {
   if (checkResult === true) return;
 
   placeBoatInPlayerArr();
+  handleBoatInComputerArr();
   highlightColumnsAddRemovePointer(targetColumns);
   disableBoatContainer();
-  placeBoatInComputerArr();
-  // setCurrentBoatToDefault();
+  setCurrentBoatToDefault();
 };
 
 startScreenBoard.addEventListener("mouseover", (event) => {
