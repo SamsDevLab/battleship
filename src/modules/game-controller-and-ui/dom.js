@@ -289,21 +289,21 @@ const checkRowsAndColumnsForOverlap = () => {
   } else return false;
 };
 
-// const placeBoatInComputerArr = () => {
-//   computerPlayerObj.gameMechanics.placeShip(
-//     Ship(currentBoat.name, currentBoat.length),
-//     currentBoat.row,
-//     currentBoat.column,
-//     currentBoat.direction,
-//   );
-// };
+const placeBoatInComputerArr = () => {
+  computerPlayerObj.gameMechanics.placeShip(
+    Ship(currentBoat.name, currentBoat.length),
+    currentBoat.row,
+    currentBoat.column,
+    currentBoat.direction,
+  );
+};
 
 const handleBoatInComputerArr = () => {
   addRandomDirectionToCurrentBoat();
   handleRowAndColumn();
   const result = checkRowsAndColumnsForOverlap();
   if (result === true) handleBoatInComputerArr();
-  // placeBoatInComputerArr();
+  placeBoatInComputerArr();
 };
 
 const handleClickBoatSelectHighlight = () => {
