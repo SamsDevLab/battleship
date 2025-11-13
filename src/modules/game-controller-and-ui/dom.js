@@ -245,27 +245,27 @@ const addRandomDirectionToCurrentBoat = () => {
   currentBoat.direction = randomDirection;
 };
 
-// const randomNumBasedOnBoatLength = () => {
-//   if (currentBoat.length === 5) {
-//     return Math.floor(Math.random() * 6);
-//   } else if (currentBoat.length === 4) {
-//     return Math.floor(Math.random() * 7);
-//   } else if (currentBoat.length === 3) {
-//     return Math.floor(Math.random() * 8);
-//   } else if (currentBoat.length === 2) {
-//     return Math.floor(Math.random() * 9);
-//   }
-// };
+const randomNumBasedOnBoatLength = () => {
+  if (currentBoat.length === 5) {
+    return Math.floor(Math.random() * 6);
+  } else if (currentBoat.length === 4) {
+    return Math.floor(Math.random() * 7);
+  } else if (currentBoat.length === 3) {
+    return Math.floor(Math.random() * 8);
+  } else if (currentBoat.length === 2) {
+    return Math.floor(Math.random() * 9);
+  }
+};
 
-// const handleRowAndColumn = () => {
-//   if (currentBoat.direction === "horizontal") {
-//     currentBoat.row = Math.floor(Math.random() * 10);
-//     currentBoat.column = randomNumBasedOnBoatLength();
-//   } else if (currentBoat.direction === "vertical") {
-//     currentBoat.row = randomNumBasedOnBoatLength();
-//     currentBoat.column = Math.floor(Math.random() * 10);
-//   }
-// };
+const handleRowAndColumn = () => {
+  if (currentBoat.direction === "horizontal") {
+    currentBoat.row = Math.floor(Math.random() * 10);
+    currentBoat.column = randomNumBasedOnBoatLength();
+  } else if (currentBoat.direction === "vertical") {
+    currentBoat.row = randomNumBasedOnBoatLength();
+    currentBoat.column = Math.floor(Math.random() * 10);
+  }
+};
 
 // const checkRowsAndColumnsForOverlap = () => {
 //   const computerBoardArr = computerPlayerObj.gameMechanics.board;
@@ -300,7 +300,7 @@ const addRandomDirectionToCurrentBoat = () => {
 
 const handleBoatInComputerArr = () => {
   addRandomDirectionToCurrentBoat();
-  // handleRowAndColumn();
+  handleRowAndColumn();
   // const result = checkRowsAndColumnsForOverlap();
   // if (result === true) handleBoatInComputerArr();
   // placeBoatInComputerArr();
