@@ -314,15 +314,18 @@ p {
 }
 
 #start-game-button,
-#axis-button {
+#axis-button,
+#modal-button {
   padding: 0.5rem;
   border-radius: 0.5rem;
   background-color: #e63946;
   border: none;
+  font-family: "MontserratMedium";
 }
 
 #start-game-button:hover,
-#axis-button:hover {
+#axis-button:hover,
+#modal-button:hover {
   background-color: #95a5a6;
   cursor: pointer;
 }
@@ -380,13 +383,5 @@ p {
   gap: 1rem;
   justify-content: center;
   align-items: center;
-}
-
-#modal-button {
-  padding: 0.75rem;
-  background-color: #3e5c76;
-  border: 0.5px solid #b5a67c;
-  border-radius: 0.2rem;
-  color: #95a5a6;
-  font-family: "MontserratMedium";
+  box-shadow: 0px 0px 2px 2px #e63946;
 }
