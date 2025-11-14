@@ -79,7 +79,7 @@ export const Gameboard = () => {
 
       const valueResult = checkForNegativeValue(startRow, startCol);
       if (valueResult === true) {
-        return "Starting number cannot be negative";
+        return;
       }
 
       const overflowResult = checkForOverflow(
@@ -89,7 +89,7 @@ export const Gameboard = () => {
         direction,
       );
       if (overflowResult === true) {
-        return "Boat cannot be placed outside of gameboard";
+        return;
       }
 
       const allValuesNull = checkForOccupiedSquares(
@@ -100,7 +100,7 @@ export const Gameboard = () => {
       );
 
       if (allValuesNull === false) {
-        return "These coordinates are occupied by another vessel";
+        return;
       } else {
         for (let i = 0; i < boat.length; i++) {
           if (direction === "horizontal") {
