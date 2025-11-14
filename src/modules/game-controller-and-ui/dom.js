@@ -29,12 +29,16 @@ COMPLETE:
 ✅ • Maybe respace the boats - I still don't care for the look
 ✅ • Click Listener + actions on the "Start Battle" button
 ✅ • Handle toggle bug in toggleAxisButton
+✅ • Finish adding random boats to computer board in placeBoatInComputerArr and helpers
+✅ • Style winner modal
 
 TO-DOs:
-• Finish adding random boats to computer board in placeBoatInComputerArr and helpers
-• Render name of player under board
-• Gap may be too large between D and E rows - looks larger than the others
-• Add actual boat coordinates? e.g. A1, B9, etc. so banner can read "Sam's Dev Lab hit at A1"
+• Ensure that Enemy's Boats don't render to the board in the game
+• Ensure that banner of start game begins with player name's turn
+• Darken selected squares in start game upon click
+• Look into hightlighted columns - play around witht the colors to get them just right
+• Ensure that Play Again button in winner modal brings the start-modal back up and wipes the
+  arrays
 • Refactor
 • Complete README
 */
@@ -219,7 +223,7 @@ const placeBoatInPlayerArr = () => {
 
 const highlightColumnsAddRemovePointer = (targetColumnsArr) => {
   targetColumnsArr.forEach((column) => {
-    column.classList.add("highlight", "remove-pointer");
+    column.classList.add("disabled", "remove-pointer");
   });
 };
 
@@ -466,6 +470,8 @@ const attackPlayer = () => {
 };
 
 const addRowsAndColumns = (board, div) => {
+  const competitorBoard = div.dataset.board;
+
   for (let i = 0; i < board.length; i++) {
     const boardRow = document.createElement("div");
     boardRow.classList.add("row");
@@ -479,7 +485,7 @@ const addRowsAndColumns = (board, div) => {
 
       if (board[i][j] === "missed" || board[i][j] === "hit") {
         markPreviousAttackOnBoard(board[i][j], boardColumn);
-      } else if (board[i][j] !== null) {
+      } else if (board[i][j] !== null && competitorBoard !== "computer") {
         boardColumn.classList.add("highlight");
       }
       boardRow.append(boardColumn);
