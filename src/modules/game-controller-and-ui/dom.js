@@ -68,6 +68,10 @@ const startScreenBoard = document.querySelector("[data-board='start-screen']");
 const usernameAndButtonContainer = document.querySelector(
   "[data-container='username-and-button']",
 );
+let usernameInput = usernameAndButtonContainer.querySelector(
+  "[data-input='username']",
+);
+
 const winnerScreen = document.querySelector("[data-modal='winner-screen']");
 const winnerHeader = document.querySelector("[data-winner-header]");
 const playAgainButton = document.querySelector(
@@ -353,10 +357,6 @@ const handleInput = (event) => {
   realPlayerObj.name = inputValue;
 };
 
-const usernameInput = usernameAndButtonContainer.querySelector(
-  "[data-input='username']",
-);
-
 usernameInput.addEventListener("change", (event) => handleInput(event));
 
 /*************************/
@@ -418,12 +418,14 @@ startGameButton.addEventListener("click", () => handleStartButtonClick());
 /*************************/
 
 // Open Start Screen
-const openStartScreen = () => {
-  addRowsAndColumns(
-    playerObjs.realPlayerObj.gameMechanics.board,
-    startScreenBoard,
-  );
+const openStartScreen = (realPlayerBoard, screenBoard) => {
   startScreen.showModal();
+  screenBoard.replaceChildren();
+  addRowsAndColumns(realPlayerBoard, screenBoard);
+  // addRowsAndColumns(
+  //   playerObjs.realPlayerObj.gameMechanics.board,
+  //   startScreenBoard,
+  // );
 };
 
 /******************************* */
@@ -433,6 +435,11 @@ const openStartScreen = () => {
 const announceWinner = (winnerObj) => {
   winnerScreen.showModal();
   winnerHeader.textContent = `${winnerObj.name} wins the game!`;
+};
+
+const resetGameBoards = () => {
+  playerDiv.replaceChildren();
+  computerDiv.replaceChildren();
 };
 
 const resetPlayerObjs = () => {
@@ -459,12 +466,18 @@ const resetStartScreenColumns = () => {
   });
 };
 
+const resetUsernameInput = () => {
+  usernameInput.value = "";
+};
+
 const handleGameReset = () => {
   winnerScreen.close();
+  resetGameBoards();
   resetPlayerObjs();
   resetBoatContainers();
   resetStartScreenColumns();
-  openStartScreen();
+  resetUsernameInput();
+  openStartScreen(realPlayerObj.gameMechanics.board, startScreenBoard);
 };
 
 playAgainButton.addEventListener("click", () => {
@@ -583,5 +596,5 @@ const addButtonFunctionality = () => {
   });
 };
 
-openStartScreen();
+openStartScreen(realPlayerObj.gameMechanics.board, startScreenBoard);
 addButtonFunctionality();
