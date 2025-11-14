@@ -31,9 +31,9 @@ COMPLETE:
 ✅ • Handle toggle bug in toggleAxisButton
 ✅ • Finish adding random boats to computer board in placeBoatInComputerArr and helpers
 ✅ • Style winner modal
+✅ • Ensure that Enemy's Boats don't render to the board in the game
 
 TO-DOs:
-• Ensure that Enemy's Boats don't render to the board in the game
 • Ensure that banner of start game begins with player name's turn
 • Darken selected squares in start game upon click
 • Look into hightlighted columns - play around witht the colors to get them just right
@@ -53,7 +53,7 @@ const boatPlacementContainer = document.querySelector(
 const boatContainersArr = Array.from(
   document.querySelectorAll("[data-container='boat']"),
 );
-const messageBanner = document.querySelector("#banner");
+const messageBanner = document.querySelector("[data-container='banner']");
 const playerDiv = document.querySelector("[data-board='player']");
 const computerDiv = document.querySelector("[data-board='computer']");
 const startScreen = document.querySelector("[data-modal='start-screen']");
@@ -395,6 +395,7 @@ const handleStartButtonClick = () => {
     insertErrorParagraphTag();
   } else {
     startScreen.close();
+    messageBanner.textContent = `${realPlayerObj.name} starts the game!`;
     RenderToDom();
   }
 };
