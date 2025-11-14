@@ -32,21 +32,28 @@ COMPLETE:
 ✅ • Finish adding random boats to computer board in placeBoatInComputerArr and helpers
 ✅ • Style winner modal
 ✅ • Ensure that Enemy's Boats don't render to the board in the game
+✅ • Ensure that banner of start game begins with player name's turn
+✅ • Darken selected squares in start game upon click
 
 TO-DOs:
-• Ensure that banner of start game begins with player name's turn
-• Darken selected squares in start game upon click
-• Look into hightlighted columns - play around witht the colors to get them just right
+• Boat Placement can STILL overlap. Arrrgh - must fix
 • Ensure that Play Again button in winner modal brings the start-modal back up and wipes the
   arrays
+• Look into hightlighted columns - play around witht the colors to get them just right
 • Refactor
 • Complete README
 */
 
 const gameController = GameController();
-const playerObjs = gameController.initGame();
-const realPlayerObj = playerObjs.realPlayerObj;
-const computerPlayerObj = playerObjs.computerPlayerObj;
+// const playerObjs = gameController.initGame();
+let playerObjs;
+let realPlayerObj;
+let computerPlayerObj;
+
+playerObjs = gameController.initGame();
+realPlayerObj = playerObjs.realPlayerObj;
+computerPlayerObj = playerObjs.computerPlayerObj;
+
 const boatPlacementContainer = document.querySelector(
   "[data-container='boat-placement']",
 );
@@ -63,7 +70,9 @@ const usernameAndButtonContainer = document.querySelector(
 );
 const winnerScreen = document.querySelector("[data-modal='winner-screen']");
 const winnerHeader = document.querySelector("[data-winner-header]");
-const modalButton = document.querySelector("[data-modal-button]");
+const playAgainButton = document.querySelector(
+  "[data-modal-button='play-again']",
+);
 
 let currentBoat = {
   direction: "horizontal",
@@ -223,7 +232,7 @@ const placeBoatInPlayerArr = () => {
 
 const highlightColumnsAddRemovePointer = (targetColumnsArr) => {
   targetColumnsArr.forEach((column) => {
-    column.classList.add("disabled", "remove-pointer");
+    column.classList.add("disabled");
   });
 };
 
@@ -410,11 +419,11 @@ startGameButton.addEventListener("click", () => handleStartButtonClick());
 
 // Open Start Screen
 const openStartScreen = () => {
-  startScreen.showModal();
   addRowsAndColumns(
     playerObjs.realPlayerObj.gameMechanics.board,
     startScreenBoard,
   );
+  startScreen.showModal();
 };
 
 /******************************* */
@@ -426,8 +435,40 @@ const announceWinner = (winnerObj) => {
   winnerHeader.textContent = `${winnerObj.name} wins the game!`;
 };
 
-modalButton.addEventListener("click", () => {
+const resetPlayerObjs = () => {
+  playerObjs = null;
+  playerObjs = gameController.initGame();
+  realPlayerObj = playerObjs.realPlayerObj;
+  computerPlayerObj = playerObjs.computerPlayerObj;
+};
+
+const resetBoatContainers = () => {
+  boatContainersArr.forEach((boatContainer) => {
+    boatContainer.classList.remove("disabled");
+    boatContainer.classList.add("hover-effect");
+  });
+};
+
+const resetStartScreenColumns = () => {
+  const highlightedColumns = Array.from(
+    startScreenBoard.querySelectorAll(".highlight"),
+  );
+  highlightedColumns.forEach((column) => {
+    column.classList.remove("highlight");
+    column.classList.remove("disabled");
+  });
+};
+
+const handleGameReset = () => {
   winnerScreen.close();
+  resetPlayerObjs();
+  resetBoatContainers();
+  resetStartScreenColumns();
+  openStartScreen();
+};
+
+playAgainButton.addEventListener("click", () => {
+  handleGameReset();
 });
 
 const markPreviousAttackOnBoard = (attack, boardColumn) => {
@@ -486,7 +527,8 @@ const addRowsAndColumns = (board, div) => {
 
       if (board[i][j] === "missed" || board[i][j] === "hit") {
         markPreviousAttackOnBoard(board[i][j], boardColumn);
-      } else if (board[i][j] !== null && competitorBoard !== "computer") {
+      } else if (board[i][j] !== null) {
+        // Remove for testing - && competitorBoard !== "computer"
         boardColumn.classList.add("highlight");
       }
       boardRow.append(boardColumn);
