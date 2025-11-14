@@ -470,6 +470,13 @@ const resetUsernameInput = () => {
   usernameInput.value = "";
 };
 
+const resetIncompleteWarning = () => {
+  const errorTag = document.querySelector("[data-tag='error']");
+  if (errorTag === null) {
+    return;
+  } else errorTag.remove();
+};
+
 const handleGameReset = () => {
   winnerScreen.close();
   resetGameBoards();
@@ -477,6 +484,7 @@ const handleGameReset = () => {
   resetBoatContainers();
   resetStartScreenColumns();
   resetUsernameInput();
+  resetIncompleteWarning();
   openStartScreen(realPlayerObj.gameMechanics.board, startScreenBoard);
 };
 
