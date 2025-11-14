@@ -282,7 +282,7 @@ p {
   grid-template-rows: 1fr 0.5fr;
   align-items: center;
   justify-content: center;
-  padding: 1px;
+  padding: 0.2rem 0.4rem;
 }
 
 .boat-header {
