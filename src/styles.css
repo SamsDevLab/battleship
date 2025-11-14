@@ -295,6 +295,7 @@ p {
   background-color: #3e5c76;
   border-radius: 0.5rem;
   cursor: pointer;
+  pointer-events: all;
 }
 
 .selected {
@@ -305,11 +306,6 @@ p {
 
 .disabled {
   opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.remove-pointer {
   pointer-events: none;
 }
 
