@@ -34,11 +34,12 @@ COMPLETE:
 ✅ • Ensure that Enemy's Boats don't render to the board in the game
 ✅ • Ensure that banner of start game begins with player name's turn
 ✅ • Darken selected squares in start game upon click
+✅ • Ensure that Play Again button in winner modal brings the start-modal back up and wipes the
+  arrays
 
 TO-DOs:
 • Boat Placement can STILL overlap. Arrrgh - must fix
-• Ensure that Play Again button in winner modal brings the start-modal back up and wipes the
-  arrays
+• Boats can still hover over already placed boats jacking up the placed boats' color
 • Look into hightlighted columns - play around witht the colors to get them just right
 • Refactor
 • Complete README
@@ -237,6 +238,7 @@ const placeBoatInPlayerArr = () => {
 const highlightColumnsAddRemovePointer = (targetColumnsArr) => {
   targetColumnsArr.forEach((column) => {
     column.classList.add("disabled");
+    column.classList.add("remove-pointer");
   });
 };
 
