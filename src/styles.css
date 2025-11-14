@@ -309,6 +309,10 @@ p {
   pointer-events: none;
 }
 
+.remove-pointer {
+  pointer-events: none;
+}
+
 #start-game-button,
 #axis-button,
 #modal-button {
