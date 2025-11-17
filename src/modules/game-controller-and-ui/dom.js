@@ -1,6 +1,9 @@
 // import { InitGame } from "../game-controller-and-ui/index.js";
-import { Ship } from "../game-rules-and-logic/ship.js";
-import { GameController } from "./game-controller.js";
+// import { Ship } from "../game-rules-and-logic/ship.js";
+// import { GameController } from "./game-controller.js";
+
+import { Ship } from "../refactor-game/refactor-ship.js";
+import { GameController } from "../refactor-game/refactor-game-controller.js";
 
 /*
 Dom Responsibilites:
@@ -607,6 +610,10 @@ TO-DOs:
 // addButtonFunctionality();
 
 // Second Draft:
+
+/* 
+Proposed Modules:
+• */
 const gameController = GameController();
 let playerObjs;
 let realPlayerObj;

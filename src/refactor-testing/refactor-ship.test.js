@@ -1,4 +1,4 @@
-import { Ship } from "../modules/game-rules-and-logic/index";
+import { Ship } from "../modules/refactor-game/refactor-ship.js";
 
 const newShip = Ship(2);
 

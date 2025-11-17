@@ -1,5 +1,5 @@
-import { Gameboard } from "../modules/game-rules-and-logic/index.js";
-import { Ship } from "../modules/game-rules-and-logic/index.js";
+import { Gameboard } from "../modules/refactor-game/refactor-gameboard.js";
+import { Ship } from "../modules/refactor-game/refactor-ship.js";
 
 const patrolBoat = Ship("patrol", 2);
 const submarineBoat = Ship("submarine", 3);
