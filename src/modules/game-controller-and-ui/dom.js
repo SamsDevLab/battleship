@@ -36,17 +36,578 @@ COMPLETE:
 ✅ • Darken selected squares in start game upon click
 ✅ • Ensure that Play Again button in winner modal brings the start-modal back up and wipes the
   arrays
+✅ • Boat Placement can STILL overlap. Arrrgh - must fix
+✅ • Boats can still hover over already placed boats jacking up the placed boats' color
+✅ • Look into hightlighted columns - play around witht the colors to get them just right
 
 TO-DOs:
-• Boat Placement can STILL overlap. Arrrgh - must fix
-• Boats can still hover over already placed boats jacking up the placed boats' color
-• Look into hightlighted columns - play around witht the colors to get them just right
-• Refactor
+• Darken columns when entire boat sinks?
+• Refactor - Split this massive file into different modules. Big architectural refactor
 • Complete README
+• Ship
 */
 
+// First Draft - All Working Code But Needs to Be Split Out:
+// const gameController = GameController();
+// let playerObjs;
+// let realPlayerObj;
+// let computerPlayerObj;
+
+// playerObjs = gameController.initGame();
+// realPlayerObj = playerObjs.realPlayerObj;
+// computerPlayerObj = playerObjs.computerPlayerObj;
+
+// const boatPlacementContainer = document.querySelector(
+//   "[data-container='boat-placement']",
+// );
+// const boatContainersArr = Array.from(
+//   document.querySelectorAll("[data-container='boat']"),
+// );
+// const messageBanner = document.querySelector("[data-container='banner']");
+// const playerDiv = document.querySelector("[data-board='player']");
+// const computerDiv = document.querySelector("[data-board='computer']");
+// const startScreen = document.querySelector("[data-modal='start-screen']");
+// const startScreenBoard = document.querySelector("[data-board='start-screen']");
+// const usernameAndButtonContainer = document.querySelector(
+//   "[data-container='username-and-button']",
+// );
+// let usernameInput = usernameAndButtonContainer.querySelector(
+//   "[data-input='username']",
+// );
+
+// const winnerScreen = document.querySelector("[data-modal='winner-screen']");
+// const winnerHeader = document.querySelector("[data-winner-header]");
+// const playAgainButton = document.querySelector(
+//   "[data-modal-button='play-again']",
+// );
+
+// let currentBoat = {
+//   direction: "horizontal",
+//   name: "",
+//   length: 0,
+//   row: 0,
+//   column: 0,
+// };
+
+// const setCurrentBoatToDefault = () => {
+//   currentBoat.direction = "horizontal";
+//   currentBoat.name = "";
+//   currentBoat.length = 0;
+//   currentBoat.row = 0;
+//   currentBoat.column = 0;
+// };
+
+// const rows = startScreenBoard.children;
+
+// // Handle Boat Selection
+// const selectBoat = (boatElement) => {
+//   boatElement.classList.remove("hover-effect");
+//   boatElement.classList.add("selected");
+
+//   currentBoat.name = boatElement.dataset.boatName;
+//   currentBoat.length = +boatElement.dataset.boatLength;
+// };
+
+// const toggleAxisButton = (button) => {
+//   if (currentBoat.direction === "horizontal") {
+//     button.textContent = "Vertical Axis";
+//     currentBoat.direction = "vertical";
+//   } else if (currentBoat.direction === "vertical") {
+//     button.textContent = "Horizontal Axis";
+//     currentBoat.direction = "horizontal";
+//   }
+// };
+
+// const checkForAlreadySelectedBoat = () => {
+//   const alreadySelectedBoat = boatContainersArr.find((boatContainer) =>
+//     boatContainer.classList.contains("selected"),
+//   );
+
+//   if (alreadySelectedBoat !== undefined) {
+//     alreadySelectedBoat.classList.remove("selected");
+//     alreadySelectedBoat.classList.add("hover-effect");
+//   }
+// };
+
+// const handleBoatContainerClick = (event) => {
+//   const closestContainer = event.target.closest("[data-container]");
+
+//   if (closestContainer.dataset.container === "boat") {
+//     checkForAlreadySelectedBoat();
+//     selectBoat(closestContainer);
+//   } else if (closestContainer.dataset.container === "axis-button") {
+//     const axisButton = closestContainer.querySelector("[data-button]");
+//     toggleAxisButton(axisButton);
+//   }
+// };
+
+// boatPlacementContainer.addEventListener("click", (event) =>
+//   handleBoatContainerClick(event),
+// );
+
+// /************************ */
+
+// // Handle Boat Placement on Screen Board:
+// const getTargetColumns = () => {
+//   let targetRow = rows[currentBoat.row];
+//   let columns = targetRow.children;
+//   let targetColumn = columns[currentBoat.column];
+//   const finalTargetColumns = [];
+
+//   if (currentBoat.direction === "horizontal") {
+//     for (let i = 0; i < currentBoat.length; i++) {
+//       targetColumn = columns[currentBoat.column + i];
+//       finalTargetColumns.push(targetColumn);
+//     }
+//   } else if (currentBoat.direction === "vertical") {
+//     for (let i = 0; i < currentBoat.length; i++) {
+//       targetRow = rows[currentBoat.row + i];
+//       if (targetRow === undefined) {
+//         finalTargetColumns.push(targetRow);
+//       } else {
+//         columns = targetRow.children;
+//         targetColumn = columns[currentBoat.column];
+//         finalTargetColumns.push(targetColumn);
+//       }
+//     }
+//   }
+
+//   return finalTargetColumns;
+// };
+
+// const checkForUndefinedAndRemovePointerClass = (targetColumnsArr) => {
+//   const checkForUndefined = targetColumnsArr.some(
+//     (column) => column === undefined,
+//   );
+
+//   if (checkForUndefined === true) return true;
+
+//   const checkForRemovePointer = targetColumnsArr.some((column) =>
+//     column.classList.contains("remove-pointer"),
+//   );
+
+//   if (checkForRemovePointer === true) return true;
+
+//   return false;
+// };
+
+// const highlightColumns = (targetColumnsArr) => {
+//   targetColumnsArr.forEach((column) => column.classList.add("highlight"));
+// };
+
+// const handleHoverAddHighlight = (event) => {
+//   if (event.target.dataset.board === "start-screen") return;
+
+//   currentBoat.row = +event.target.closest("[data-row]").dataset.row;
+//   currentBoat.column = +event.target.dataset.column;
+
+//   const targetColumns = getTargetColumns();
+//   const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
+
+//   if (checkResult === true) return;
+
+//   highlightColumns(targetColumns);
+// };
+
+// const removeHighlightSetColsAndRowsToNull = (targetColumnsArr) => {
+//   targetColumnsArr.forEach((column) => column.classList.remove("highlight"));
+//   currentBoat.row = null;
+//   currentBoat.column = null;
+// };
+
+// const handleHoverRemoveHighlight = (event) => {
+//   if (event.target.dataset.board === "start-screen") return;
+
+//   currentBoat.row = +event.target.closest("[data-row]").dataset.row;
+
+//   const targetColumns = getTargetColumns();
+
+//   const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
+//   if (checkResult === true) return;
+
+//   removeHighlightSetColsAndRowsToNull(targetColumns);
+// };
+
+// const placeBoatInPlayerArr = () => {
+//   realPlayerObj.gameMechanics.placeShip(
+//     Ship(currentBoat.name, currentBoat.length),
+//     currentBoat.row,
+//     currentBoat.column,
+//     currentBoat.direction,
+//   );
+// };
+
+// const highlightColumnsAddRemovePointer = (targetColumnsArr) => {
+//   targetColumnsArr.forEach((column) => {
+//     column.classList.add("disabled");
+//     column.classList.add("remove-pointer");
+//   });
+// };
+
+// const disableBoatContainer = () => {
+//   const currentBoatContainer = boatContainersArr.find((container) =>
+//     container.classList.contains("selected"),
+//   );
+
+//   currentBoatContainer.classList.remove("selected");
+//   currentBoatContainer.classList.add("disabled");
+// };
+
+// /****************************/
+// /* Computer Boat Placement */
+// /**************************/
+
+// const addRandomDirectionToCurrentBoat = () => {
+//   const directionList = ["horizontal", "vertical"];
+//   const randomStrIndex = Math.floor(Math.random() * directionList.length);
+
+//   const randomDirection = directionList[randomStrIndex];
+//   currentBoat.direction = randomDirection;
+// };
+
+// const randomNumBasedOnBoatLength = () => {
+//   if (currentBoat.length === 5) {
+//     return Math.floor(Math.random() * 6);
+//   } else if (currentBoat.length === 4) {
+//     return Math.floor(Math.random() * 7);
+//   } else if (currentBoat.length === 3) {
+//     return Math.floor(Math.random() * 8);
+//   } else if (currentBoat.length === 2) {
+//     return Math.floor(Math.random() * 9);
+//   }
+// };
+
+// const handleRowAndColumn = () => {
+//   if (currentBoat.direction === "horizontal") {
+//     currentBoat.row = Math.floor(Math.random() * 10);
+//     currentBoat.column = randomNumBasedOnBoatLength();
+//   } else if (currentBoat.direction === "vertical") {
+//     currentBoat.row = randomNumBasedOnBoatLength();
+//     currentBoat.column = Math.floor(Math.random() * 10);
+//   }
+// };
+
+// const checkRowsAndColumnsForOverlap = () => {
+//   const computerBoardArr = computerPlayerObj.gameMechanics.board;
+//   const targetColsArr = getTargetColumns();
+
+//   const trueOrFalseArr = [];
+
+//   targetColsArr.forEach((col) => {
+//     const row = col.closest("[data-row]").dataset.row;
+//     const column = col.dataset.column;
+
+//     if (computerBoardArr[row][column] !== null) {
+//       trueOrFalseArr.push(true);
+//     } else trueOrFalseArr.push(false);
+//   });
+
+//   const foundTrue = trueOrFalseArr.find((boolean) => boolean === true);
+
+//   if (foundTrue === true) {
+//     return true;
+//   } else return false;
+// };
+
+// const placeBoatInComputerArr = () => {
+//   computerPlayerObj.gameMechanics.placeShip(
+//     Ship(currentBoat.name, currentBoat.length),
+//     currentBoat.row,
+//     currentBoat.column,
+//     currentBoat.direction,
+//   );
+// };
+
+// const handleBoatInComputerArr = () => {
+//   addRandomDirectionToCurrentBoat();
+//   handleRowAndColumn();
+//   const result = checkRowsAndColumnsForOverlap();
+//   if (result === true) handleBoatInComputerArr();
+//   placeBoatInComputerArr();
+// };
+
+// const handleClickBoatSelectHighlight = () => {
+//   if (currentBoat.name === "") return;
+
+//   const targetColumns = getTargetColumns();
+
+//   const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
+//   if (checkResult === true) return;
+
+//   placeBoatInPlayerArr();
+//   handleBoatInComputerArr();
+//   highlightColumnsAddRemovePointer(targetColumns);
+//   disableBoatContainer();
+//   setCurrentBoatToDefault();
+// };
+
+// startScreenBoard.addEventListener("mouseover", (event) => {
+//   handleHoverAddHighlight(event);
+// });
+
+// startScreenBoard.addEventListener("mouseout", (event) => {
+//   handleHoverRemoveHighlight(event);
+// });
+
+// startScreenBoard.addEventListener("click", () => {
+//   handleClickBoatSelectHighlight();
+// });
+
+// /*************************/
+
+// // Username Input
+// const handleInput = (event) => {
+//   const inputValue = event.target.value;
+//   realPlayerObj.name = inputValue;
+// };
+
+// usernameInput.addEventListener("change", (event) => handleInput(event));
+
+// /*************************/
+
+// // Start Battle Button
+
+// const checkForAllBoatsPlaced = () => {
+//   const result = boatContainersArr.every((boatContainer) =>
+//     boatContainer.classList.contains("disabled"),
+//   );
+
+//   return result;
+// };
+
+// const checkForPlayerNamePlacement = () => {
+//   if (realPlayerObj.name === undefined) return false;
+//   else return true;
+// };
+
+// const checkForErrorTag = () => {
+//   const result = document.querySelector("[data-tag='error']");
+//   return result;
+// };
+
+// const insertErrorParagraphTag = () => {
+//   const checkResult = checkForErrorTag();
+
+//   if (checkResult !== null) return;
+
+//   const errorParagraphTag = document.createElement("p");
+//   errorParagraphTag.textContent =
+//     "⚠️ Please enter your name and place all 5 of your ships!";
+
+//   errorParagraphTag.id = "error-tag";
+//   errorParagraphTag.dataset.tag = "error";
+
+//   usernameAndButtonContainer.insertBefore(errorParagraphTag, startGameButton);
+// };
+
+// const handleStartButtonClick = () => {
+//   const boatPlacementResult = checkForAllBoatsPlaced();
+//   const playerNamePlacement = checkForPlayerNamePlacement();
+
+//   if (boatPlacementResult === false || playerNamePlacement === false) {
+//     insertErrorParagraphTag();
+//   } else {
+//     startScreen.close();
+//     messageBanner.textContent = `${realPlayerObj.name} shoots first!`;
+//     RenderToDom();
+//   }
+// };
+
+// const startGameButton = usernameAndButtonContainer.querySelector(
+//   "[data-button='start-game']",
+// );
+
+// startGameButton.addEventListener("click", () => handleStartButtonClick());
+
+// /*************************/
+
+// // Open Start Screen
+// const openStartScreen = (realPlayerBoard, screenBoard) => {
+//   startScreen.showModal();
+//   screenBoard.replaceChildren();
+//   addRowsAndColumns(realPlayerBoard, screenBoard);
+// };
+
+// /******************************* */
+// /* Start Screen From Here Up ^ */
+// /****************************** */
+
+// const announceWinner = (winnerObj) => {
+//   winnerScreen.showModal();
+//   winnerHeader.textContent = `${winnerObj.name} wins the game!`;
+// };
+
+// const resetGameBoards = () => {
+//   playerDiv.replaceChildren();
+//   computerDiv.replaceChildren();
+// };
+
+// const resetPlayerObjs = () => {
+//   playerObjs = null;
+//   playerObjs = gameController.initGame();
+//   realPlayerObj = playerObjs.realPlayerObj;
+//   computerPlayerObj = playerObjs.computerPlayerObj;
+// };
+
+// const resetBoatContainers = () => {
+//   boatContainersArr.forEach((boatContainer) => {
+//     boatContainer.classList.remove("disabled");
+//     boatContainer.classList.add("hover-effect");
+//   });
+// };
+
+// const resetStartScreenColumns = () => {
+//   const highlightedColumns = Array.from(
+//     startScreenBoard.querySelectorAll(".highlight"),
+//   );
+//   highlightedColumns.forEach((column) => {
+//     column.classList.remove("highlight");
+//     column.classList.remove("disabled");
+//   });
+// };
+
+// const resetUsernameInput = () => {
+//   usernameInput.value = "";
+// };
+
+// const resetIncompleteWarning = () => {
+//   const errorTag = document.querySelector("[data-tag='error']");
+//   if (errorTag === null) {
+//     return;
+//   } else errorTag.remove();
+// };
+
+// const handleGameReset = () => {
+//   winnerScreen.close();
+//   resetGameBoards();
+//   resetPlayerObjs();
+//   resetBoatContainers();
+//   resetStartScreenColumns();
+//   resetUsernameInput();
+//   resetIncompleteWarning();
+//   openStartScreen(realPlayerObj.gameMechanics.board, startScreenBoard);
+// };
+
+// playAgainButton.addEventListener("click", () => {
+//   handleGameReset();
+// });
+
+// const markPreviousAttackOnBoard = (attack, boardColumn) => {
+//   const markAttackSpan = document.createElement("span");
+//   markAttackSpan.classList.add(`${attack}-circle`);
+//   boardColumn.dataset.hitOrMiss = `${attack}`;
+//   boardColumn.append(markAttackSpan);
+//   boardColumn.classList.add("remove-pointer");
+// };
+
+// const getRandomCoords = (playerBoard) => {
+//   const row = Math.floor(Math.random(playerBoard.length) * 10);
+//   const col = Math.floor(Math.random(playerBoard[0].length) * 10);
+
+//   if (playerBoard[row][col] === "hit" || playerBoard[row][col] === "missed") {
+//     return getRandomCoords(playerBoard);
+//   } else {
+//     return { row, col };
+//   }
+// };
+
+// const attackPlayer = () => {
+//   const playerBoard = playerObjs.realPlayerObj.gameMechanics.board;
+
+//   let random = getRandomCoords(playerBoard);
+
+//   const attackResult = gameController.attack(
+//     random.row,
+//     random.col,
+//     playerObjs.realPlayerObj,
+//     playerObjs.computerPlayerObj,
+//   );
+
+//   if (attackResult === "All boats have been sunk!")
+//     announceWinner(playerObjs.computerPlayerObj);
+
+//   messageBanner.textContent = "";
+//   messageBanner.textContent = attackResult;
+
+//   RenderToDom();
+// };
+
+// const addRowsAndColumns = (board, div) => {
+//   const competitorBoard = div.dataset.board;
+
+//   for (let i = 0; i < board.length; i++) {
+//     const boardRow = document.createElement("div");
+//     boardRow.classList.add("row");
+//     boardRow.dataset.row = `${i}`;
+//     div.append(boardRow);
+
+//     for (let j = 0; j < board.length; j++) {
+//       const boardColumn = document.createElement("button");
+//       boardColumn.classList.add("column");
+//       boardColumn.dataset.column = `${j}`;
+
+//       if (board[i][j] === "missed" || board[i][j] === "hit") {
+//         markPreviousAttackOnBoard(board[i][j], boardColumn);
+//       } else if (board[i][j] !== null && competitorBoard !== "computer") {
+//         boardColumn.classList.add("highlight");
+//       }
+//       boardRow.append(boardColumn);
+//     }
+//   }
+// };
+
+// export const RenderToDom = () => {
+//   playerDiv.textContent = "";
+//   computerDiv.textContent = "";
+
+//   addRowsAndColumns(playerObjs.realPlayerObj.gameMechanics.board, playerDiv);
+//   addRowsAndColumns(
+//     playerObjs.computerPlayerObj.gameMechanics.board,
+//     computerDiv,
+//   );
+// };
+
+// const addButtonFunctionality = () => {
+//   const computerBoard = document.querySelector("[data-board='computer']");
+
+//   computerBoard.addEventListener("click", (event) => {
+//     if (
+//       event.target.dataset.hitOrMiss === "missed" ||
+//       event.target.parentNode.dataset.hitOrMiss === "missed" ||
+//       event.target.dataset.hitOrMiss === "hit" ||
+//       event.target.parentNode.dataset.hitOrMiss === "hit"
+//     ) {
+//       messageBanner.textContent = "";
+//       messageBanner.textContent = "Target already hit. Try another target!";
+//       return;
+//     }
+
+//     const targetRow = event.target.parentElement.dataset.row;
+//     const targetColumn = event.target.dataset.column;
+
+//     const computerAttackResult = gameController.attack(
+//       targetRow,
+//       targetColumn,
+//       playerObjs.computerPlayerObj,
+//       playerObjs.realPlayerObj,
+//     );
+
+//     if (computerAttackResult === "All boats have been sunk!")
+//       announceWinner(playerObjs.realPlayerObj);
+
+//     messageBanner.textContent = "";
+//     messageBanner.textContent = computerAttackResult;
+
+//     RenderToDom();
+//     setTimeout(attackPlayer, 1200);
+//   });
+// };
+
+// openStartScreen(realPlayerObj.gameMechanics.board, startScreenBoard);
+// addButtonFunctionality();
+
+// Second Draft:
 const gameController = GameController();
-// const playerObjs = gameController.initGame();
 let playerObjs;
 let realPlayerObj;
 let computerPlayerObj;
@@ -406,7 +967,7 @@ const handleStartButtonClick = () => {
     insertErrorParagraphTag();
   } else {
     startScreen.close();
-    messageBanner.textContent = `${realPlayerObj.name} starts the game!`;
+    messageBanner.textContent = `${realPlayerObj.name} shoots first!`;
     RenderToDom();
   }
 };
@@ -424,10 +985,6 @@ const openStartScreen = (realPlayerBoard, screenBoard) => {
   startScreen.showModal();
   screenBoard.replaceChildren();
   addRowsAndColumns(realPlayerBoard, screenBoard);
-  // addRowsAndColumns(
-  //   playerObjs.realPlayerObj.gameMechanics.board,
-  //   startScreenBoard,
-  // );
 };
 
 /******************************* */
@@ -550,8 +1107,7 @@ const addRowsAndColumns = (board, div) => {
 
       if (board[i][j] === "missed" || board[i][j] === "hit") {
         markPreviousAttackOnBoard(board[i][j], boardColumn);
-      } else if (board[i][j] !== null) {
-        // Remove for testing - && competitorBoard !== "computer"
+      } else if (board[i][j] !== null && competitorBoard !== "computer") {
         boardColumn.classList.add("highlight");
       }
       boardRow.append(boardColumn);
