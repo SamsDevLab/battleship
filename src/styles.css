@@ -237,7 +237,8 @@ p {
 }
 
 /* Start Game Dialog */
-#start-game-modal:open {
+
+.is-open {
   min-height: 100vh;
   min-width: 100vw;
   display: grid;
@@ -248,7 +249,7 @@ p {
   font-family: "MontserratMedium";
 }
 
-#start-game-modal h2 {
+.start-game-modal h2 {
   font-family: "BlackOpsOne";
   font-size: 4rem;
   margin-top: 1.5rem;
