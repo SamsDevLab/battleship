@@ -1,53 +1,51 @@
-# Webpack-template
+# 🚢 Battleship
 
-Webpack template for use with Node.js
+Battleship game developed for [The Odin Project](https://www.theodinproject.com/) curriculum. Sink the computer's fleet and secure your status on the high seas!
 
-## Base Features
+## 💻 Technologies Used:
 
-### Greeting.js file
+- Vanilla JavaScript
+- HTML
+- CSS
+- Jest (for testing core logic)
+- Webpack
 
-For testing purposes. To ensure your JavaScript is linking correctly.
+## ❇️ Features:
 
-### HTML Webpack Plugin:
+- Click and point boat placement
+- Axis button - alters boats orientation
+- Input field to add name of admiral (player)
+- Interactive gameboard - click the cell that you wish to target
+- Win screen with play again - allows player to restart the game
 
-Allows HTML to bundle together with JavaScript
+## To Run:
 
-### HTML Loader:
+1. Clone and Install
 
-Used for detecting image file paths in HTML template
+```
+git clone https://github.com/SamsDevLab/battleship.git
+cd battleship
+npm install
+```
 
-### CSS Loaders:
+2. Run locally (dev server):
 
-Comes with "style-loader" & "css-loader".
+```
+npm run dev
+```
 
-"css-loader" loads CSS into a string that JavaScript can recognize. "style-loader" injects that string into the JavaScript.
+3. Build for production:
 
-### Pre-linked style sheet:
+```
+npm run build
+```
 
-Background color pre-set for testing purposes
+## 📺 Screenshots:
 
-### Linked assets:
+![alt text](src/screenshots/start-screen.png)
+![alt text](src/screenshots/gameplay.png)
+![alt text](src/screenshots/winning-game.png)
 
-To help your JavaScript recognize local image files. Including: (png | svg | jpg | jpeg | gif)
+## Image Credit:
 
-### Webpack Dev Server:
-
-Bundle code behind the scenes without having to save to dist folder. Allows you to test your code in realtime live preview.
-
-### Source map:
-
-For help with debugging your source code.
-
-### CSS Minimizer Webpack Plugin | Mini CSS Extract Plugin
-
-Minifies production code.
-
-### Webpack Merge
-
-Allows common resourced (used by both prod and dev) to be shared, thereby providing DRY
-
-### Webpack CLI
-
-Provides a flexible set of webpack commands for developers
-
-Start here after lunch - finish README and move on to JSON
+- Boat SVGs extracted from macrovector's "Military boats collection" on [Freepik](https://www.freepik.com/free-vector/military-boats-collection_9585890.htm#fromView=keyword&page=1&position=0&uuid=3835a9a5-9943-4e27-8a02-cfec2bf563c6&query=Military+ship)
