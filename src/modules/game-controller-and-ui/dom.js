@@ -1,5 +1,5 @@
-import { Ship } from "../refactor-game/refactor-ship.js";
-import { GameController } from "../refactor-game/refactor-game-controller.js";
+import { Ship } from "../game/ship.js";
+import { GameController } from "../game/game-controller.js";
 
 const gameController = GameController();
 let playerObjs;
