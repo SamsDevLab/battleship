@@ -361,6 +361,7 @@ const handleStartButtonClick = () => {
   if (boatPlacementResult === false || playerNamePlacement === false) {
     insertErrorParagraphTag();
   } else {
+    startScreen.classList.remove("is-open");
     startScreen.close();
     messageBanner.textContent = `${realPlayerObj.name} shoots first!`;
     RenderToDom();
@@ -377,6 +378,7 @@ startGameButton.addEventListener("click", () => handleStartButtonClick());
 
 // Open Start Screen
 const openStartScreen = (realPlayerBoard, screenBoard) => {
+  startScreen.classList.add("is-open");
   startScreen.showModal();
   screenBoard.replaceChildren();
   addRowsAndColumns(realPlayerBoard, screenBoard);
