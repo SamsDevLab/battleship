@@ -389,6 +389,7 @@ const openStartScreen = (realPlayerBoard, screenBoard) => {
 /****************************** */
 
 const announceWinner = (winnerObj) => {
+  winnerScreen.classList.add("show-winner");
   winnerScreen.showModal();
   winnerHeader.textContent = `${winnerObj.name} wins the game!`;
 };
@@ -434,6 +435,7 @@ const resetIncompleteWarning = () => {
 };
 
 const handleGameReset = () => {
+  winnerScreen.classList.remove("show-winner");
   winnerScreen.close();
   resetGameBoards();
   resetPlayerObjs();
