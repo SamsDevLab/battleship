@@ -1,4 +1,4 @@
-import { Ship } from "../modules/refactor-game/refactor-ship.js";
+import { Ship } from "../modules/game/ship.js";
 
 const newShip = Ship(2);
 

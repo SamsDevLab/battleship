@@ -1,5 +1,5 @@
-import { Player } from "../modules/refactor-game/refactor-player.js";
-import { Ship } from "../modules/refactor-game/refactor-ship.js";
+import { Player } from "../modules/game/player.js";
+import { Ship } from "../modules/game/ship.js";
 
 // *************************** //
 // *** Test Player Object *** //

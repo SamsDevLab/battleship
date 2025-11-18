@@ -1,4 +1,4 @@
-import { Gameboard } from "../refactor-game/refactor-gameboard.js";
+import { Gameboard } from "../game/gameboard.js";
 
 export const Player = () => {
   return {

@@ -1,4 +1,4 @@
-import { Player } from "../refactor-game/refactor-player.js";
+import { Player } from "./player.js";
 
 export const GameController = () => {
   return {
