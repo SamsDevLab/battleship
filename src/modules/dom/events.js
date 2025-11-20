@@ -1,29 +1,34 @@
-import { handleBoatContainerClick } from "./boat-placement-ui.js";
 import { boatPlacementContainer } from "./dom-helpers";
-import { handleHoverAddHighlight } from "./boat-placement-ui.js";
-import { handleHoverRemoveHighlight } from "./boat-placement-ui.js";
-import { handleClickBoatSelectHighlight } from "./boat-placement-ui.js";
-import { handleStartButtonClick } from "./boat-placement-ui.js";
+import { startScreenBoard } from "./dom-helpers";
 import { usernameInput } from "./dom-helpers";
 import { startGameButton } from "./dom-helpers";
+import { BoatPlacement } from "./boat-placement-ui";
+
+const boatPlacement = BoatPlacement();
 
 boatPlacementContainer.addEventListener("click", (event) =>
-  handleBoatContainerClick(event),
+  boatPlacement.handleBoatContainerClick(event),
 );
 
 // Start Screen Board listeners:
 startScreenBoard.addEventListener("mouseover", (event) => {
-  handleHoverAddHighlight(event);
+  boatPlacement.handleHoverAddHighlight(event);
 });
 
 startScreenBoard.addEventListener("mouseout", (event) => {
-  handleHoverRemoveHighlight(event);
+  boatPlacement.handleHoverRemoveHighlight(event);
 });
 
 startScreenBoard.addEventListener("click", () => {
-  handleClickBoatSelectHighlight();
+  boatPlacement.handleClickBoatSelectHighlight();
 });
 
-usernameInput.addEventListener("change", (event) => handleInput(event));
+// Input listener:
+usernameInput.addEventListener("change", (event) =>
+  boatPlacement.handleInput(event),
+);
 
-startGameButton.addEventListener("click", () => handleStartButtonClick());
+// Start Game Button listener:
+startGameButton.addEventListener("click", () =>
+  boatPlacement.handleStartButtonClick(),
+);
