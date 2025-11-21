@@ -1,5 +1,3 @@
-import { startScreen } from "../dom/dom-helpers";
-
 export const State = () => {
   let currentBoat = {
     direction: "horizontal",
@@ -9,6 +7,7 @@ export const State = () => {
     column: 0,
   };
   return {
+    currentBoat,
     setCurrentBoatToDefault: function () {
       currentBoat.direction = "horizontal";
       currentBoat.name = "";
