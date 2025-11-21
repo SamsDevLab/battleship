@@ -20,19 +20,26 @@ Start here when you return: keep parsing logic from the monolith dom.js file and
 in appropriate modules
 */
 
+import { DOMHelpers } from "./modules/dom/dom-helpers.js";
+import { State } from "./modules/state/ui-state.js";
+import { ComputerBoatPlacement } from "./modules/game/ai-boat-placement.js";
 import { GameController } from "./modules/game/game-controller.js";
 import { Renderer } from "./modules/dom/renderer.js";
-import { startScreen } from "./modules/dom/dom-helpers.js";
-import { startScreenBoard } from "./modules/dom/dom-helpers.js";
+import { BoatPlacement } from "./modules/dom/boat-placement-ui.js";
+import "./modules/dom/events.js";
 
+export { DOMHelpers };
+export { BoatPlacement };
+export { ComputerBoatPlacement };
+export { State };
+
+const domHelpers = DOMHelpers();
 const gameController = GameController();
 const renderer = Renderer();
 const playersObjs = gameController.initGame();
 
 renderer.openStartScreen(
   playersObjs.realPlayerObj.gameMechanics.board,
-  startScreenBoard,
-  startScreen,
+  domHelpers.startScreenBoard,
+  domHelpers.startScreen,
 );
-
-console.log(playersObjs);
