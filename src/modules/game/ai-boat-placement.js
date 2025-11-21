@@ -51,14 +51,14 @@ export const ComputerBoatPlacement = () => {
     } else return false;
   };
 
-  const placeBoatInComputerArr = () => {
-    computerPlayerObj.gameMechanics.placeShip(
-      Ship(currentBoat.name, currentBoat.length),
-      currentBoat.row,
-      currentBoat.column,
-      currentBoat.direction,
-    );
-  };
+  // const placeBoatInComputerArr = () => {
+  //   computerPlayerObj.gameMechanics.placeShip(
+  //     Ship(currentBoat.name, currentBoat.length),
+  //     currentBoat.row,
+  //     currentBoat.column,
+  //     currentBoat.direction,
+  //   );
+  // };
 
   return {
     handleBoatInComputerArr: function () {
