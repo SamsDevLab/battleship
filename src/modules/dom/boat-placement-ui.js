@@ -5,6 +5,7 @@ import { ComputerBoatPlacement } from "../../index.js";
 const domHelpers = DOMHelpers();
 const currentBoat = State().currentBoat;
 const computerBoatPlacement = ComputerBoatPlacement();
+const boatContainersArr = domHelpers.boatContainersArr;
 
 export const BoatPlacement = () => {
   const selectBoat = (boatElement) => {
@@ -38,7 +39,6 @@ export const BoatPlacement = () => {
 
   const getTargetColumns = () => {
     const rows = domHelpers.startScreenBoard.children;
-    console.log(rows);
     let targetRow = rows[currentBoat.row];
     let columns = targetRow.children;
     let targetColumn = columns[currentBoat.column];
