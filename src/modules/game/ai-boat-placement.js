@@ -65,7 +65,7 @@ export const ComputerBoatPlacement = () => {
       addRandomDirectionToCurrentBoat();
       handleRowAndColumn();
       const result = checkRowsAndColumnsForOverlap();
-      if (result === true) handleBoatInComputerArr();
+      if (result === true) ComputerBoatPlacement().handleBoatInComputerArr();
       placeBoatInComputerArr();
     },
   };
