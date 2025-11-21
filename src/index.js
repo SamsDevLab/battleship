@@ -21,14 +21,15 @@ in appropriate modules
 */
 
 import { DOMHelpers } from "./modules/dom/dom-helpers.js";
+import { Renderer } from "./modules/dom/renderer.js";
 import { State } from "./modules/state/ui-state.js";
 import { ComputerBoatPlacement } from "./modules/game/ai-boat-placement.js";
 import { GameController } from "./modules/game/game-controller.js";
-import { Renderer } from "./modules/dom/renderer.js";
 import { BoatPlacement } from "./modules/dom/boat-placement-ui.js";
 import "./modules/dom/events.js";
 
 export { DOMHelpers };
+export { GameController };
 export { BoatPlacement };
 export { ComputerBoatPlacement };
 export { State };
@@ -36,10 +37,13 @@ export { State };
 const domHelpers = DOMHelpers();
 const gameController = GameController();
 const renderer = Renderer();
-const playersObjs = gameController.initGame();
+const playerObjs = gameController.initGame();
+const state = State();
+
+state.storeObjects(playerObjs);
 
 renderer.openStartScreen(
-  playersObjs.realPlayerObj.gameMechanics.board,
+  playerObjs.realPlayerObj.gameMechanics.board,
   domHelpers.startScreenBoard,
   domHelpers.startScreen,
 );
