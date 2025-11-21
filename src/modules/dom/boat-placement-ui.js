@@ -1,19 +1,35 @@
 import { DOMHelpers } from "../../index.js";
 import { State } from "../../index.js";
+import { GameController } from "../../index.js";
 import { ComputerBoatPlacement } from "../../index.js";
 
 const domHelpers = DOMHelpers();
-const currentBoat = State().currentBoat;
+const state = State();
+const gameController = GameController();
 const computerBoatPlacement = ComputerBoatPlacement();
 const boatContainersArr = domHelpers.boatContainersArr;
 
+/*
+Notes for the commit
+Updating currentBoat setters in the following functions:
+• selectBoat - Placed setters
+• getTargetColumns - Placed currentBoat getter
+• handleHoverAddHighlight - Placed setters
+• handleHoverRemoveHighlight - Placed setter
+• removeHighlightSetColsAndRowsToNull - Placed setters
+*/
+
 export const BoatPlacement = () => {
   const selectBoat = (boatElement) => {
+    console.log(boatElement);
     boatElement.classList.remove("hover-effect");
     boatElement.classList.add("selected");
 
-    currentBoat.name = boatElement.dataset.boatName;
-    currentBoat.length = +boatElement.dataset.boatLength;
+    state.setCurrentBoatName(boatElement.dataset.boatName);
+    state.setCurrentBoatLength(+boatElement.dataset.boatLength);
+
+    // currentBoat.name = boatElement.dataset.boatName;
+    // currentBoat.length = +boatElement.dataset.boatLength;
   };
 
   const toggleAxisButton = (button) => {
@@ -38,6 +54,7 @@ export const BoatPlacement = () => {
   };
 
   const getTargetColumns = () => {
+    const currentBoat = state.getCurrentBoat();
     const rows = domHelpers.startScreenBoard.children;
     let targetRow = rows[currentBoat.row];
     let columns = targetRow.children;
@@ -87,8 +104,12 @@ export const BoatPlacement = () => {
 
   const removeHighlightSetColsAndRowsToNull = (targetColumnsArr) => {
     targetColumnsArr.forEach((column) => column.classList.remove("highlight"));
-    currentBoat.row = null;
-    currentBoat.column = null;
+
+    state.setCurrentBoatRow(null);
+    state.setCurrentBoatColumn(null);
+
+    // currentBoat.row = null;
+    // currentBoat.column = null;
   };
 
   const highlightColumnsAddRemovePointer = (targetColumnsArr) => {
@@ -156,8 +177,11 @@ export const BoatPlacement = () => {
     handleHoverAddHighlight: function (event) {
       if (event.target.dataset.board === "start-screen") return;
 
-      currentBoat.row = +event.target.closest("[data-row]").dataset.row;
-      currentBoat.column = +event.target.dataset.column;
+      state.setCurrentBoatRow(+event.target.closest("[data-row]").dataset.row);
+      state.setCurrentBoatColumn(+event.target.dataset.column);
+
+      // currentBoat.row = +event.target.closest("[data-row]").dataset.row;
+      // currentBoat.column = +event.target.dataset.column;
 
       const targetColumns = getTargetColumns();
       const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
@@ -169,7 +193,9 @@ export const BoatPlacement = () => {
     handleHoverRemoveHighlight: function (event) {
       if (event.target.dataset.board === "start-screen") return;
 
-      currentBoat.row = +event.target.closest("[data-row]").dataset.row;
+      state.setCurrentBoatRow(+event.target.closest("[data-row]").dataset.row);
+
+      // currentBoat.row = +event.target.closest("[data-row]").dataset.row;
 
       const targetColumns = getTargetColumns();
 
@@ -186,7 +212,7 @@ export const BoatPlacement = () => {
       const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
       if (checkResult === true) return;
 
-      placeBoatInPlayerArr();
+      gameController.placeBoatInPlayerArr();
       computerBoatPlacement.handleBoatInComputerArr();
       highlightColumnsAddRemovePointer(targetColumns);
       disableBoatContainer();
