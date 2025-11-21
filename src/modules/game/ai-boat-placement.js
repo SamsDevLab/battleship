@@ -1,5 +1,21 @@
+import { GameController } from "../../index.js";
+import { State } from "../../index.js";
+
+const gameController = GameController();
+const state = State();
+
+/* 
+Add getter to:
+
+• handleBoatInComputerArr
+
+Add setter to:
+• handleRowAndColumn
+
+*/
+
 export const ComputerBoatPlacement = () => {
-  const addRandomDirectionToCurrentBoat = () => {
+  const addRandomDirectionToCurrentBoat = (currentBoat) => {
     const directionList = ["horizontal", "vertical"];
     const randomStrIndex = Math.floor(Math.random() * directionList.length);
 
@@ -19,18 +35,26 @@ export const ComputerBoatPlacement = () => {
     }
   };
 
-  const handleRowAndColumn = () => {
+  const handleRowAndColumn = (currentBoat) => {
     if (currentBoat.direction === "horizontal") {
-      currentBoat.row = Math.floor(Math.random() * 10);
-      currentBoat.column = randomNumBasedOnBoatLength();
+      state.setCurrentBoatRow(Math.floor(Math.random() * 10));
+      state.setCurrentBoatColumn(randomNumBasedOnBoatLength(currentBoat));
+
+      // currentBoat.row = Math.floor(Math.random() * 10);
+      // currentBoat.column = randomNumBasedOnBoatLength();
     } else if (currentBoat.direction === "vertical") {
-      currentBoat.row = randomNumBasedOnBoatLength();
-      currentBoat.column = Math.floor(Math.random() * 10);
+      state.setCurrentBoatRow(randomNumBasedOnBoatLength(currentBoat));
+      state.setCurrentBoatColumn(Math.floor(Math.random() * 10));
+
+      // currentBoat.row = randomNumBasedOnBoatLength();
+      // currentBoat.column = Math.floor(Math.random() * 10);
     }
   };
 
   const checkRowsAndColumnsForOverlap = () => {
-    const computerBoardArr = computerPlayerObj.gameMechanics.board;
+    const computerPlayer = state.getComputerPlayer();
+
+    const computerBoardArr = computerPlayer.gameMechanics.board;
     const targetColsArr = getTargetColumns();
 
     const trueOrFalseArr = [];
@@ -62,11 +86,12 @@ export const ComputerBoatPlacement = () => {
 
   return {
     handleBoatInComputerArr: function () {
-      addRandomDirectionToCurrentBoat();
-      handleRowAndColumn();
+      const currentBoat = state.getCurrentBoat();
+      addRandomDirectionToCurrentBoat(currentBoat);
+      handleRowAndColumn(currentBoat);
       const result = checkRowsAndColumnsForOverlap();
       if (result === true) ComputerBoatPlacement().handleBoatInComputerArr();
-      placeBoatInComputerArr();
+      gameController.placeBoatInComputerArr();
     },
   };
 };
