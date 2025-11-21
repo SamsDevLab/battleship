@@ -1,3 +1,11 @@
+import { DOMHelpers } from "../../index.js";
+import { State } from "../../index.js";
+import { ComputerBoatPlacement } from "../../index.js";
+
+const domHelpers = DOMHelpers();
+const currentBoat = State().currentBoat;
+const computerBoatPlacement = ComputerBoatPlacement();
+
 export const BoatPlacement = () => {
   const selectBoat = (boatElement) => {
     boatElement.classList.remove("hover-effect");
@@ -29,6 +37,8 @@ export const BoatPlacement = () => {
   };
 
   const getTargetColumns = () => {
+    const rows = domHelpers.startScreenBoard.children;
+    console.log(rows);
     let targetRow = rows[currentBoat.row];
     let columns = targetRow.children;
     let targetColumn = columns[currentBoat.column];
@@ -132,6 +142,7 @@ export const BoatPlacement = () => {
 
   return {
     handleBoatContainerClick: function (event) {
+      console.log(event);
       const closestContainer = event.target.closest("[data-container]");
 
       if (closestContainer.dataset.container === "boat") {
@@ -176,7 +187,7 @@ export const BoatPlacement = () => {
       if (checkResult === true) return;
 
       placeBoatInPlayerArr();
-      handleBoatInComputerArr();
+      computerBoatPlacement.handleBoatInComputerArr();
       highlightColumnsAddRemovePointer(targetColumns);
       disableBoatContainer();
       setCurrentBoatToDefault();
