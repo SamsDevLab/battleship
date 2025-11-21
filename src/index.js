@@ -1,12 +1,38 @@
-// import { GameController } from "./modules/refactor-game/refactor-game-controller.js";
-// import { setPlayerObjs } from "./modules/refactor-state/refactor-ui-state.js";
-// import { openStartScreen } from "./modules/refactor-dom/renderer.js";
-// import { startScreenBoard } from "./modules/refactor-dom/helpers.js";
-import { RenderToDom } from "./modules/game-controller-and-ui/dom.js";
+/* 
+Suggested modules:
+dom/index.js — the entrypoint that imports the other dom modules and wires things to GameController. This is the file Odin expects.
 
-// const gameController = GameController();
-// const playerObjs = gameController.initGame();
-// console.log(playerObjs);
+dom/renderer.js — all DOM creation + update functions (addRowsAndColumns, markPreviousAttackOnBoard, RenderToDom, helpers).
 
-// setPlayerObjs(playerObjs);
-// openStartScreen(playerObjs.realPlayerObj.gameMechanics.board, startScreenBoard);
+dom/boatPlacementUI.js — UI-only boat selection / hover / highlight logic. Talks to gameController.placeShip() but computes UI coords.
+
+dom/events.js — event listener registration (clicks/hover) and high-level handlers that call controller methods.
+
+dom/helpers.js — tiny DOM util functions (closestRowColFromEl, createEl, setDataAttr).
+
+game/ai.js — computer random placement & random shooting logic (pure functions that return coords).
+
+game/game-controller.js — your existing GameController but moved heavier logic (computer placement loop, turn manager) out of DOM file.
+
+state/ui-state.js (optional) — thin object for transient UI-only state (currentBoat selection, direction) that the DOM modules own.
+
+Start here when you return: keep parsing logic from the monolith dom.js file and placing it
+in appropriate modules
+*/
+
+import { GameController } from "./modules/game/game-controller.js";
+import { Renderer } from "./modules/dom/renderer.js";
+import { startScreen } from "./modules/dom/dom-helpers.js";
+import { startScreenBoard } from "./modules/dom/dom-helpers.js";
+
+const gameController = GameController();
+const renderer = Renderer();
+const playersObjs = gameController.initGame();
+
+renderer.openStartScreen(
+  playersObjs.realPlayerObj.gameMechanics.board,
+  startScreenBoard,
+  startScreen,
+);
+
+console.log(playersObjs);
