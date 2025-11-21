@@ -205,6 +205,8 @@ export const BoatPlacement = () => {
       removeHighlightSetColsAndRowsToNull(targetColumns);
     },
     handleClickBoatSelectHighlight: function () {
+      const currentBoat = state.getCurrentBoat();
+
       if (currentBoat.name === "") return;
 
       const targetColumns = getTargetColumns();
