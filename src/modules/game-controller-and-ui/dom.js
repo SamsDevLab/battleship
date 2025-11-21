@@ -54,7 +54,7 @@ let computerPlayerObj;
 //   currentBoat.column = 0;
 // };
 
-const rows = startScreenBoard.children;
+// const rows = startScreenBoard.children;
 
 // New Location: boat-placement-ui.js
 // Handle Boat Selection
@@ -199,14 +199,14 @@ const rows = startScreenBoard.children;
 // };
 
 // Start here when you return from break. You were migrating this to the game-controller
-const placeBoatInPlayerArr = () => {
-  realPlayerObj.gameMechanics.placeShip(
-    Ship(currentBoat.name, currentBoat.length),
-    currentBoat.row,
-    currentBoat.column,
-    currentBoat.direction,
-  );
-};
+// const placeBoatInPlayerArr = () => {
+//   realPlayerObj.gameMechanics.placeShip(
+//     Ship(currentBoat.name, currentBoat.length),
+//     currentBoat.row,
+//     currentBoat.column,
+//     currentBoat.direction,
+//   );
+// };
 
 // New Location: boat-placement-ui.js
 // const highlightColumnsAddRemovePointer = (targetColumnsArr) => {
