@@ -3,6 +3,7 @@ export const BoatPlacement = (
   state,
   gameController,
   computerBoatPlacement,
+  renderer,
 ) => {
   const selectBoat = (boatElement) => {
     boatElement.classList.remove("hover-effect");
@@ -135,7 +136,10 @@ export const BoatPlacement = (
     errorParagraphTag.id = "error-tag";
     errorParagraphTag.dataset.tag = "error";
 
-    usernameAndButtonContainer.insertBefore(errorParagraphTag, startGameButton);
+    domHelpers.usernameAndButtonContainer.insertBefore(
+      errorParagraphTag,
+      domHelpers.startGameButton,
+    );
   };
 
   return {
@@ -190,16 +194,18 @@ export const BoatPlacement = (
       const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
       if (checkResult === true) return;
 
-      // gameController.placeBoatInPlayerArr(currentBoat, realPlayerObj);
-      // computerBoatPlacement.handleBoatInComputerArr(
-      //   getTargetColumns,
-      //   computerBoatPlacement,
-      //   gameController,
-      // );
+      gameController.placeBoatInPlayerArr(currentBoat, realPlayerObj);
+      computerBoatPlacement.handleBoatInComputerArr(
+        getTargetColumns,
+        computerBoatPlacement,
+        gameController,
+      );
+
       highlightColumnsAddRemovePointer(targetColumns);
       disableBoatContainer(boatContainersArr);
 
-      console.log(realPlayerObj);
+      console.log(realPlayerObj.gameMechanics.board);
+      console.log(computerPlayerObj.gameMechanics.board);
       state.setCurrentBoatToDefault();
     },
     handleInput: function (event) {
@@ -219,8 +225,8 @@ export const BoatPlacement = (
       } else {
         domHelpers.startScreen.classList.remove("is-open");
         domHelpers.startScreen.close();
-        messageBanner.textContent = `${realPlayerObj.name} shoots first!`;
-        RenderToDom();
+        domHelpers.messageBanner.textContent = `${realPlayerObj.name} shoots first!`;
+        renderer.renderToDom();
       }
     },
   };
