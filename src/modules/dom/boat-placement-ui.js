@@ -98,7 +98,7 @@ export const BoatPlacement = (
     });
   };
 
-  const disableBoatContainer = () => {
+  const disableBoatContainer = (boatContainersArr) => {
     const currentBoatContainer = boatContainersArr.find((container) =>
       container.classList.contains("selected"),
     );
@@ -180,8 +180,9 @@ export const BoatPlacement = (
     },
     handleClickBoatSelectHighlight: function () {
       const currentBoat = state.getCurrentBoat();
-      const realPlayer = state.getRealPlayer();
-      const computerPlayer = state.getComputerPlayer();
+      const realPlayerObj = state.getRealPlayer();
+      const computerPlayerObj = state.getComputerPlayer();
+      const boatContainersArr = domHelpers.boatContainersArr;
 
       if (currentBoat.name === "") return;
 
@@ -190,16 +191,17 @@ export const BoatPlacement = (
       const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
       if (checkResult === true) return;
 
-      gameController.placeBoatInPlayerArr(currentBoat, realPlayer);
+      gameController.placeBoatInPlayerArr(currentBoat, realPlayerObj);
       computerBoatPlacement.handleBoatInComputerArr(
         currentBoat,
-        computerPlayer,
+        computerPlayerObj,
       );
       highlightColumnsAddRemovePointer(targetColumns);
-      disableBoatContainer();
-      setCurrentBoatToDefault();
+      disableBoatContainer(boatContainersArr);
+      state.setCurrentBoatToDefault();
     },
     handleInput: function (event) {
+      const realPlayerObj = state.getRealPlayer();
       const inputValue = event.target.value;
       realPlayerObj.name = inputValue;
     },
