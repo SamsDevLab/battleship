@@ -196,7 +196,6 @@ export const BoatPlacement = (
 
       gameController.placeBoatInPlayerArr(currentBoat, realPlayerObj);
       computerBoatPlacement.handleBoatInComputerArr(
-        getTargetColumns,
         computerBoatPlacement,
         gameController,
       );
