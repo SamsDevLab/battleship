@@ -1,4 +1,4 @@
-export const Renderer = () => {
+export const Renderer = (domHelpers, state) => {
   const addRowsAndColumns = (board, div) => {
     const competitorBoard = div.dataset.board;
 
@@ -36,6 +36,18 @@ export const Renderer = () => {
       startScreen.showModal();
       screenBoard.replaceChildren();
       addRowsAndColumns(realPlayerBoard, screenBoard);
+    },
+    renderToDom: function () {
+      const playerDiv = domHelpers.playerDiv;
+      const computerDiv = domHelpers.computerDiv;
+      const realPlayerObj = state.getRealPlayer();
+      const computerPlayerObj = state.getComputerPlayer();
+
+      playerDiv.textContent = "";
+      computerDiv.textContent = "";
+
+      addRowsAndColumns(realPlayerObj.gameMechanics.board, playerDiv);
+      addRowsAndColumns(computerPlayerObj.gameMechanics.board, computerDiv);
     },
   };
 };
