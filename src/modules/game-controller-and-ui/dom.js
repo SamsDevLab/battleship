@@ -1,10 +1,10 @@
-import { Ship } from "../game/ship.js";
-import { GameController } from "../game/game-controller.js";
+// import { Ship } from "../game/ship.js";
+// import { GameController } from "../game/game-controller.js";
 
 // const gameController = GameController();
-let playerObjs;
-let realPlayerObj;
-let computerPlayerObj;
+// let playerObjs;
+// let realPlayerObj;
+// let computerPlayerObj;
 
 // playerObjs = gameController.initGame();
 // realPlayerObj = playerObjs.realPlayerObj;
@@ -552,16 +552,16 @@ const attackPlayer = () => {
 //   }
 // };
 
-export const RenderToDom = () => {
-  playerDiv.textContent = "";
-  computerDiv.textContent = "";
+// export const RenderToDom = () => {
+//   playerDiv.textContent = "";
+//   computerDiv.textContent = "";
 
-  addRowsAndColumns(playerObjs.realPlayerObj.gameMechanics.board, playerDiv);
-  addRowsAndColumns(
-    playerObjs.computerPlayerObj.gameMechanics.board,
-    computerDiv,
-  );
-};
+//   addRowsAndColumns(playerObjs.realPlayerObj.gameMechanics.board, playerDiv);
+//   addRowsAndColumns(
+//     playerObjs.computerPlayerObj.gameMechanics.board,
+//     computerDiv,
+//   );
+// };
 
 const addButtonFunctionality = () => {
   const computerBoard = document.querySelector("[data-board='computer']");
