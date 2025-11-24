@@ -20,7 +20,7 @@ export const State = () => {
     },
     storeObjects: function (playerObjs) {
       realPlayer = playerObjs.realPlayerObj;
-      computerPlayer = playerObjs.computerPlayer;
+      computerPlayer = playerObjs.computerPlayerObj;
     },
     setCurrentBoatToDefault: function () {
       currentBoat.direction = "horizontal";
