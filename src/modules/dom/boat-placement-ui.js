@@ -15,7 +15,7 @@ export const BoatPlacement = (
     state.setCurrentBoatLength(+boatElement.dataset.boatLength);
   };
 
-  const toggleAxisButton = (button) => {
+  const toggleAxisButton = (button, currentBoat) => {
     if (currentBoat.direction === "horizontal") {
       button.textContent = "Vertical Axis";
       currentBoat.direction = "vertical";
@@ -150,8 +150,9 @@ export const BoatPlacement = (
         checkForAlreadySelectedBoat();
         selectBoat(closestContainer);
       } else if (closestContainer.dataset.container === "axis-button") {
+        const currentBoat = state.getCurrentBoat();
         const axisButton = closestContainer.querySelector("[data-button]");
-        toggleAxisButton(axisButton);
+        toggleAxisButton(axisButton, currentBoat);
       }
     },
     handleHoverAddHighlight: function (event) {
