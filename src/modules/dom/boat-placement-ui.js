@@ -7,7 +7,6 @@ export const BoatPlacement = (
   const boatContainersArr = domHelpers.boatContainersArr;
 
   const selectBoat = (boatElement) => {
-    console.log(boatElement);
     boatElement.classList.remove("hover-effect");
     boatElement.classList.add("selected");
 
@@ -18,10 +17,10 @@ export const BoatPlacement = (
   const toggleAxisButton = (button, currentBoat) => {
     if (currentBoat.direction === "horizontal") {
       button.textContent = "Vertical Axis";
-      currentBoat.direction = "vertical";
+      state.setCurrentBoatDirection("vertical");
     } else if (currentBoat.direction === "vertical") {
       button.textContent = "Horizontal Axis";
-      currentBoat.direction = "horizontal";
+      state.setCurrentBoatDirection("horizontal");
     }
   };
 
@@ -143,7 +142,6 @@ export const BoatPlacement = (
 
   return {
     handleBoatContainerClick: function (event) {
-      console.log(event);
       const closestContainer = event.target.closest("[data-container]");
 
       if (closestContainer.dataset.container === "boat") {
@@ -182,6 +180,8 @@ export const BoatPlacement = (
     },
     handleClickBoatSelectHighlight: function () {
       const currentBoat = state.getCurrentBoat();
+      const realPlayer = state.getRealPlayer();
+      const computerPlayer = state.getComputerPlayer();
 
       if (currentBoat.name === "") return;
 
@@ -190,8 +190,11 @@ export const BoatPlacement = (
       const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
       if (checkResult === true) return;
 
-      gameController.placeBoatInPlayerArr(currentBoat);
-      computerBoatPlacement.handleBoatInComputerArr(currentBoat);
+      gameController.placeBoatInPlayerArr(currentBoat, realPlayer);
+      computerBoatPlacement.handleBoatInComputerArr(
+        currentBoat,
+        computerPlayer,
+      );
       highlightColumnsAddRemovePointer(targetColumns);
       disableBoatContainer();
       setCurrentBoatToDefault();
