@@ -1,9 +1,3 @@
-// import { DOMHelpers } from "../../index.js";
-// import { BoatPlacement } from "../../index.js";
-
-// const domHelpers = DOMHelpers();
-// const boatPlacement = BoatPlacement();
-
 export const AttachEventListeners = (domHelpers, boatPlacement) => {
   domHelpers.boatPlacementContainer.addEventListener("click", (event) =>
     boatPlacement.handleBoatContainerClick(event),
