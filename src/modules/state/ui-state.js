@@ -29,6 +29,9 @@ export const State = () => {
       currentBoat.row = 0;
       currentBoat.column = 0;
     },
+    setCurrentBoatDirection: function (direction) {
+      currentBoat.direction = direction;
+    },
     setCurrentBoatName: function (name) {
       currentBoat.name = name;
     },
