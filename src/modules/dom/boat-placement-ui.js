@@ -4,8 +4,6 @@ export const BoatPlacement = (
   gameController,
   computerBoatPlacement,
 ) => {
-  const boatContainersArr = domHelpers.boatContainersArr;
-
   const selectBoat = (boatElement) => {
     boatElement.classList.remove("hover-effect");
     boatElement.classList.add("selected");
@@ -24,7 +22,7 @@ export const BoatPlacement = (
     }
   };
 
-  const checkForAlreadySelectedBoat = () => {
+  const checkForAlreadySelectedBoat = (boatContainersArr) => {
     const alreadySelectedBoat = boatContainersArr.find((boatContainer) =>
       boatContainer.classList.contains("selected"),
     );
@@ -142,10 +140,11 @@ export const BoatPlacement = (
 
   return {
     handleBoatContainerClick: function (event) {
+      const boatContainersArr = domHelpers.boatContainersArr;
       const closestContainer = event.target.closest("[data-container]");
 
       if (closestContainer.dataset.container === "boat") {
-        checkForAlreadySelectedBoat();
+        checkForAlreadySelectedBoat(boatContainersArr);
         selectBoat(closestContainer);
       } else if (closestContainer.dataset.container === "axis-button") {
         const currentBoat = state.getCurrentBoat();
@@ -191,13 +190,16 @@ export const BoatPlacement = (
       const checkResult = checkForUndefinedAndRemovePointerClass(targetColumns);
       if (checkResult === true) return;
 
-      gameController.placeBoatInPlayerArr(currentBoat, realPlayerObj);
-      computerBoatPlacement.handleBoatInComputerArr(
-        currentBoat,
-        computerPlayerObj,
-      );
+      // gameController.placeBoatInPlayerArr(currentBoat, realPlayerObj);
+      // computerBoatPlacement.handleBoatInComputerArr(
+      //   getTargetColumns,
+      //   computerBoatPlacement,
+      //   gameController,
+      // );
       highlightColumnsAddRemovePointer(targetColumns);
       disableBoatContainer(boatContainersArr);
+
+      console.log(realPlayerObj);
       state.setCurrentBoatToDefault();
     },
     handleInput: function (event) {
@@ -215,8 +217,8 @@ export const BoatPlacement = (
       if (boatPlacementResult === false || playerNamePlacement === false) {
         insertErrorParagraphTag();
       } else {
-        startScreen.classList.remove("is-open");
-        startScreen.close();
+        domHelpers.startScreen.classList.remove("is-open");
+        domHelpers.startScreen.close();
         messageBanner.textContent = `${realPlayerObj.name} shoots first!`;
         RenderToDom();
       }
