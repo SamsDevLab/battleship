@@ -107,7 +107,7 @@ export const BoatPlacement = (
     currentBoatContainer.classList.add("disabled");
   };
 
-  const checkForAllBoatsPlaced = () => {
+  const checkForAllBoatsPlaced = (boatContainersArr) => {
     const result = boatContainersArr.every((boatContainer) =>
       boatContainer.classList.contains("disabled"),
     );
@@ -115,7 +115,7 @@ export const BoatPlacement = (
     return result;
   };
 
-  const checkForPlayerNamePlacement = () => {
+  const checkForPlayerNamePlacement = (realPlayerObj) => {
     if (realPlayerObj.name === undefined) return false;
     else return true;
   };
@@ -204,8 +204,11 @@ export const BoatPlacement = (
       realPlayerObj.name = inputValue;
     },
     handleStartButtonClick: function () {
-      const boatPlacementResult = checkForAllBoatsPlaced();
-      const playerNamePlacement = checkForPlayerNamePlacement();
+      const realPlayerObj = state.getRealPlayer();
+      const boatPlacementResult = checkForAllBoatsPlaced(
+        domHelpers.boatContainersArr,
+      );
+      const playerNamePlacement = checkForPlayerNamePlacement(realPlayerObj);
 
       if (boatPlacementResult === false || playerNamePlacement === false) {
         insertErrorParagraphTag();
