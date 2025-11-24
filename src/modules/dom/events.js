@@ -1,32 +1,34 @@
-import { DOMHelpers } from "../../index.js";
-import { BoatPlacement } from "./boat-placement-ui";
+// import { DOMHelpers } from "../../index.js";
+// import { BoatPlacement } from "../../index.js";
 
-const domHelpers = DOMHelpers();
-const boatPlacement = BoatPlacement();
+// const domHelpers = DOMHelpers();
+// const boatPlacement = BoatPlacement();
 
-domHelpers.boatPlacementContainer.addEventListener("click", (event) =>
-  boatPlacement.handleBoatContainerClick(event),
-);
+export const AttachEventListeners = (domHelpers, boatPlacement) => {
+  domHelpers.boatPlacementContainer.addEventListener("click", (event) =>
+    boatPlacement.handleBoatContainerClick(event),
+  );
 
-// Start Screen Board listeners:
-domHelpers.startScreenBoard.addEventListener("mouseover", (event) => {
-  boatPlacement.handleHoverAddHighlight(event);
-});
+  // Start Screen Board listeners:
+  domHelpers.startScreenBoard.addEventListener("mouseover", (event) => {
+    boatPlacement.handleHoverAddHighlight(event);
+  });
 
-domHelpers.startScreenBoard.addEventListener("mouseout", (event) => {
-  boatPlacement.handleHoverRemoveHighlight(event);
-});
+  domHelpers.startScreenBoard.addEventListener("mouseout", (event) => {
+    boatPlacement.handleHoverRemoveHighlight(event);
+  });
 
-domHelpers.startScreenBoard.addEventListener("click", () => {
-  boatPlacement.handleClickBoatSelectHighlight();
-});
+  domHelpers.startScreenBoard.addEventListener("click", () => {
+    boatPlacement.handleClickBoatSelectHighlight();
+  });
 
-// Input listener:
-domHelpers.usernameInput.addEventListener("change", (event) =>
-  boatPlacement.handleInput(event),
-);
+  // Input listener:
+  domHelpers.usernameInput.addEventListener("change", (event) =>
+    boatPlacement.handleInput(event),
+  );
 
-// Start Game Button listener:
-domHelpers.startGameButton.addEventListener("click", () =>
-  boatPlacement.handleStartButtonClick(),
-);
+  // Start Game Button listener:
+  domHelpers.startGameButton.addEventListener("click", () =>
+    boatPlacement.handleStartButtonClick(),
+  );
+};
