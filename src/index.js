@@ -16,34 +16,47 @@ game/game-controller.js — your existing GameController but moved heavier logic
 
 state/ui-state.js (optional) — thin object for transient UI-only state (currentBoat selection, direction) that the DOM modules own.
 
-Start here when you return: keep parsing logic from the monolith dom.js file and placing it
-in appropriate modules
-*/
 
+*/
+// import "./styles.css";
 import { DOMHelpers } from "./modules/dom/dom-helpers.js";
 import { Renderer } from "./modules/dom/renderer.js";
 import { State } from "./modules/state/ui-state.js";
-import { ComputerBoatPlacement } from "./modules/game/ai-boat-placement.js";
+import { AttachEventListeners } from "./modules/dom/events.js";
 import { GameController } from "./modules/game/game-controller.js";
 import { BoatPlacement } from "./modules/dom/boat-placement-ui.js";
-import "./modules/dom/events.js";
-
-export { DOMHelpers };
-export { GameController };
-export { BoatPlacement };
-export { ComputerBoatPlacement };
-export { State };
+import { ComputerBoatPlacement } from "./modules/game/ai-boat-placement.js";
 
 const domHelpers = DOMHelpers();
+// const renderer = Renderer(domHelpers);
 const gameController = GameController();
-const renderer = Renderer();
 const playerObjs = gameController.initGame();
-const state = State();
 
+const state = State(playerObjs);
 state.storeObjects(playerObjs);
+
+const renderer = Renderer(domHelpers, state);
+
+const computerBoatPlacement = ComputerBoatPlacement(state);
 
 renderer.openStartScreen(
   playerObjs.realPlayerObj.gameMechanics.board,
   domHelpers.startScreenBoard,
   domHelpers.startScreen,
 );
+
+const boatPlacement = BoatPlacement(
+  domHelpers,
+  state,
+  gameController,
+  computerBoatPlacement,
+  renderer,
+);
+
+AttachEventListeners(domHelpers, boatPlacement);
+
+// export { DOMHelpers };
+// export { GameController };
+// export { BoatPlacement };
+// export { ComputerBoatPlacement };
+// export { State };
