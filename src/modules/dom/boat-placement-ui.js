@@ -206,6 +206,10 @@ export const BoatPlacement = (
       console.log(realPlayerObj.gameMechanics.board);
       console.log(computerPlayerObj.gameMechanics.board);
       state.setCurrentBoatToDefault();
+
+      if (domHelpers.axisButton.textContent === "Vertical Axis") {
+        domHelpers.axisButton.textContent = "Horizontal Axis";
+      }
     },
     handleInput: function (event) {
       const realPlayerObj = state.getRealPlayer();
