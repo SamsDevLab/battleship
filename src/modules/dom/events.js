@@ -1,4 +1,4 @@
-export const AttachEventListeners = (domHelpers, boatPlacement) => {
+export const AttachEventListeners = (domHelpers, boatPlacement, gameUI) => {
   domHelpers.boatPlacementContainer.addEventListener("click", (event) =>
     boatPlacement.handleBoatContainerClick(event),
   );
@@ -25,4 +25,9 @@ export const AttachEventListeners = (domHelpers, boatPlacement) => {
   domHelpers.startGameButton.addEventListener("click", () =>
     boatPlacement.handleStartButtonClick(),
   );
+
+  // Computer Div Listener:
+  domHelpers.computerDiv.addEventListener("click", (event) => {
+    gameUI.handleComputerBoardClick(event);
+  });
 };
