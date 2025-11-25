@@ -119,16 +119,7 @@ export const BoatPlacement = (
     else return true;
   };
 
-  const checkForErrorTag = () => {
-    const result = document.querySelector("[data-tag='error']");
-    return result;
-  };
-
   const insertErrorParagraphTag = () => {
-    const checkResult = checkForErrorTag();
-
-    if (checkResult !== null) return;
-
     const errorParagraphTag = document.createElement("p");
     errorParagraphTag.textContent =
       "⚠️ Please enter your name and place all 5 of your ships!";
@@ -203,8 +194,6 @@ export const BoatPlacement = (
       highlightColumnsAddRemovePointer(targetColumns);
       disableBoatContainer(boatContainersArr);
 
-      console.log(realPlayerObj.gameMechanics.board);
-      console.log(computerPlayerObj.gameMechanics.board);
       state.setCurrentBoatToDefault();
 
       if (domHelpers.axisButton.textContent === "Vertical Axis") {
@@ -224,6 +213,7 @@ export const BoatPlacement = (
       const playerNamePlacement = checkForPlayerNamePlacement(realPlayerObj);
 
       if (boatPlacementResult === false || playerNamePlacement === false) {
+        // Need to Address:
         insertErrorParagraphTag();
       } else {
         domHelpers.startScreen.classList.remove("is-open");
