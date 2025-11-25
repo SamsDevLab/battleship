@@ -1,9 +1,13 @@
-export const AttachEventListeners = (domHelpers, boatPlacement, gameUI) => {
+export const AttachEventListeners = (
+  domHelpers,
+  boatPlacement,
+  gameUI,
+  gameReset,
+) => {
   domHelpers.boatPlacementContainer.addEventListener("click", (event) =>
     boatPlacement.handleBoatContainerClick(event),
   );
 
-  // Start Screen Board listeners:
   domHelpers.startScreenBoard.addEventListener("mouseover", (event) => {
     boatPlacement.handleHoverAddHighlight(event);
   });
@@ -16,18 +20,19 @@ export const AttachEventListeners = (domHelpers, boatPlacement, gameUI) => {
     boatPlacement.handleClickBoatSelectHighlight();
   });
 
-  // Input listener:
   domHelpers.usernameInput.addEventListener("change", (event) =>
     boatPlacement.handleInput(event),
   );
 
-  // Start Game Button listener:
   domHelpers.startGameButton.addEventListener("click", () =>
     boatPlacement.handleStartButtonClick(),
   );
 
-  // Computer Div Listener:
   domHelpers.computerDiv.addEventListener("click", (event) => {
     gameUI.handleComputerBoardClick(event);
+  });
+
+  domHelpers.playAgainButton.addEventListener("click", () => {
+    gameReset.handleGameReset();
   });
 };
