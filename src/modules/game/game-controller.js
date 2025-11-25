@@ -1,6 +1,5 @@
 import { Player } from "./player.js";
-// Need to grab realPlayerObj and computerPlayerObj from State.
-// Both should be kept in "State", I think
+import { Ship } from "./ship.js";
 
 export const GameController = () => {
   return {
@@ -10,16 +9,19 @@ export const GameController = () => {
 
       return { realPlayerObj, computerPlayerObj };
     },
-    placeBoatInPlayerArr: function () {
-      realPlayerObj.gameMechanics.placeShip(
+    placeBoatInPlayerArr: function (currentBoat, realPlayer) {
+      realPlayer.gameMechanics.placeShip(
         Ship(currentBoat.name, currentBoat.length),
         currentBoat.row,
         currentBoat.column,
         currentBoat.direction,
       );
     },
-    placeBoatInComputerArr: function () {
-      computerPlayerObj.gameMechanics.placeShip(
+    placeBoatInComputerArr: function (state) {
+      const computerPlayer = state.getComputerPlayer();
+      const currentBoat = state.getCurrentBoat();
+
+      computerPlayer.gameMechanics.placeShip(
         Ship(currentBoat.name, currentBoat.length),
         currentBoat.row,
         currentBoat.column,
