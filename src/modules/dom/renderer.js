@@ -1,4 +1,12 @@
 export const Renderer = (domHelpers, state) => {
+  const markPreviousAttackOnBoard = (attack, boardColumn) => {
+    const markAttackSpan = document.createElement("span");
+    markAttackSpan.classList.add(`${attack}-circle`);
+    boardColumn.dataset.hitOrMiss = `${attack}`;
+    boardColumn.append(markAttackSpan);
+    boardColumn.classList.add("remove-pointer");
+  };
+
   const addRowsAndColumns = (board, div) => {
     const competitorBoard = div.dataset.board;
 
@@ -24,13 +32,14 @@ export const Renderer = (domHelpers, state) => {
   };
 
   return {
-    markPreviousAttackOnBoard: function (attack, boardColumn) {
-      const markAttackSpan = document.createElement("span");
-      markAttackSpan.classList.add(`${attack}-circle`);
-      boardColumn.dataset.hitOrMiss = `${attack}`;
-      boardColumn.append(markAttackSpan);
-      boardColumn.classList.add("remove-pointer");
-    },
+    // Commit after break:
+    // markPreviousAttackOnBoard: function (attack, boardColumn) {
+    //   const markAttackSpan = document.createElement("span");
+    //   markAttackSpan.classList.add(`${attack}-circle`);
+    //   boardColumn.dataset.hitOrMiss = `${attack}`;
+    //   boardColumn.append(markAttackSpan);
+    //   boardColumn.classList.add("remove-pointer");
+    // },
     openStartScreen: function (realPlayerBoard, screenBoard, startScreen) {
       startScreen.classList.add("is-open");
       startScreen.showModal();
