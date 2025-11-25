@@ -152,7 +152,7 @@ export const BoatPlacement = (
         selectBoat(closestContainer);
       } else if (closestContainer.dataset.container === "axis-button") {
         const currentBoat = state.getCurrentBoat();
-        const axisButton = closestContainer.querySelector("[data-button]");
+        const axisButton = domHelpers.axisButton;
         toggleAxisButton(axisButton, currentBoat);
       }
     },
