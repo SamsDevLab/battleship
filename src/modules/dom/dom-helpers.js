@@ -13,6 +13,8 @@ export const DOMHelpers = () => {
     document.querySelectorAll("[data-container='boat']"),
   );
 
+  const axisButton = document.querySelector("[data-button='axis']");
+
   const usernameAndButtonContainer = document.querySelector(
     "[data-container='username-and-button']",
   );
@@ -44,6 +46,7 @@ export const DOMHelpers = () => {
     startScreenBoard,
     boatPlacementContainer,
     boatContainersArr,
+    axisButton,
     usernameAndButtonContainer,
     usernameInput,
     startGameButton,
