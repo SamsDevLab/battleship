@@ -1,4 +1,10 @@
 export const GameUI = (domHelpers, gameController, state, renderer) => {
+  const announceWinner = (winnerObj) => {
+    domHelpers.winnerScreen.classList.add("show-winner");
+    domHelpers.winnerScreen.showModal();
+    domHelpers.winnerHeader.textContent = `${winnerObj.name} wins the game!`;
+  };
+
   const determineHitOrMiss = (event) => {
     if (
       event.target.dataset.hitOrMiss === "missed" ||
@@ -15,7 +21,6 @@ export const GameUI = (domHelpers, gameController, state, renderer) => {
 
   const handleAttackResult = (attackResult, player) => {
     if (attackResult === "All boats have been sunk!") {
-      // Need to connect winner/end game module once you have it
       announceWinner(player);
     }
 
