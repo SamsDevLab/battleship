@@ -6,11 +6,8 @@ export const GameReset = (domHelpers, gameController, state, renderer) => {
 
   const resetPlayerObjs = () => {
     state.setPlayerObjsToDefault();
-    // playerObjs = null;
     const playerObjs = gameController.initGame();
     state.storeObjects(playerObjs);
-    // realPlayerObj = playerObjs.realPlayerObj;
-    // computerPlayerObj = playerObjs.computerPlayerObj;
   };
 
   const resetBoatContainers = () => {
