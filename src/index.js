@@ -1,11 +1,4 @@
-/* 
-Item Checklist - Things to Address
-• Finish migrating all code from dom.js to appropriate modules
-✅ • Axis button needs to automatically move back to "Horizontal" after placing a boat
-✅ • Fix bug in ai-boat-placement
-
-*/
-// import "./styles.css";
+import "./styles.css";
 import { DOMHelpers } from "./modules/dom/dom-helpers.js";
 import { Renderer } from "./modules/dom/renderer.js";
 import { State } from "./modules/state/ui-state.js";
@@ -14,6 +7,7 @@ import { GameController } from "./modules/game/game-controller.js";
 import { BoatPlacement } from "./modules/dom/boat-placement-ui.js";
 import { ComputerBoatPlacement } from "./modules/game/ai-boat-placement.js";
 import { GameUI } from "./modules/dom/game-ui.js";
+import { GameReset } from "./modules/game/game-reset.js";
 
 const domHelpers = DOMHelpers();
 const gameController = GameController();
@@ -40,12 +34,7 @@ const boatPlacement = BoatPlacement(
   renderer,
 );
 
-const gameUI = GameUI();
+const gameUI = GameUI(domHelpers, gameController, state, renderer);
+const gameReset = GameReset(domHelpers, gameController, state, renderer);
 
-AttachEventListeners(domHelpers, boatPlacement, gameUI);
-
-// export { DOMHelpers };
-// export { GameController };
-// export { BoatPlacement };
-// export { ComputerBoatPlacement };
-// export { State };
+AttachEventListeners(domHelpers, boatPlacement, gameUI, gameReset);
