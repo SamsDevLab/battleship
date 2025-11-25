@@ -4,7 +4,6 @@ export const Renderer = (domHelpers, state) => {
     markAttackSpan.classList.add(`${attack}-circle`);
     boardColumn.dataset.hitOrMiss = `${attack}`;
     boardColumn.append(markAttackSpan);
-    boardColumn.classList.add("remove-pointer");
   };
 
   const addRowsAndColumns = (board, div) => {
