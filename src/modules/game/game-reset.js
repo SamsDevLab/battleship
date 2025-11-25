@@ -35,10 +35,10 @@ export const GameReset = (domHelpers, gameController, state, renderer) => {
   };
 
   const resetIncompleteWarning = () => {
-    // const errorTag = document.querySelector("[data-tag='error']");
-    if (domHelpers.errorTag === null) {
+    const errorTag = document.querySelector("[data-tag='error']");
+    if (errorTag === null) {
       return;
-    } else domHelpers.errorTag.remove();
+    } else errorTag.remove();
   };
 
   return {
