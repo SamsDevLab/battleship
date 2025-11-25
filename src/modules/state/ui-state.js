@@ -44,5 +44,9 @@ export const State = () => {
     setCurrentBoatColumn: function (column) {
       currentBoat.column = column;
     },
+    setPlayerObjsToDefault: function () {
+      realPlayer = null;
+      computerPlayer = null;
+    },
   };
 };
