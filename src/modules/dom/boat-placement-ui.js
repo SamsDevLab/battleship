@@ -213,7 +213,6 @@ export const BoatPlacement = (
       const playerNamePlacement = checkForPlayerNamePlacement(realPlayerObj);
 
       if (boatPlacementResult === false || playerNamePlacement === false) {
-        // Need to Address:
         insertErrorParagraphTag();
       } else {
         domHelpers.startScreen.classList.remove("is-open");
