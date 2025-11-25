@@ -90,7 +90,7 @@ export const GameUI = (domHelpers, gameController, state, renderer) => {
 
       const rowsAndCols = getRowsAndColumns(event);
       attackComputer(rowsAndCols, computerPlayer, realPlayer);
-      setTimeout(attackPlayer, 2000);
+      setTimeout(attackPlayer, 1700);
     },
   };
 };
