@@ -83,8 +83,6 @@ select {
   font: inherit;
 }
 
-/* Project Below */
-
 @font-face {
   font-family: "BlackOpsOne";
   src:
@@ -174,10 +172,6 @@ p {
   font-family: "MontserratMedium";
   text-shadow: 2px 2px 4px black;
 }
-
-/* h3 {
-  text-shadow: 0px 0px 10px black;
-  /*#e63946*/
 
 .number-coords {
   display: grid;
@@ -364,8 +358,6 @@ p {
   outline: 2px solid #e63946;
   border-radius: 0.2rem;
 }
-
-/* Winner Dialog */
 
 .show-winner {
   padding: 2rem;
