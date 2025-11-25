@@ -27,6 +27,8 @@ export const DOMHelpers = () => {
     "[data-button='start-game']",
   );
 
+  const errorTag = document.querySelector("[data-tag='error']");
+
   const messageBanner = document.querySelector("[data-container='banner']");
 
   const playerDiv = document.querySelector("[data-board='player']");
@@ -50,6 +52,7 @@ export const DOMHelpers = () => {
     usernameAndButtonContainer,
     usernameInput,
     startGameButton,
+    errorTag,
     messageBanner,
     playerDiv,
     computerDiv,
