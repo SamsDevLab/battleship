@@ -5,18 +5,16 @@ export const GameUI = (domHelpers, gameController, state, renderer) => {
     domHelpers.winnerHeader.textContent = `${winnerObj.name} wins the game!`;
   };
 
-  const determineHitOrMiss = (event) => {
+  const checkForOccupiedColumn = (event) => {
+    console.log(event);
     if (
       event.target.dataset.hitOrMiss === "missed" ||
       event.target.parentNode.dataset.hitOrMiss === "missed" ||
       event.target.dataset.hitOrMiss === "hit" ||
       event.target.parentNode.dataset.hitOrMiss === "hit"
     ) {
-      domHelpers.messageBanner.textContent = "";
-      domHelpers.messageBanner.textContent =
-        "Target already hit. Try another target!";
-      return;
-    }
+      return true;
+    } else return false;
   };
 
   const handleAttackResult = (attackResult, player) => {
@@ -81,7 +79,15 @@ export const GameUI = (domHelpers, gameController, state, renderer) => {
       const computerPlayer = state.getComputerPlayer();
       const realPlayer = state.getRealPlayer();
 
-      determineHitOrMiss(event);
+      const occupied = checkForOccupiedColumn(event);
+
+      if (occupied === true) {
+        domHelpers.messageBanner.textContent = "";
+        domHelpers.messageBanner.textContent =
+          "Target has already been shot. Try again!";
+        return;
+      }
+
       const rowsAndCols = getRowsAndColumns(event);
       attackComputer(rowsAndCols, computerPlayer, realPlayer);
       setTimeout(attackPlayer, 1200);
